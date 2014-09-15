@@ -1,0 +1,37 @@
+0.  BMP: 256  GIF: 256   JPEG: 16.7 million
+
+1.  GIF 
+
+2.  Lossless compression breaks up the file into segments. The file is then assembled exactly as it was before it was compressed.
+    Lossy compression removes redundant pieces of data. When the file is assembled back it is not the same as before it was compressed.
+
+3. JPEG 
+
+4.  What happens when you delete a file from the trash bin: The file is removed from the directory and the system moves all the FAT clusters to the list of free clusters.
+
+5.  How to ensure data is deleted: Write Gutmann patterns multiple times over the disk.
+
+6.  stdint.h: Declares a set of integer types with specific widths and defines a set of macros. 
+Required fields are: int8_t, int16_t, int32_t, uint8_t, uint16_t, uint32_t. If there is implementation with a width 64 the below items are required int64_t, uint64_t.
+
+7.  Declaring that they will be used in the program and assigning the required space.
+8.  BYTE: 8 , DWORD: 32, LONG: 32, WORD: 16
+
+9.  BM
+10. bfsize is the size of the file. bisize is the size of the bitmapinfoheader.
+
+11. biheight is negative when the file goes from top down.
+
+12. 24
+
+13. fopen returns NULL when the fopen fails. Examples of this is if the file already existed.
+
+14. The 3rd argurment is always 1 because the program is reading in only one pixel.
+
+15. 3
+
+16. fseek flushes any buffered output before setting the file position or else remembers it so it will be written later in its proper place in the file. 
+
+17. SEEK_CUR puts the fseek on the current location.
+
+18. Milo Banana 

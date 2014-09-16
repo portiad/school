@@ -32,14 +32,14 @@ node* hashtable[SIZE] = {NULL};
 bool check(const char* word)
 {
     // change case to lower case
-
-    char* tempWord;
-    for (tempWord = *word; *tempWord != '\0'; ++tempWord)
+    char* tempWord[] = malloc(strlen(word) + 1);
+    
+    for (strcpy(tempWord,word); *tempWord != '\0'; tempWord++)
     {
         *tempWord = tolower(*tempWord); 
     }  
      
-     int index = word[0] - 'a' + 1;
+     int index = tempWord[0] - 'a' + 1;
      node* temp = hashtable[index];
      
      // check if hashtable exists for letter
@@ -51,7 +51,7 @@ bool check(const char* word)
      // iterates through the list to find the last entry and appends newWord
      while (temp->next != NULL)
     {
-        if (strcmp(word, temp->word) == 0)
+        if (strcmp(tempWord, temp->word) == 0)
         {
             return true;
         }

@@ -134,12 +134,16 @@ bool unload(void)
 {
     int index = 0;
     
+    // loop while the index is less than the size
     while (index < SIZE)
     {
+        // increment index if hastable is empty
         if(hashtable[index] == 0)
         {
             index++;
         }
+        
+        // free memory
         else
         {
             node* cursor = hashtable[index];

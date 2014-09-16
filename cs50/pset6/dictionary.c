@@ -31,25 +31,24 @@ node* hashtable[SIZE] = {NULL};
  */
 bool check(const char* word)
 {
-    // change case to lower case
-    char* tempWord[] = malloc(strlen(word) + 1);
+    char tempWord[LENGTH + 1] = {'\0'};
     
-    for (strcpy(tempWord,word); *tempWord != '\0'; tempWord++)
+    for(int i = 0, len = strlen(word); i <= len; i++)
     {
-        *tempWord = tolower(*tempWord); 
-    }  
+        tempWord[i] = tolower(word[i]);
+    } 
      
-     int index = tempWord[0] - 'a' + 1;
-     node* temp = hashtable[index];
+    int index = tempWord[0] - 'a' + 1;
+    node* temp = hashtable[index];
      
      // check if hashtable exists for letter
-     if (temp == NULL)
-     {
-        return false;
-     }
+    if (temp == NULL)
+    {
+       return false;
+    }
      
-     // iterates through the list to find the last entry and appends newWord
-     while (temp->next != NULL)
+    // iterates through the list to find the last entry and appends newWord
+    while (temp != NULL)
     {
         if (strcmp(tempWord, temp->word) == 0)
         {
@@ -60,7 +59,7 @@ bool check(const char* word)
             temp = temp->next;
         }
     }   
-    
+
     return false;
 }
 /**
@@ -75,7 +74,7 @@ bool load(const char* dictionary)
         return false;
     }
     
-    char word[LENGTH + 1];
+    char word[LENGTH + 1] = {'\0'};
     
     while (fscanf(dict, "%s\n", word)!= EOF)
     {

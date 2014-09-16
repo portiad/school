@@ -19,7 +19,7 @@
 
 typedef struct node 
 {
-  char* word;
+  char word[LENGTH + 1];
   struct node* next;
 } node;
 
@@ -34,7 +34,6 @@ bool check(const char* word)
     // TODO
     return false;
 }
-
 /**
  * Loads dictionary into memory.  Returns true if successful else false.
  */
@@ -73,8 +72,13 @@ bool load(const char* dictionary)
         // if hashtable is not empty at index, append
         else
         {
-            newWord->next = hashtable[index];
-            hashtable[index] = newWord;
+            node* temp = hashtable[index];
+            // iterates through the list to find the last entry and appends newWord
+            while (temp->next != NULL)
+                {
+                    temp = temp->next;
+                }
+            temp->next = newWord;    
         }      
     }
     

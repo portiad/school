@@ -120,7 +120,10 @@ bool load(const char* dictionary)
  */
 unsigned int size(void)
 {
-    // TODO
+    if (dictionarySize > 0)
+    {
+        return dictionarySize;
+    }
     return 0;
 }
 
@@ -129,6 +132,21 @@ unsigned int size(void)
  */
 bool unload(void)
 {
-    // TODO
-    return false;
+    int index = 0;
+    
+    while (index < SIZE)
+    {
+        if(hashtable[index] == 0)
+        {
+            index++;
+        }
+        else
+        {
+            node* cursor = hashtable[index];
+            hashtable[index] = cursor->next;
+            free(cursor);
+        }
+    }
+    
+    return true;
 }

@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
+
+#define _XOPEN_SOURCE
 
 int main(int argc, string argv[])
 {
@@ -13,11 +16,7 @@ int main(int argc, string argv[])
 
     string k = argv[1];
     int lenk = strlen(k); 
-    for(int i = 0; i < lenk; i++) { // determine that the keyword is alpha
-        if (isalpha(k[i]) == false) {
-            printf("You did not enter in a word\n");
-            return 1;
-        }
+
     }
     
     string p = GetString();

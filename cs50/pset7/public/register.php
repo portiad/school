@@ -8,7 +8,7 @@
     {
         $result = query("INSERT INTO users (username, hash, cash) VALUES(?, ?, 10000.00)", $_POST["username"], crypt($_POST["password"]));
         
-        if ($result === true)
+        if ($result === false)
         {
             apologize("Username is taken. Choose another one. ");
         }
@@ -16,11 +16,10 @@
         {
             $rows = query("SELECT LAST_INSERT_ID() AS id");
             $id = $rows[0]["id"];
-            
-            $_SESSION["id"] = $row["id"];
+
+            $_SESSION["id"] = $id;
 
             redirect("/");
-
         }
     }
     else

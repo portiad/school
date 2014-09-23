@@ -9,7 +9,7 @@
             <input autofocus class="form-control" name="shares" placeholder="Shares" type="text"/>
         </div>
         <div class="form-group">
-            <button type="sell" class="btn btn-default">Sell</button>
+            <button type="submit" class="btn btn-default">Sell</button>
         </div>
     </fieldset>
 </form>

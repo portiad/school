@@ -8,23 +8,34 @@
     // if form was submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
+
+
         //query for money in users account
+        $row = query("SELECT * FROM users WHERE id = ?", $_SESSION["id"]);
+        $row = $row[0];
+
         //determine the cost for buying the stocks
+        $stock = lookup($_POST["symbol"]);
+        $cost = $stock["price"] * $_POST["share"];
+        $test = $row["cash"] - $cost;
         //determine if user has enough to cover
         //buy stock
         
-        $result = query("SELECT * FROM users WHERE username = ?", $_POST["username"]);
-        
-        if ($result === false)
+        if ($stock === false)
         {
-            apologize("Username is taken. Choose another one. ");
+            apologize("Symbol not found.");
+        }
+
+        else if ($test < 0)
+        {
+
+            apologize("You can't afford that.");
         }
         else
         {
-            $rows = query("SELECT LAST_INSERT_ID() AS id");
-            $id = $rows[0]["id"];
 
-            $_SESSION["id"] = $id;
+           $result = query("INSERT INTO transactions (id, symbol, shares) VALUES(?, ?, ?)", $_SESSION["id"], $_POST["symbol"], $_POST["share"]);
+           $update = query("UPDATE users where id = ? (cash) VALUES(?)", $_SESSION["id"], $test);
 
             redirect("/");
         }
@@ -32,5 +43,5 @@
     else
     {
         // else render form
-        render("buy_form.php", ["title" => "Register"]);
+        render("buy_form.php", ["title" => "Buy"]);
     }

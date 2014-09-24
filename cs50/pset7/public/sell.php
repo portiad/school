@@ -8,21 +8,43 @@
     // if form was submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
-        //determine csot of stock
-        //sell stock
+        //query for money in users account
+        $rowuser = query("SELECT * FROM users WHERE id = ?", $_SESSION["id"]);
+        $rowuser = $rowuser[0];
 
-        $result = query("INSERT INTO users (username, hash, cash) VALUES(?, ?, 10000.00)", $_POST["username"], crypt($_POST["password"]));
+        //determine the cost for buying the stocks
+        $stock = lookup($_POST["symbol"]);
+
         
-        if ($result === false)
+        if ($stock === false)
         {
-            apologize("Username is taken. Choose another one. ");
+            apologize("Symbol not found.");
         }
-        else
+        else if ($newcash < 0) //determine if user has enough to cover
         {
-            $rows = query("SELECT LAST_INSERT_ID() AS id");
-            $id = $rows[0]["id"];
+            apologize("You can't afford that.");
+        }
+        else //buy stock
+        {
+            //query if user already owns this stock
+            $rowtrans = query("SELECT * FROM transactions WHERE id = ? and symbol = ?", $_SESSION["id"], $_POST["symbol"]);
+            $rowtrans = $rowtrans[0];
+            $newshares = $rowtrans["shares"] + $_POST["shares"];
 
-            $_SESSION["id"] = $id;
+            if ($rowtrans == false) // user does not own stock, insert it in
+            {
+                $result = query("INSERT INTO transactions (id, symbol, shares) VALUES(?, ?, ?)", $_SESSION["id"], $_POST["symbol"], $_POST["shares"]);
+            }
+            else // user does have the stock, update it
+            {
+                $result = query("UPDATE transactions set shares = ? where id = ? ", $newshares, $_SESSION["id"]);
+            }
+
+            //update cash balance
+            $update = query("UPDATE users set cash = ? where id = ? ", $newcash, $_SESSION["id"]);
+
+                $cost = $stock["price"] * $_POST["shares"];
+                $newcash = $rowuser["cash"] - $cost;
 
             redirect("/");
         }
@@ -30,5 +52,5 @@
     else
     {
         // else render form
-        render("sell_form.php", ["title" => "Register"]);
+        render("sell_form.php", ["title" => "Sell"]);
     }

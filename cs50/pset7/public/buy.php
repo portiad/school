@@ -15,10 +15,12 @@
         $stock = lookup($_POST["symbol"]);
         $cost = $stock["price"] * $_POST["shares"];
         $newcash = $rowuser["cash"] - $cost;
+
+        $share = preg_match("/^\d+$/", $_POST["shares"]);
         
-        if ($stock === false)
+        if ($stock === false || $share === 0)
         {
-            apologize("Symbol not found.");
+            apologize("Symbol or shares you entered in are not correct.");
         }
         else if ($newcash < 0) //determine if user has enough to cover
         {

@@ -7,10 +7,11 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $stock = lookup($_POST["symbol"]);
+        $share = preg_match("/^\d+$/", $_POST["shares"]);
         
-        if ($stock === false)
+        if ($stock === false || $share ===false || $_POST["shares"] < 1)
         {
-            apologize("Please select a stock to sell.");
+            apologize("Please select a stock and number of shares to sell");
         }
         else //buy sell stock
         {

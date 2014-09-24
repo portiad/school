@@ -28,7 +28,6 @@
         {
             $rowtrans = query("SELECT * FROM stocks WHERE id = ? and symbol = ?", $_SESSION["id"], $_POST["symbol"]);
             $rowtrans = $rowtrans[0];
-            $newshares = $rowtrans["shares"] + $_POST["shares"];
 
             if ($rowtrans == false) // user does not own stock, insert it in
             {
@@ -36,6 +35,7 @@
             }
             else // user does have the stock, update it
             {
+                $newshares = $rowtrans["shares"] + $_POST["shares"];
                 $result = query("UPDATE stocks set shares = ? where id = ? ", $newshares, $_SESSION["id"]);
             } 
             

@@ -7,7 +7,6 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $stock = lookup($_POST["symbol"]);
-
         
         if ($stock === false)
         {
@@ -16,7 +15,7 @@
         else //buy sell stock
         {
             //query if user already owns this stock
-            $rowtrans = query("SELECT * FROM stocks WHERE id = ? and symbol = ?", $_SESSION["id"], $_POST["symbol"]);
+            $rowtrans = query("SELECT * FROM stocks WHERE id = ? and symbol = ?", $_SESSION["id"], $stock["symbol"]);
             $rowtrans = $rowtrans[0];
             $newshares = $rowtrans["shares"] - $_POST["shares"];
 
@@ -26,11 +25,11 @@
             }
             else if ($newshares == 0) // remove stocks that become 0
             {
-                $delete = query("DELETE FROM stocks WHERE id = ? and symbol = ?", $_SESSION["id"], $_POST["symbol"]);
+                $delete = query("DELETE FROM stocks WHERE id = ? and symbol = ?", $_SESSION["id"], $stock["symbol"]);
             }
             else // update stock amount if gt 0
             {
-                $result = query("UPDATE stocks set shares = ? where id = ? ", $newshares, $_SESSION["id"]);
+                $result = query("UPDATE stocks set shares = ? where id = ? and symbol = ?", $newshares, $_SESSION["id"], $stock["symbol"]);
             }
 
             $rowuser = query("SELECT * FROM users WHERE id = ?", $_SESSION["id"]);
@@ -39,7 +38,7 @@
 
             // insert into transaction table sell and update the cash amount in the users table
 
-            $insert = query("INSERT INTO history (id, type, symbol, shares, price) VALUES(?, ?, ?, ?, ?)", $_SESSION["id"], "Sell", $_POST["symbol"], $_POST["shares"], $stock["price"]);
+            $insert = query("INSERT INTO history (id, type, symbol, shares, price) VALUES(?, ?, ?, ?, ?)", $_SESSION["id"], "Sell", $stock["symbol"], $_POST["shares"], $stock["price"]);
             $update = query("UPDATE users set cash = ? where id = ? ", $newcash, $_SESSION["id"]);
 
             redirect("/");

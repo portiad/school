@@ -16,15 +16,9 @@
         else //buy sell stock
         {
             //query if user already owns this stock
-            $rowtrans = query("SELECT * FROM transactions WHERE id = ? and symbol = ?", $_SESSION["id"], $_POST["symbol"]);
-            $shares = 0;
-
-            foreach ($rowtrans as $rowtrans)
-            {
-                $shares = $shares + $rowtrans["shares"];
-            }   
-
-            $newshares = $shares - $_POST["shares"];
+            $rowtrans = query("SELECT * FROM stocks WHERE id = ? and symbol = ?", $_SESSION["id"], $_POST["symbol"]);
+            $rowtrans = $rowtrans[0];
+            $newshares = $rowtrans["shares"] - $_POST["shares"];
 
             if ($newshares < 0) // selling more stock than you own
             {

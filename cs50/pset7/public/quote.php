@@ -1,5 +1,3 @@
-//TODO!!!
-
 <?php
 
     // configuration
@@ -16,10 +14,7 @@
         }
         else
         {
-    		//return back name, symbol and price and display to user an example of: A share of Limelight Network (LLNW) costs $2.45.
-    		$stock["name"]
-    		$stock["symbol"]
-    		$stock["price"]
+	        render("quote.php",["title" => "Quote","price" => $stock["price"], "name" => $stock["name"], "symbol" => $stock["symbol"]] );
         }
     }
     else

@@ -10,20 +10,18 @@
     </thead>
 
     <?php
-
-    foreach ($rows as $row)
-    {
-      
-        print("<tr>");
-        print("<td>{$row["type"]}</td>");
-        print("<td>{$row["datetime"]}</td>");
-        print("<td>{$row["symbol"]}</td>");
-        print("<td>{$row["shares"]}</td>");
-        print("<td>$ {$row["price"]}</td>");
-        print("</tr>");
-    }
+        foreach ($rows as $row)
+        {
+            $datetime = date("m-d-Y H:m", strtotime($row["datetime"]));
+            $price = number_format($row["price"],2);
+            
+            print("<tr>");
+            print("<td>{$row["type"]}</td>");
+            print("<td>{$datetime}</td>");
+            print("<td>{$row["symbol"]}</td>");
+            print("<td>{$row["shares"]}</td>");
+            print("<td>$ {$price}</td>");
+            print("</tr>");
+        }
 	?>
 </table>
-<div>
-    <a href="logout.php">Log Out</a>
-</div>

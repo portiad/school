@@ -37,7 +37,6 @@
             $newcash = $rowuser["cash"] + ($stock["price"] * $_POST["shares"]);
 
             // insert into transaction table sell and update the cash amount in the users table
-
             $insert = query("INSERT INTO history (id, type, symbol, shares, price) VALUES(?, ?, ?, ?, ?)", $_SESSION["id"], "Sell", $stock["symbol"], $_POST["shares"], $stock["price"]);
             $update = query("UPDATE users set cash = ? where id = ? ", $newcash, $_SESSION["id"]);
 

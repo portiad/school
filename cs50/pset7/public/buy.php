@@ -26,24 +26,25 @@
         }
         else //buy stock
         {
-            //query if user already owns this stock
-            $rowtrans = query("SELECT * FROM transactions WHERE id = ? and symbol = ?", $_SESSION["id"], $_POST["symbol"]);
+            $rowtrans = query("SELECT * FROM stocks WHERE id = ? and symbol = ?", $_SESSION["id"], $_POST["symbol"]);
             $rowtrans = $rowtrans[0];
             $newshares = $rowtrans["shares"] + $_POST["shares"];
 
             if ($rowtrans == false) // user does not own stock, insert it in
             {
-                $result = query("INSERT INTO transactions (id, symbol, shares) VALUES(?, ?, ?)", $_SESSION["id"], $_POST["symbol"], $_POST["shares"]);
+                $result = query("INSERT INTO stocks (id, symbol, shares) VALUES(?, ?, ?)", $_SESSION["id"], $_POST["symbol"], $_POST["shares"]);
             }
             else // user does have the stock, update it
             {
-                $result = query("UPDATE transactions set shares = ? where id = ? ", $newshares, $_SESSION["id"]);
-            }
-
-            //update cash balance
+                $result = query("UPDATE stocks set shares = ? where id = ? ", $newshares, $_SESSION["id"]);
+            } 
+            
+            //update cash balance & insert into history
+            $insert = query("INSERT INTO history (id, type, symbol, shares, price) VALUES(?, ?, ?, ?, ?)", $_SESSION["id"], "Buy", $_POST["symbol"], $_POST["shares"], $stock["price"]);
             $update = query("UPDATE users set cash = ? where id = ? ", $newcash, $_SESSION["id"]);
 
             redirect("/");
+
         }
     }
     else

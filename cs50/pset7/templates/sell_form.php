@@ -1,4 +1,5 @@
-<?php $stocks = query("SELECT symbol FROM transactions where id = ?", $_SESSION["id"]); ?>
+<?php $stocks = query("SELECT * FROM stocks where id = ?", $_SESSION["id"]); 
+?>
 
 <form action="sell.php" method="post">
     <fieldset>

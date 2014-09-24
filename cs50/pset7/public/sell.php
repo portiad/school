@@ -1,5 +1,3 @@
-//TODO!!!
-
 <?php
 
     // configuration
@@ -8,45 +6,35 @@
     // if form was submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
-        //query for money in users account
-        $rowuser = query("SELECT * FROM users WHERE id = ?", $_SESSION["id"]);
-        $rowuser = $rowuser[0];
-
-        //determine the cost for buying the stocks
         $stock = lookup($_POST["symbol"]);
 
         
         if ($stock === false)
         {
-            apologize("Symbol not found.");
+            apologize("Please select a stock to sell.");
         }
-        else if ($newcash < 0) //determine if user has enough to cover
-        {
-            apologize("You can't afford that.");
-        }
-        else //buy stock
+        else //buy sell stock
         {
             //query if user already owns this stock
             $rowtrans = query("SELECT * FROM transactions WHERE id = ? and symbol = ?", $_SESSION["id"], $_POST["symbol"]);
             $rowtrans = $rowtrans[0];
-            $newshares = $rowtrans["shares"] + $_POST["shares"];
+            $newshares = $rowtrans["shares"] - $_POST["shares"];
 
-            if ($rowtrans == false) // user does not own stock, insert it in
+            if ($newshares < 0) // selling more stock than you own
             {
-                $result = query("INSERT INTO transactions (id, symbol, shares) VALUES(?, ?, ?)", $_SESSION["id"], $_POST["symbol"], $_POST["shares"]);
+                apologize("You are selling more than the shares you own. You have " .  $rowtrans["shares"] . " shares to sell of " . $rowtrans["symbol"] . ".");
             }
-            else // user does have the stock, update it
+            else
             {
+                $rowuser = query("SELECT * FROM users WHERE id = ?", $_SESSION["id"]);
+                $rowuser = $rowuser[0];
+                $newcash = $rowuser["cash"] + ($stock["price"] * $_POST["shares"]);
+
                 $result = query("UPDATE transactions set shares = ? where id = ? ", $newshares, $_SESSION["id"]);
+                $result = query("UPDATE users set cash = ? where id = ? ", $newcash, $_SESSION["id"]);
+
+                redirect("/");
             }
-
-            //update cash balance
-            $update = query("UPDATE users set cash = ? where id = ? ", $newcash, $_SESSION["id"]);
-
-                $cost = $stock["price"] * $_POST["shares"];
-                $newcash = $rowuser["cash"] - $cost;
-
-            redirect("/");
         }
     }
     else

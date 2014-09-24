@@ -11,6 +11,7 @@
         $rowuser = $rowuser[0];
 
         //determine the cost for buying the stocks
+        $_POST["symbol"] = strtoupper($_POST["symbol"]);
         $stock = lookup($_POST["symbol"]);
         $cost = $stock["price"] * $_POST["shares"];
         $newcash = $rowuser["cash"] - $cost;

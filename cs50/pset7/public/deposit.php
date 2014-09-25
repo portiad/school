@@ -16,14 +16,13 @@
         {
             apologize("Please select a bank and enter in the amount of money to deposit");
         }
-        else //buy stock
+        else // add in cash
         {
             $newcash = $rowuser["cash"] + $_POST["deposit"];
 
             $update = query("UPDATE users set cash = ? where id = ? ", $newcash, $_SESSION["id"]);
 
             redirect("/");
-
         }
     }
     else

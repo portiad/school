@@ -15,7 +15,8 @@
         $stock = lookup($_POST["symbol"]);
         $cost = $stock["price"] * $_POST["shares"];
         $newcash = $rowuser["cash"] - $cost;
-
+        
+        //check for non int or negative nums
         $share = preg_match("/^\d+$/", $_POST["shares"]);
         
         if ($stock === false || $share === 0)
@@ -38,12 +39,19 @@
             else // user does have the stock, update it
             {
                 $newshares = $rowtrans["shares"] + $_POST["shares"];
-                $result = query("UPDATE stocks set shares = ? where id = ? ", $newshares, $_SESSION["id"]);
+                $result = query("UPDATE stocks set shares = ? where id = ? and symbol = ? ", $newshares, $_SESSION["id"], $_POST["symbol"]);
             } 
             
             //update cash balance & insert into history
             $insert = query("INSERT INTO history (id, type, symbol, shares, price) VALUES(?, ?, ?, ?, ?)", $_SESSION["id"], "Buy", $_POST["symbol"], $_POST["shares"], $stock["price"]);
             $update = query("UPDATE users set cash = ? where id = ? ", $newcash, $_SESSION["id"]);
+
+            if(strlen($rowuser["email"]) < 1)
+            {
+                apologize("Stocks have been bought but you do not have email on file.");
+            }
+            
+            $email = confirmation($_POST["shares"], $stock["name"], "bought",$rowuser["email"]);
 
             redirect("/");
 

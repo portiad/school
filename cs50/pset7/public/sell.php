@@ -7,9 +7,11 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $stock = lookup($_POST["symbol"]);
+        
+        //check for non int or negative nums
         $share = preg_match("/^\d+$/", $_POST["shares"]);
         
-        if ($stock === false || $share ===false || $_POST["shares"] < 1)
+        if ($stock === false || $share === 0)
         {
             apologize("Please select a stock and number of shares to sell");
         }
@@ -22,7 +24,7 @@
 
             if ($newshares < 0) // selling more stock than you own
             {
-                apologize("You are selling more than the shares you own. You have " .  $rowtrans["shares"] . " shares to sell of " . $rowtrans["symbol"] . ".");
+                apologize("You are selling more than the shares you own. You have " .  $rowtrans["shares"] . " shares to sell of " . $stock["symbol"] . ".");
             }
             else if ($newshares == 0) // remove stocks that become 0
             {
@@ -40,6 +42,13 @@
             // insert into transaction table sell and update the cash amount in the users table
             $insert = query("INSERT INTO history (id, type, symbol, shares, price) VALUES(?, ?, ?, ?, ?)", $_SESSION["id"], "Sell", $stock["symbol"], $_POST["shares"], $stock["price"]);
             $update = query("UPDATE users set cash = ? where id = ? ", $newcash, $_SESSION["id"]);
+
+            if(strlen($rowuser["email"]) < 1)
+            {
+                apologize("Stocks have been sold but you do not have email on file.");
+            }
+
+            $email = confirmation($_POST["shares"], $stock["name"], "sold", $rowuser["email"]);
 
             redirect("/");
         }

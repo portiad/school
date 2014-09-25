@@ -10,6 +10,7 @@
      */
 
     require_once("constants.php");
+    require_once("PHPMailer/class.phpmailer.php");
 
     /**
      * Apologizes to user with message.
@@ -219,4 +220,35 @@
         }
     }
 
+    // send confirmation email of buy and sell
+    function confirmation($shares, $name, $type, $email)
+    {
+        $mail = new PHPMailer();
+
+        // use your ISP's SMTP server (e.g., smtp.fas.harvard.edu if on campus or smtp.comcast.net if off campus and your ISP is Comcast)
+        $mail->IsSMTP();
+        $mail->Host = 'smtp.gmail.com';         // Specify main and backup server
+        $mail->SMTPAuth = true;                 // Enable SMTP authentication
+        $mail->Username = 'email';              // SMTP username
+        $mail->Password = 'password';           // SMTP password
+        $mail->SMTPSecure = 'tls';              // Enable encryption, 'ssl' also accepted
+        $mail->Port = 587;
+        $mail->SetFrom("email");                // set From:            
+        $mail->AddAddress($email);              // set To:
+        $mail->Subject = "Confirmation of Activity";// set Subject:
+
+        // set body
+        $mail->Body = '<html><body>Congratulations you have ' . $type . ' ' . $shares . ' shares of '. $name . '.</body></html>';
+
+        // set alternative body, in case user's mail client doesn't support HTML
+        $mail->AltBody = 'Congratulations you have '. $type . ' ' . $shares . ' shares of '. $name . '.';
+
+        // send mail
+        if ($mail->Send() === false)
+        {
+            die($mail->ErrorInfo . "\n");
+        }
+        
+        return true;
+    }
 ?>

@@ -7,6 +7,9 @@
             <input class="form-control" name="password" placeholder="Password" type="password"/>
         </div>
         <div class="form-group">
+            <input class="form-control" name="email" placeholder="Email" type="text"/>
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-default">Register</button>
         </div>
     </fieldset>

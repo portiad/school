@@ -19,7 +19,7 @@
         //check for non int or negative nums
         $share = preg_match("/^\d+$/", $_POST["shares"]);
         
-        if ($stock === false || $share === 0)
+        if ($stock === false || $share == 0 || $_POST["shares"] == 0)
         {
             apologize("Symbol or shares you entered in are not correct.");
         }

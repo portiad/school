@@ -308,7 +308,8 @@ function pickup()
             {
                 if (HOUSES.(PASSENGERS[i].house) != null)        // remove freshman passengers
                 {                    
-                shuttle.seats[seat] = PASSENGERS[i].name;           
+                shuttle.seats[seat] = PASSENGERS[i].name;
+                chart();           
                 features.removeChild(p);        //3D remove 
                 m.setMap(null);                 //2D remove
                 }

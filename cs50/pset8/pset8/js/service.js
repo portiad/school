@@ -351,8 +351,6 @@ function populate()
         // prepare point
         var point = earth.createPoint("");
         point.setAltitudeMode(earth.ALTITUDE_RELATIVE_TO_GROUND);
-        point.setLatitude(building.lat);
-        point.setLongitude(building.lng);
         point.setAltitude(0.0);
 
         // associate placemark with point
@@ -368,8 +366,10 @@ function populate()
             position: new google.maps.LatLng(building.lat, building.lng),
             title: PASSENGERS[i].name + " at " + building.name
         });
-
-        // TODO: remember passenger's placemark and marker for pick-up's sake
+        
+        // Remember passenger's placemark and marker for pick-up
+        PASSENGERS[i].marker = marker;
+        PASSENGERS[i].point = point;
     }
 }
 

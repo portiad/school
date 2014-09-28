@@ -306,12 +306,12 @@ function pickup()
             var seat = getseats();      // check if seats available
             if (seat != "full")
             {
-                if (HOUSES.(PASSENGERS[i].house) != null)        // remove freshman passengers
+                if (HOUSES.(PASSENGERS[i].house) != null)        // don't pick up freshman
                 {                    
-                shuttle.seats[seat] = PASSENGERS[i].name;
-                chart();           
-                features.removeChild(p);        //3D remove 
-                m.setMap(null);                 //2D remove
+                    shuttle.seats[seat] = PASSENGERS[i].name;
+                    chart();           
+                    features.removeChild(p);        //3D remove 
+                    m.setMap(null);                 //2D remove
                 }
             }
             else

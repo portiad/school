@@ -66,7 +66,7 @@ $(window).load(function() {
         pickup();
     });
 
-    // load application
+    // load applicationfshuttle.seat
     load();
 });
 
@@ -96,6 +96,24 @@ function chart()
 
     //TODO update #seats anytime that array is updated by calling chart.
     $("#chart").html(html);
+}
+
+/**
+* Get first available seat
+*/
+function getseats()
+{
+    for (var i = 0; i < shuttle.seats.length; i++)
+    {
+        if (shuttle.seats[i] == null)
+        {
+            return i;
+        }
+        else
+        {
+            return "full";
+        }
+    }
 }
 
 /**
@@ -278,26 +296,40 @@ function load()
  */
 function pickup()
 {
-    //shuttle location
-    var d = shuttle.distance(lat, lng);
-    
-    //be sure not to let drivers pick up any freshmen (i.e., anyone whose home isn’t in js/houses.js)!
+    var features = earth.getFeatures();
 
-    //button is clicked shuttle within 15.0 meters of a passenger and seat is empty, remove from 2D map and 3D earth. 
-        //3D remove
-        var features = earth.getFeatures();
-        features.removeChild(p);
-        //2D remove
-        m.setMap(null);
-    //If multiple passengers are within 15.0 meters, you should pick up as many of them as there are empty seats.
-    //If the shuttle is not within 15.0 meters of any passenger, make an announcement to that effect.
-    $("#announcements").html("hello, world");
-    //If the shuttle is within range of some passenger but no seats are free, make an announcement don’t pick up the passenger. 
+    if (getseats() ==true)
+    {
+        for (var i in PASSENGERS)
+        {
+            var d = shuttle.distance(lat, lng);
+            if ()       //check if passengers within 15 meters
+                var seat = getseats();      // check if seats available
+                if (seat != "full")
+                {
+                    if (HOUSES.(PASSENGERS[i].house) != null)        // remove freshman passengers
+                    {                    
+                    shuttle.seats[seat] = PASSENGERS[i].name;           
+                    features.removeChild(p);        //3D remove 
+                    m.setMap(null);                 //2D remove
+                    }
+                }
+                else
+                {
+                   $("#announcements").html("No seats are free"); 
+                }
+
+                
+                //update shuttle.seats
+
+                }
+            else
+                {
+                    $("#announcements").html("No passengers within 15 meters");                   
+                }
+        }
+    }
     //Any such announcements should be cleared (or replaced with some default text) as soon as the shuttle starts moving.
-    //update shuttle.seats
-
-
-
     alert("TODO");
 }
 

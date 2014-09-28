@@ -298,35 +298,29 @@ function pickup()
 {
     var features = earth.getFeatures();
 
-    if (getseats() ==true)
+    for (var i in PASSENGERS)
     {
-        for (var i in PASSENGERS)
+        var d = shuttle.distance(lat, lng);
+        if ()       //check if passengers within 15 meters
         {
-            var d = shuttle.distance(lat, lng);
-            if ()       //check if passengers within 15 meters
-                var seat = getseats();      // check if seats available
-                if (seat != "full")
-                {
-                    if (HOUSES.(PASSENGERS[i].house) != null)        // remove freshman passengers
-                    {                    
-                    shuttle.seats[seat] = PASSENGERS[i].name;           
-                    features.removeChild(p);        //3D remove 
-                    m.setMap(null);                 //2D remove
-                    }
+            var seat = getseats();      // check if seats available
+            if (seat != "full")
+            {
+                if (HOUSES.(PASSENGERS[i].house) != null)        // remove freshman passengers
+                {                    
+                shuttle.seats[seat] = PASSENGERS[i].name;           
+                features.removeChild(p);        //3D remove 
+                m.setMap(null);                 //2D remove
                 }
-                else
-                {
-                   $("#announcements").html("No seats are free"); 
-                }
-
-                
-                //update shuttle.seats
-
-                }
+            }
             else
-                {
-                    $("#announcements").html("No passengers within 15 meters");                   
-                }
+            {
+               $("#announcements").html("No seats are free"); 
+            }
+        }
+        else
+        {
+            $("#announcements").html("No passengers within 15 meters");                   
         }
     }
     //Any such announcements should be cleared (or replaced with some default text) as soon as the shuttle starts moving.

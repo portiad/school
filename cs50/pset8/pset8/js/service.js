@@ -310,8 +310,8 @@ function pickup()
                 {                    
                     shuttle.seats[seat] = PASSENGERS[i].name;
                     chart();           
-                    features.removeChild(p);        //3D remove 
-                    m.setMap(null);                 //2D remove
+                    features.removeChild(PASSENGERS[i].placemark);        //3D remove
+                    (PASSENGERS[i].marker).setMap(null);                 //2D remove
                 }
             }
             else

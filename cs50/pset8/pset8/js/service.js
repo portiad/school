@@ -300,8 +300,8 @@ function pickup()
 
     for (var i in PASSENGERS)
     {
-        var d = shuttle.distance(lat, lng);
-        if ()       //check if passengers within 15 meters
+        var d = shuttle.distance(PASSENGERS[i].marker.position);
+        if (d <= 15)       //check if passengers within 15 meters
         {
             var seat = getseats();      // check if seats available
             if (seat != "full")

@@ -294,6 +294,8 @@ function getseats()
 function pickup()
 {
     var features = earth.getFeatures();
+    var count = 0;
+    var html = "";
 
     for (var i in PASSENGERS)
     {
@@ -301,6 +303,7 @@ function pickup()
         if (d <= 15)       //check if passengers within 15 meters
         {
             var seat = getseats();      // check if seats available
+            count ++;
             if (seat != "full")
             {
                 if (HOUSES[PASSENGERS[i].house] != null)        // don't pick up freshman
@@ -309,22 +312,27 @@ function pickup()
                     chart();                                             // update seating chart
                     features.removeChild(PASSENGERS[i].placemark);       // 3D remove
                     (PASSENGERS[i].marker).setMap(null);                 // 2D remove
-                    $("#announcements").html(PASSENGERS[i].name + "is picked up.");
+                    html += PASSENGERS[i].name + "is picked up<br>";
                 }
                 else
                 {
-                    $("#announcements").html("Can't pick up freshman");
+                    html += "Can't pick up freshman<br>";
                 }
             }
             else
             {
-               $("#announcements").html("No seats are free"); 
+               html += "No more free seats<br>";
             }
         }
-        else
-        {
-            $("#announcements").html("No passengers within 15 meters");                   
-        }
+    }
+
+    if (count > 0)
+    {
+        $("#announcements").html(html);                     
+    }
+    else
+    {
+        $("#announcements").html("No passengers within 15 meters");
     }
 }
 

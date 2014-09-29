@@ -66,7 +66,7 @@ $(window).load(function() {
         pickup();
     });
 
-    // load applicationfshuttle.seat
+    // load application
     load();
 });
 
@@ -87,33 +87,13 @@ function chart()
         {
             html += "<li>Empty Seat</li>";
         }
-        else                        //displays picked-up passengers names and houses
+        else        //displays picked-up passengers names and houses
         {
             html += "<li>" + "TODO" + "</li>";
         }
     }
     html += "</ol>";
-
-    //TODO update #seats anytime that array is updated by calling chart.
     $("#chart").html(html);
-}
-
-/**
-* Get first available seat
-*/
-function getseats()
-{
-    for (var i = 0; i < shuttle.seats.length; i++)
-    {
-        if (shuttle.seats[i] == null)
-        {
-            return i;
-        }
-        else
-        {
-            return "full";
-        }
-    }
 }
 
 /**
@@ -292,6 +272,24 @@ function load()
 }
 
 /**
+* Get first available seat
+*/
+function getseats()
+{
+    for (var i = 0; i < shuttle.seats.length; i++)
+    {
+        if (shuttle.seats[i] == null)
+        {
+            return i;
+        }
+        else
+        {
+            return "full";
+        }
+    }
+}
+
+/**
  * Picks up nearby passengers.
  */
 function pickup()
@@ -306,7 +304,7 @@ function pickup()
             var seat = getseats();      // check if seats available
             if (seat != "full")
             {
-                if (HOUSES.(PASSENGERS[i].house) != null)        // don't pick up freshman
+                if (HOUSES.PASSENGERS[i].house != null)        // don't pick up freshman
                 {                    
                     shuttle.seats[seat] = PASSENGERS[i].name;
                     chart();           
@@ -378,6 +376,8 @@ function populate()
         // prepare point
         var point = earth.createPoint("");
         point.setAltitudeMode(earth.ALTITUDE_RELATIVE_TO_GROUND);
+        point.setLatitude(building.lat);
+        point.setLongitude(building.lng);
         point.setAltitude(0.0);
 
         // associate placemark with point

@@ -179,6 +179,8 @@ function initCB(instance)
  */
 function keystroke(event, state)
 {
+    $("#announcements").html("On the move."); 
+
     // ensure we have event
     if (!event)
     {
@@ -303,10 +305,11 @@ function pickup()
             {
                 if (HOUSES[PASSENGERS[i].house] != null)        // don't pick up freshman
                 {                    
-                    shuttle.seats[seat] = PASSENGERS[i].name;
-                    chart();           
-                    features.removeChild(PASSENGERS[i].placemark);        //3D remove
-                    (PASSENGERS[i].marker).setMap(null);                 //2D remove
+                    shuttle.seats[seat] = PASSENGERS[i].name;            // place passenger in seat
+                    chart();                                             // update seating chart
+                    features.removeChild(PASSENGERS[i].placemark);       // 3D remove
+                    (PASSENGERS[i].marker).setMap(null);                 // 2D remove
+                    $("#announcements").html(PASSENGERS[i].name + "is picked up.");
                 }
                 else
                 {
@@ -323,8 +326,6 @@ function pickup()
             $("#announcements").html("No passengers within 15 meters");                   
         }
     }
-    //Any such announcements should be cleared (or replaced with some default text) as soon as the shuttle starts moving.
-    alert("TODO");
 }
 
 /**

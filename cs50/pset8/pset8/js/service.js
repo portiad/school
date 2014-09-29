@@ -300,7 +300,7 @@ function pickup()
     for (var i in PASSENGERS)
     {
         var d = shuttle.distance(PASSENGERS[i].placemark.getGeometry().getLatitude(), PASSENGERS[i].placemark.getGeometry().getLongitude());
-        if (d <= 15)       //check if passengers within 15 meters
+        if (d <= 15 && PASSENGERS[i].status == null)       //check if passengers within 15 meters
         {
             var seat = getseats();      // check if seats available
             count ++;
@@ -310,13 +310,14 @@ function pickup()
                 {                    
                     shuttle.seats[seat] = PASSENGERS[i].name;            // place passenger in seat
                     chart();                                             // update seating chart
+                    PASSENGERS[i].status = "shuttle"
                     features.removeChild(PASSENGERS[i].placemark);       // 3D remove
                     (PASSENGERS[i].marker).setMap(null);                 // 2D remove
                     html += PASSENGERS[i].name + "is picked up<br>";
                 }
                 else
                 {
-                    html += "Can't pick up freshman<br>";
+                    html += "Can't pick up freshmen<br>";
                 }
             }
             else
@@ -407,6 +408,7 @@ function populate()
         // Remember passenger's placemark and marker for pick-up
         PASSENGERS[i].placemark = placemark;
         PASSENGERS[i].marker = marker;
+        PASSENGERS[i].status = null;
     }
 }
 

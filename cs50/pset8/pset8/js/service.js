@@ -89,7 +89,7 @@ function chart()
         }
         else        //displays picked-up passengers names and houses
         {
-            html += "<li>" + "TODO" + "</li>";
+            html += "<li>" + shuttle.seats[i] + "</li>";
         }
     }
     html += "</ol>";
@@ -282,11 +282,8 @@ function getseats()
         {
             return i;
         }
-        else
-        {
-            return "full";
-        }
     }
+    return "full";
 }
 
 /**
@@ -298,18 +295,22 @@ function pickup()
 
     for (var i in PASSENGERS)
     {
-        var d = shuttle.distance(PASSENGERS[i].marker.position);
+        var d = shuttle.distance(PASSENGERS[i].placemark.getGeometry().getLatitude(), PASSENGERS[i].placemark.getGeometry().getLongitude());
         if (d <= 15)       //check if passengers within 15 meters
         {
             var seat = getseats();      // check if seats available
             if (seat != "full")
             {
-                if (HOUSES.PASSENGERS[i].house != null)        // don't pick up freshman
+                if (HOUSES[PASSENGERS[i].house] != null)        // don't pick up freshman
                 {                    
                     shuttle.seats[seat] = PASSENGERS[i].name;
                     chart();           
                     features.removeChild(PASSENGERS[i].placemark);        //3D remove
                     (PASSENGERS[i].marker).setMap(null);                 //2D remove
+                }
+                else
+                {
+                    $("#announcements").html("Can't pick up freshman");
                 }
             }
             else
@@ -395,8 +396,8 @@ function populate()
         });
         
         // Remember passenger's placemark and marker for pick-up
+        PASSENGERS[i].placemark = placemark;
         PASSENGERS[i].marker = marker;
-        PASSENGERS[i].point = point;
     }
 }
 

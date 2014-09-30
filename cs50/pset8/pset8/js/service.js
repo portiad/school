@@ -101,7 +101,38 @@ function chart()
  */
 function dropoff()
 {
-    alert("TODO");
+    var count = 0;
+    var html = "";
+
+    for (var i = 0 in PASSENGERS)
+    {
+        if (PASSENGERS[i].status == "shuttle")
+        {
+            var d = shuttle.distance(HOUSES[PASSENGERS[i].house].lat, HOUSES[PASSENGERS[i].house].lng);
+            if (d <= 30) 
+            {
+               for (var j = 0; j < shuttle.seats.length; j++)
+                {
+                    if (shuttle.seats[j] == PASSENGERS[i].name)
+                    {
+                        PASSENGERS[i].status = "house";
+                        shuttle.seats[j] = null;
+                        html += " Dropped off " + PASSENGERS[i].name + "<br>";
+                        chart();
+                    }
+                }
+                count ++ 
+            }
+        }
+    }
+    if (count > 0)
+    {
+        $("#announcements").html(html);
+    }
+    else
+    {
+        $("#announcements").html("No passengers within 30 feet of their house");
+    }
 }
 
 /**
@@ -310,7 +341,7 @@ function pickup()
                 {                    
                     shuttle.seats[seat] = PASSENGERS[i].name;            // place passenger in seat
                     chart();                                             // update seating chart
-                    PASSENGERS[i].status = "shuttle"
+                    PASSENGERS[i].status = "shuttle"                     // change passenger to on shuttle
                     features.removeChild(PASSENGERS[i].placemark);       // 3D remove
                     (PASSENGERS[i].marker).setMap(null);                 // 2D remove
                     html += PASSENGERS[i].name + "is picked up<br>";

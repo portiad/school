@@ -40,8 +40,8 @@ var shuttle = null;
 // starting points for the game
 var points = 0;
 
-// full tank of gas
-var gas = 1;
+// full tank of charge
+var charge = 50;
 
 // load version 1 of the Google Earth API
 google.load("earth", "1");
@@ -72,6 +72,10 @@ $(window).load(function() {
         pickup();
     });
 
+    // listen for click on Charge button
+    $("#charge").click(function(event) {
+        charged();
+    });
     // load application
     load();
 });
@@ -105,12 +109,42 @@ function chart()
 /**
  * Drops up passengers if their stop is nearby.
  */
+function charged()
+{
+    var html = "";
+    count = 0;
+
+    for (var i in STATION)
+    {
+        var d = shuttle.distance(STATION[i].lat, STATION[i].lng);
+        
+        if (d <= 20)
+        {
+            charge = 100;
+            html += "Shuttle is now charged"
+            count++;
+        }
+    }
+
+    if (count > 0)
+    {
+        $("#announcements").html("Shuttle is now charged");
+    }
+    else
+    {
+        $("#announcements").html("No stations within 20 feet of the shuttle");
+    } 
+}
+
+/**
+ * Drops up passengers if their stop is nearby.
+ */
 function dropoff()
 {
     var count = 0;
     var html = "";
 
-    for (var i = 0 in PASSENGERS)
+    for (var i in PASSENGERS)
     {
         if (PASSENGERS[i].status == "shuttle")
         {
@@ -213,6 +247,7 @@ function initCB(instance)
     populate();
 
     $("#points").html("Points: " + points);
+    $("#charge").html("Charge: " + charge + "%");
 }
 
 /**
@@ -437,7 +472,7 @@ function populate()
 
         // plant house on map
         new google.maps.Marker({
-            icon: "http://maps.gstatic.com/mapfiles/place_api/icons/gas_station-71.png",
+            icon: "https://maps.gstatic.com/mapfiles/ms2/micons/gas.png",
             map: map,
             position: new google.maps.LatLng(STATION[i].lat, STATION[i].lng),
             title: STATION[i].name

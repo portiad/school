@@ -37,6 +37,12 @@ var map = null;
 // global reference to shuttle
 var shuttle = null;
 
+// starting points for the game
+var points = 0;
+
+// full tank of gas
+var gas = 1;
+
 // load version 1 of the Google Earth API
 google.load("earth", "1");
 
@@ -117,8 +123,10 @@ function dropoff()
                     {
                         PASSENGERS[i].status = "house";
                         shuttle.seats[j] = null;
-                        html += " Dropped off " + PASSENGERS[i].name + "<br>";
+                        html += " Dropped off " + PASSENGERS[i].name + "You got a point!<br>";
                         chart();
+                        points++;
+                        $("#points").html("Points: " + points);
                     }
                 }
                 count ++ 
@@ -203,6 +211,8 @@ function initCB(instance)
 
     // populate Earth with passengers and houses
     populate();
+
+    $("#points").html("Points: " + points);
 }
 
 /**
@@ -339,7 +349,7 @@ function pickup()
             {
                 if (HOUSES[PASSENGERS[i].house] != null)        // don't pick up freshman
                 {                    
-                    shuttle.seats[seat] = PASSENGERS[i].name;            // place passenger in seat
+                    shuttle.seats[seat] = PASSENGERS[i].name + " - " + PASSENGERS[i].house;            // place passenger in seat
                     chart();                                             // update seating chart
                     PASSENGERS[i].status = "shuttle"                     // change passenger to on shuttle
                     features.removeChild(PASSENGERS[i].placemark);       // 3D remove
@@ -384,6 +394,55 @@ function populate()
             title: house
         });
     }
+    
+    // get current URL, sans any filename
+    var url = window.location.href.substring(0, (window.location.href.lastIndexOf("/")) + 1);
+
+    // mark station
+    for (var i = 0; i < STATION.length; i++)
+    {   
+        // prepare placemark
+        var splacemark = earth.createPlacemark("");
+        splacemark.setName(STATION[i].name);
+
+        // prepare icon
+        var logo = earth.createIcon("");
+        logo.setHref(url + "/img/station/" + STATION[i].img + ".png");
+
+        // prepare style
+        var sstyle = earth.createStyle("");
+        sstyle.getIconStyle().setIcon(logo);
+        sstyle.getIconStyle().setScale(4.0);
+
+        // prepare stylemap
+        var sstyleMap = earth.createStyleMap("");
+        sstyleMap.setNormalStyle(sstyle);
+        sstyleMap.setHighlightStyle(sstyle);
+
+        // associate stylemap with placemark
+        splacemark.setStyleSelector(sstyleMap);
+
+        // prepare point
+        var spoint = earth.createPoint("");
+        spoint.setAltitudeMode(earth.ALTITUDE_RELATIVE_TO_GROUND);
+        spoint.setLatitude(STATION[i].lat);
+        spoint.setLongitude(STATION[i].lng);
+        spoint.setAltitude(0.0);
+
+        // associate placemark with point
+        splacemark.setGeometry(spoint);
+
+        // add placemark to Earth
+        earth.getFeatures().appendChild(splacemark);
+
+        // plant house on map
+        new google.maps.Marker({
+            icon: "http://maps.gstatic.com/mapfiles/place_api/icons/gas_station-71.png",
+            map: map,
+            position: new google.maps.LatLng(STATION[i].lat, STATION[i].lng),
+            title: STATION[i].name
+        });
+    }
 
     // get current URL, sans any filename
     var url = window.location.href.substring(0, (window.location.href.lastIndexOf("/")) + 1);
@@ -400,7 +459,7 @@ function populate()
 
         // prepare icon
         var icon = earth.createIcon("");
-        icon.setHref(url + "/img/" + PASSENGERS[i].username + ".jpg");
+        icon.setHref(url + "/img/passenger/" + PASSENGERS[i].username + ".jpg");
 
         // prepare style
         var style = earth.createStyle("");

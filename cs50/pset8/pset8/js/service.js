@@ -41,7 +41,7 @@ var shuttle = null;
 var points = 0;
 
 // full tank of charge
-var charge = 50;
+var charge = 100;
 
 // load version 1 of the Google Earth API
 google.load("earth", "1");
@@ -51,17 +51,22 @@ google.load("maps", "3", {other_params: "sensor=false"});
 
 // once the window has loaded
 $(window).load(function() {
+    if (charge > 0)
+    {// listen for keydown anywhere in body
+        $(document.body).keydown(function(event) {
+            return keystroke(event, true);
+        });
 
-    // listen for keydown anywhere in body
-    $(document.body).keydown(function(event) {
-        return keystroke(event, true);
-    });
-
-    // listen for keyup anywhere in body
-    $(document.body).keyup(function(event) {
-        return keystroke(event, false);
-    });
-
+        // listen for keyup anywhere in body
+        $(document.body).keyup(function(event) {
+            return keystroke(event, false);
+        });
+    }
+    else
+    {
+        $("#announcements").html("Shuttle has no charge to move");
+    }
+    
     // listen for click on Drop Off button
     $("#dropoff").click(function(event) {
         dropoff();
@@ -84,6 +89,27 @@ $(window).load(function() {
 $(window).unload(function() {
     unload();
 });
+
+function power()
+{
+    charge = charge - .1;
+
+    if (charge < 0)
+    {
+         charge = 0;
+    }
+
+    driverinfo();   
+}
+
+/**
+* Renders the points and charge % to the player
+*/
+function driverinfo()
+{
+    $("#points").html("Points: " + points);
+    $("#charge").html("Charge: " + parseInt(charge) + "%");
+}
 
 /**
  * Renders seating chart.
@@ -121,7 +147,7 @@ function charged()
         if (d <= 20)
         {
             charge = 100;
-            html += "Shuttle is now charged"
+            driverinfo();
             count++;
         }
     }
@@ -151,18 +177,12 @@ function dropoff()
             var d = shuttle.distance(HOUSES[PASSENGERS[i].house].lat, HOUSES[PASSENGERS[i].house].lng);
             if (d <= 30) 
             {
-               for (var j = 0; j < shuttle.seats.length; j++)
-                {
-                    if (shuttle.seats[j] == PASSENGERS[i].name)
-                    {
-                        PASSENGERS[i].status = "house";
-                        shuttle.seats[j] = null;
-                        html += " Dropped off " + PASSENGERS[i].name + "You got a point!<br>";
-                        chart();
-                        points++;
-                        $("#points").html("Points: " + points);
-                    }
-                }
+                PASSENGERS[i].status = "house";
+                shuttle.seats[PASSENGERS[i].seat] = null;
+                html += " Dropped off " + PASSENGERS[i].name + "! You got a point!<br>";
+                points++;
+                chart();
+                driverinfo();
                 count ++ 
             }
         }
@@ -246,8 +266,8 @@ function initCB(instance)
     // populate Earth with passengers and houses
     populate();
 
-    $("#points").html("Points: " + points);
-    $("#charge").html("Charge: " + charge + "%");
+    // driver info
+    driverinfo();
 }
 
 /**
@@ -262,6 +282,8 @@ function keystroke(event, state)
     {
         event = window.event;
     }
+
+    power();
 
     // left arrow
     if (event.keyCode == 37)
@@ -384,12 +406,13 @@ function pickup()
             {
                 if (HOUSES[PASSENGERS[i].house] != null)        // don't pick up freshman
                 {                    
-                    shuttle.seats[seat] = PASSENGERS[i].name + " - " + PASSENGERS[i].house;            // place passenger in seat
+                    shuttle.seats[seat] = PASSENGERS[i].name + " - " + PASSENGERS[i].house;       // place passenger in seat
+                    PASSENGERS[i].seat = seat;
                     chart();                                             // update seating chart
                     PASSENGERS[i].status = "shuttle"                     // change passenger to on shuttle
                     features.removeChild(PASSENGERS[i].placemark);       // 3D remove
                     (PASSENGERS[i].marker).setMap(null);                 // 2D remove
-                    html += PASSENGERS[i].name + "is picked up<br>";
+                    html += PASSENGERS[i].name + "is picked up!<br>";
                 }
                 else
                 {
@@ -534,6 +557,7 @@ function populate()
         PASSENGERS[i].placemark = placemark;
         PASSENGERS[i].marker = marker;
         PASSENGERS[i].status = null;
+        PASSENGERS[i].seat = null;
     }
 }
 

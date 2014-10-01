@@ -340,6 +340,22 @@ function keystroke(event, state)
         shuttle.states.movingForward = state;    
         return false;
     }
+
+    // I, i
+    else if (event.keyCode == 73 || event.keyCode == 105)
+    {
+        shuttle.velocity += 5;
+    }
+
+    //K, k
+    else if (event.keyCode == 75 || event.keyCode == 107)
+    {
+        shuttle.velocity -= 5;
+        if (shuttle.velocity < 0)
+        {
+            shuttle.velocity = 0;
+        }
+    }
   
     return true;
 }

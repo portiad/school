@@ -80,7 +80,7 @@ def getStoryString():
     """
     Returns a story in encrypted text.
     """
-    return open("story.txt", "r").read()
+    return open("/home/portia/Dropbox/Dev/School/Python6.00.1/ps6/story.txt", "r").read()
 
 
 # (end of helper code)
@@ -105,7 +105,6 @@ def buildCoder(shift):
     keyList = upper + lower
     
     for i in range(0, shift):
-
         lower.append(lower.pop(0))
         upper.append(upper.pop(0))
 
@@ -144,7 +143,7 @@ def applyShift(text, shift):
     """
     ### TODO.
     ### HINT: This is a wrapper function.
-    return "Not yet implemented." # Remove this comment when you code the function
+    return applyCoder(text,buildCoder(shift))
 
 #
 # Problem 2: Decryption
@@ -157,7 +156,24 @@ def findBestShift(wordList, text):
     returns: 0 <= int < 26
     """
     ### TODO
-    return "Not yet implemented." # Remove this comment when you code the function
+    bestshift = 0
+    bestscore = 0
+    
+    for s in range(0,26):
+        tempscore = 0
+        
+        shift = applyShift(text, s)
+        split = shift.split()
+        
+        for word in split:
+            if isWord(wordList, word) == True:
+                tempscore += 1
+
+        if tempscore > bestscore:
+            bestscore = tempscore
+            bestshift = s
+                
+    return bestshift
 
 def decryptStory():
     """
@@ -169,7 +185,7 @@ def decryptStory():
     returns: string - story in plain text
     """
     ### TODO.
-    return "Not yet implemented." # Remove this comment when you code the function
+    return applyShift(getStoryString(), findBestShift(loadWords(), getStoryString()))
 
 #
 # Build data structures used for entire session and run encryption
@@ -177,9 +193,9 @@ def decryptStory():
 
 if __name__ == '__main__':
     # To test findBestShift:
-   ''' wordList = loadWords()
+    wordList = loadWords()
     s = applyShift('Hello, world!', 8)
     bestShift = findBestShift(wordList, s)
     assert applyShift(s, bestShift) == 'Hello, world!'
-    # To test decryptStory, comment the above four lines and uncomment this line:'''
-    # decryptStory()
+    # To test decryptStory, comment the above four lines and uncomment this line:
+    decryptStory()

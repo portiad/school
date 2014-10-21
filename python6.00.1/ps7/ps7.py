@@ -91,8 +91,6 @@ class Trigger(object):
 class WordTrigger(Trigger): # Change back to Trigger
     def __init__(self, word):
         self.word = word.lower()
-        self.text = None
-        self.story = None
 
     def wordParse(self, text):
         text = text.lower()
@@ -105,8 +103,8 @@ class WordTrigger(Trigger): # Change back to Trigger
         Returns True if the whole word is present in text, 
         False otherwise.This method should not be case-sensitive.
         """
-        self.text = self.wordParse(text)
-        if self.word in self.text:
+        text = self.wordParse(text)
+        if self.word in text:
             return True
         return False
 
@@ -131,17 +129,44 @@ class SummaryTrigger(WordTrigger):
 
 # Composite Triggers
 # Problems 6-8
+class NotTrigger(Trigger):
+    def __init__(self, trigger):
+        self.trigger = trigger
 
-# TODO: NotTrigger
-# TODO: AndTrigger
-# TODO: OrTrigger
+    def evaluate(self, story):
+        return not self.trigger.evaluate(story)
+
+class AndTrigger(Trigger):
+    def __init__(self, trigger1, trigger2):
+        self.trigger1 = trigger1
+        self.trigger2 = trigger2
+
+    def evaluate(self, story):
+        return self.trigger1.evaluate(story) and self.trigger2.evaluate(story)
+
+class OrTrigger(Trigger):
+    def __init__(self, trigger1, trigger2):
+        self.trigger1 = trigger1
+        self.trigger2 = trigger2
+
+    def evaluate(self, story):
+        return self.trigger1.evaluate(story) or self.trigger2.evaluate(story)
+
 
 
 # Phrase Trigger
 # Question 9
 
 # TODO: PhraseTrigger
-
+class PhraseTrigger(Trigger):
+    def __init__(self, phrase):
+        self.phrase = phrase
+    
+    def evaluate(self, story):
+        phaseTitle = self.phrase in story.getTitle() 
+        phaseSummary = self.phrase in story.getSummary() 
+        phaseSubject = self.phrase in story.getSubject() 
+        return phaseTitle or phaseSummary or phaseSubject
 
 #======================
 # Part 3

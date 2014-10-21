@@ -207,6 +207,29 @@ def makeTrigger(triggerMap, triggerType, params, name):
     Returns a new instance of a trigger (ex: TitleTrigger, AndTrigger).
     """
     # TODO: Problem 11
+  def makeTrigger(triggerMap, triggerType, params, name):
+    if triggerType == "TITLE":
+        triggerMap[name] = TitleTrigger(params[0])
+
+    elif triggerType == "SUBJECT":
+        triggerMap[name] = SubjectTrigger(params[0])
+
+    elif triggerType == "SUMMARY":
+        triggerMap[name] = SummaryTrigger(params[0])
+
+    elif triggerType == "NOT":
+        triggerMap[name] = NotTrigger(triggerMap[params[0]])
+
+    elif triggerType == "AND":
+        triggerMap[name] = AndTrigger(triggerMap[params[0]], triggerMap[params[1]])
+
+    elif triggerType == "OR":
+        triggerMap[name] = OrTrigger(triggerMap[params[0]], triggerMap[params[1]])
+
+    elif triggerType == "PHRASE":
+        triggerMap[name] = PhraseTrigger(' '.join(params))
+
+    return triggerMap[name]
 
 
 def readTriggerConfig(filename):

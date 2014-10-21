@@ -46,7 +46,30 @@ def process(url):
 
 # Problem 1
 
-# TODO: NewsStory
+class NewsStory(object):
+    def __init__(self, guid, title, subject, summary, link):
+        """creates news story"""
+        self.guid = guid
+        self.title = title
+        self.subject = subject
+        self.summary = summary
+        self.link = link
+        
+    def getGuid(self):
+        return self.guid
+        
+    def getTitle(self):
+        return self.title
+        
+    def getSubject(self):
+        return self.subject
+        
+    def getSummary(self):
+        return self.summary
+        
+    def getLink(self):
+        return self.link
+    
 
 #======================
 # Part 2
@@ -65,10 +88,45 @@ class Trigger(object):
 # Problems 2-5
 
 # TODO: WordTrigger
+class WordTrigger(Trigger): # Change back to Trigger
+    def __init__(self, word):
+        self.word = word.lower()
+        self.text = None
+        self.story = None
 
-# TODO: TitleTrigger
-# TODO: SubjectTrigger
-# TODO: SummaryTrigger
+    def wordParse(self, text):
+        text = text.lower()
+        text = text.translate(string.maketrans("",""), string.punctuation)
+        return text.split()
+
+    def isWordIn(self, text):
+        """
+        Takes in one string argument text. 
+        Returns True if the whole word is present in text, 
+        False otherwise.This method should not be case-sensitive.
+        """
+        self.text = self.wordParse(text)
+        if self.word in self.text:
+            return True
+        return False
+
+class TitleTrigger(WordTrigger):
+
+    def evaluate(self, story):
+       text = story.getTitle()
+       return self.isWordIn(text)
+
+class SubjectTrigger(WordTrigger):
+
+    def evaluate(self, story):
+       text = story.getSubject()
+       return self.isWordIn(text)
+
+class SummaryTrigger(WordTrigger):
+
+    def evaluate(self, story):
+       text = story.getSummary()
+       return self.isWordIn(text)
 
 
 # Composite Triggers

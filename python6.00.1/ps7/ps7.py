@@ -207,7 +207,7 @@ def makeTrigger(triggerMap, triggerType, params, name):
     Returns a new instance of a trigger (ex: TitleTrigger, AndTrigger).
     """
     # TODO: Problem 11
-  def makeTrigger(triggerMap, triggerType, params, name):
+def makeTrigger(triggerMap, triggerType, params, name):
     if triggerType == "TITLE":
         triggerMap[name] = TitleTrigger(params[0])
 

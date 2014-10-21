@@ -87,7 +87,6 @@ class Trigger(object):
 # Whole Word Triggers
 # Problems 2-5
 
-# TODO: WordTrigger
 class WordTrigger(Trigger): # Change back to Trigger
     def __init__(self, word):
         self.word = word.lower()
@@ -126,7 +125,6 @@ class SummaryTrigger(WordTrigger):
        text = story.getSummary()
        return self.isWordIn(text)
 
-
 # Composite Triggers
 # Problems 6-8
 class NotTrigger(Trigger):
@@ -152,12 +150,9 @@ class OrTrigger(Trigger):
     def evaluate(self, story):
         return self.trigger1.evaluate(story) or self.trigger2.evaluate(story)
 
-
-
 # Phrase Trigger
 # Question 9
 
-# TODO: PhraseTrigger
 class PhraseTrigger(Trigger):
     def __init__(self, phrase):
         self.phrase = phrase
@@ -181,6 +176,14 @@ def filterStories(stories, triggerlist):
     """
     # TODO: Problem 10
     # This is a placeholder (we're just returning all the stories, with no filtering) 
+    newlist = []
+
+    for story in stories:
+        for trigger in triggerlist:
+            if trigger.evaluate(story) == True:
+                if story not in newlist:
+                    newlist.append(story)
+    stories = newlist
     return stories
 
 #======================

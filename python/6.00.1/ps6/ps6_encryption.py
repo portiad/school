@@ -5,7 +5,7 @@
 import string
 import random
 
-WORDLIST_FILENAME = "/home/portia/Dropbox/Dev/School/Python6.00.1/ps6/words.txt"
+WORDLIST_FILENAME = "/Users/portia/Dropbox/Dev/School/Python6.00.1/ps6/words.txt"
 
 # -----------------------------------
 # Helper code
@@ -80,7 +80,7 @@ def getStoryString():
     """
     Returns a story in encrypted text.
     """
-    return open("/home/portia/Dropbox/Dev/School/Python6.00.1/ps6/story.txt", "r").read()
+    return open("/Users/portia/Dropbox/Dev/School/Python6.00.1/ps6/story.txt", "r").read()
 
 
 # (end of helper code)

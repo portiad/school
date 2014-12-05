@@ -434,13 +434,11 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
                        mutProb, numTrials):
     """
     Runs simulations and plots graphs for problem 5.
-
     For each of numTrials trials, instantiates a patient, runs a simulation for
     150 timesteps, adds guttagonol, and runs the simulation for an additional
     150 timesteps.  At the end plots the average virus population size
     (for both the total virus population and the guttagonol-resistant virus
     population) as a function of time.
-
     numViruses: number of ResistantVirus to create for patient (an integer)
     maxPop: maximum virus population for patient (an integer)
     maxBirthProb: Maximum reproduction probability (a float between 0-1)        
@@ -452,32 +450,36 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     numTrials: number of simulation runs to execute (an integer)
     
     """
-    timeSteps = 300
-    avgVirusPop = [0] * timeSteps
-    avgVirusPopResistant = [0] * timeSteps
-    newDrug = 'guttagonol' 
+    # create variables
+    timeSteps, treatStep = 300, 150
+    totalVs, resisVs = [0] * timeSteps, [0] * timeSteps 
     
-    #trial with untreated patient
-    for t in range(numTrials):
-        simViruses = []
-        for v in range(numViruses):
-            simViruses.append(ResistantVirus(maxBirthProb, clearProb, resistances, mutProb))
-
-        patient = TreatedPatient(simViruses, maxPop)
-        if numTrials > 149:
-            patient.addPrescription(newDrug)
+    # run number of trials
+    for trial in range(numTrials):
+                
+        # instantiate viruses and patient
+        viruses = []
+        for i in range(numViruses):
+            viruses.append(ResistantVirus(maxBirthProb, clearProb, resistances, mutProb))
+        patient = TreatedPatient(viruses, maxPop)
         
-        for u in range(timeSteps):
-            avgVirusPop[u] += patient.update()
-            avgVirusPopResistant[u] += patient.getResistPop(newDrug)
-    
-    avgVirusPop = [x / float(numTrials) for x in avgVirusPop]
-    avgVirusPopResistant = [x / float(numTrials) for x in avgVirusPopResistant]
-    
-    pylab.plot(avgVirusPop, label = 'Viruses')
-    pylab.plot(avgVirusPopResistant, label = 'Viruses Pop Resistant to Guttagonol')
-    pylab.title('Average virus population in patient')
-    pylab.xlabel('Time steps')
-    pylab.ylabel('Average virus population')
-    pylab.legend()
-    pylab.show()
+        # update total virus population
+        # then get num resistant viruses
+        # add drug
+        # repeat above
+        for step in range(timeSteps):
+            if step == treatStep:
+                patient.addPrescription('guttagonol')
+            patient.update()
+            totalVs[step] += patient.getTotalPop()
+            resisVs[step] += patient.getResistPop(['guttagonol'])
+
+    # average results
+    for step in range(timeSteps):
+        totalVs[step] = float(totalVs[step]) / numTrials
+        resisVs[step] = float(resisVs[step]) / numTrials
+        
+    pylab.plot(totalVs, label='Total Virus Pop.')
+    pylab.plot(resisVs, label='Resistant Virus Pop.')
+    pylab.title('ResistantVirus simulation')
+    pylab.xlabel('time step')

@@ -1,6 +1,6 @@
 <?php
 
-function lookup($symbol)
+    function lookup($symbol)
     {
         // reject symbols that start with ^
         if (preg_match("/^\^/", $symbol)){
@@ -13,8 +13,9 @@ function lookup($symbol)
         }
 
         //parse out and get today's date and 6 months from today's date
-        $start = explode('-', date('m-d-Y', strtotime("-6 months");
-        $end = explode('-', date('m-d-Y');
+        date_default_timezone_set('America/Los_Angeles');
+        $start = explode('-', date('m-d-Y', strtotime("-6 months")));
+        $end = explode('-', date('m-d-Y'));
 
         $start_day = $start[1];
         $start_month = $start[0] - 1;
@@ -25,8 +26,8 @@ function lookup($symbol)
         $end_year = $end[2];
 
         // open connection to Yahoo
-        $handle = @fopen("http://ichart.finance.yahoo.com/table.csv?s=$symbol&a=$start_month&b=$start_day&c=$start_year&d=$end_month&e=$end_month&f=$end_year&g=d&ignore=.csv", "r");
-//TODO how to read and store each line of the file
+        $handle = @fopen("http://ichart.finance.yahoo.com/table.csv?s=$symbol&a=$start_month&b=$start_day&c=$start_year&d=$end_month&e=$end_day&f=$end_year&g=d&ignore=.csv", "r");
+
 
         if ($handle === false){
             // trigger (big, orange) error
@@ -38,14 +39,14 @@ function lookup($symbol)
         $header = fgetcsv($handle);
 
         // values to track for highest profit
-        $low_price = NULL;
-        $low_date = NULL;
-        $high_price = NULL;
-        $high_date = NULL;
-        $profit = NULL;
+        $initial = fgetcsv($handle);
+        $low_price = $initial[3];
+        $low_date = $high_date = $initial[0];
+        $high_price = $initial[2];
+        $profit = $initial[2] - $initial[3]; 
 
         while ($line = fgetcsv($handle)){
-	        if ($data === false || count($data) == 1){
+	        if ($line === false || count($line) == 1){
 	            return false;
 	        }
         	if ($high_price - $line[3] > $profit){
@@ -56,7 +57,7 @@ function lookup($symbol)
         	if ($line[2] - $low_price > $profit){
         		$high_price = $line[2];
         		$high_date = $line[0];
-        		$profit = $line[2] - $low_price
+        		$profit = $line[2] - $low_price;
         	}
         	if ($line[2] - $line[3] > $profit){
         		$low_price = $line[3];
@@ -71,10 +72,42 @@ function lookup($symbol)
 
         // return stock as an associative array
         return [
-            "low price" => $low_price,
-            "low date" => $low_date,
-            "high price" => $high_price,
-            "high date" => $high_date,
+            "symbol" => $symbol,
+            "low_price" => $low_price,
+            "low_date" => date("m/d/Y", strtotime($low_date)),
+            "high_date" => date("m/d/Y", strtotime($high_date)),
+            "high_price" => $high_price,
             "profit" => $profit,
+            /* testing data
+            "start_day" => $start_day,
+            "start_month" => $start_month,
+            "start_year" => $start_year,
+            "end_day" => $end_day,
+            "end_month" => $end_month,
+            "end_year" => $end_year,
+            */
         ];
     }
+
+    function render($template, $values = [])
+    {
+        // if template exists, render it
+        if (file_exists("../templates/$template"))
+        {
+            // extract variables into local scope
+            extract($values);
+
+            // render header
+            require("../templates/header.php");
+
+            // render template
+            require("../templates/$template");
+        }
+
+        // else err
+        else
+        {
+            trigger_error("Invalid template: $template", E_USER_ERROR);
+        }
+    }
+?>

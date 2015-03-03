@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/portia/Dropbox/Dev/school/interview","disabled":false},"/var/www":{"guestpath":"/var/www","hostpath":"/Users/portia/Dropbox/Dev/school/interview/stocks","disabled":false},"/var/www/html":{"guestpath":"/var/www/html","hostpath":"/Users/portia/Dropbox/Dev/school/interview/stocks","disabled":false}}}

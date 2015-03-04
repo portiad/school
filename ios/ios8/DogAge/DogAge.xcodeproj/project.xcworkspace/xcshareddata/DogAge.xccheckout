@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>615FBEA8-733D-4A21-9EEA-0FF9AF3E38D7</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DogAge</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>
+		<string>https://github.com/portiad/school.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/ios8/DogAge/DogAge.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/portiad/school.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</string>
+			<key>IDESourceControlWCCName</key>
+			<string>school</string>
+		</dict>
+	</array>
+</dict>
+</plist>

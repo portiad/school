@@ -50,8 +50,6 @@ class ViewController: UIViewController {
                 balloon.image = UIImage(named: "RedBalloon2.jpg")
             case 2:
                 balloon.image = UIImage(named: "RedBalloon3.jpg")
-            case 3:
-                balloon.image = UIImage(named:  "BerlinTVTower.jpg")
             default:
                 balloon.image = UIImage(named: "RedBalloon4.jpg")
             }

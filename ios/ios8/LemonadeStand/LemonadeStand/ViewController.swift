@@ -34,59 +34,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func startDayButtonPressed(sender: UIButton) {
-        var mixRatio = 0
-        var totalSales = 0
-        var totalCustomers = 0
-        var lose = false
-        
-        if mixLemons > mixIceCubes {
-            mixRatio = 1
-        }
-        else if mixLemons == mixIceCubes {
-            mixRatio = 0
-        }
-        else {
-            mixRatio = -1
-        }
-        
-        let customers = prepareCustomer()
-        
-        /* Determines if you made sales that day
-        //        0 to 0.4 – favors acidic lemonade
-        //        0.4 to 0.6 – favors equal parts lemonade
-        //        0.6 to 1 – favors diluted lemonade
-        
-        //        Greater than 1 (Acidic Lemonade)
-        //        Equal to 1 (Equal Portioned Lemonade)
-        //        Less than 1 (Diluted Lemonade)
-        */
-        
-        for customer in customers {
-            if customer <= 0.4 && customer >= 0.0 && mixRatio == 1 {
-                totalCustomers += 1
-                totalSales += 1
-            }
-            else if customer <= 0.6 && customer >= 0.4 && mixRatio == 0 {
-                totalCustomers += 1
-                totalSales += 1
-            }
-            else if  customer <= 1.0 && customer >= 0.6 && mixRatio == -1{
-                totalCustomers += 1
-                totalSales += 1
-            }
-        }
-        
-        totalDollar += totalSales
-        totalLemons = totalLemons + purchaseLemons - mixLemons
-        totalIceCubes = totalIceCubes + purchaseIceCubes - mixIceCubes
-        
-        showAlertWithText(header: "Summary of Today", message: "You had a total of \(totalCustomers) today. For a total of sales of \(totalSales)")
-        
-        if totalLemons + totalIceCubes + totalDollar <= 0 {
-            lose = true
-        }
-        
-        newDay(reset: lose)
+       
         
     }
     
@@ -120,15 +68,7 @@ class ViewController: UIViewController {
     
     // Prepare a random number of customers and their taste preference between 0 and 1
     
-    func prepareCustomer() -> Array<Double> {
-        var totalCustomers = Int(arc4random_uniform(UInt32(9)))
-        var customerPreference: [Double] = []
-        for totalCustomers; totalCustomers >= 0 ; --totalCustomers{
-            customerPreference.append(1/Double(arc4random_uniform(UInt32(10))))
-        }
-        
-        return customerPreference
-    }
+
     
     func updateLabelText(label: UILabel, update:Int) {
         label.text = "\(update)"
@@ -136,27 +76,7 @@ class ViewController: UIViewController {
     
     // Updates the values for a new day
     
-    func newDay(reset:Bool = false) {
-        
-        if reset {
-            totalDollar = 10
-            totalLemons = 1
-            totalIceCubes = 1
-        }
 
-        purchaseLemons = 0
-        purchaseIceCubes = 0
-        mixIceCubes = 0
-        mixLemons = 0
-        
-        updateLabelText(mixIceCubesLabel, update: 0)
-        updateLabelText(mixLemonsLabel, update: 0)
-        updateLabelText(iceCubesAddLabel, update: 0)
-        updateLabelText(lemonsAddLabel, update: 0)
-        updateLabelText(lemonsTotalLabel, update: totalLemons)
-        updateLabelText(dollarTotalLabel, update: totalDollar)
-        updateLabelText(iceCubeTotalLabel, update: totalIceCubes)
-    }
     
     func showAlertWithText(var header: String = "Warning", var message: String = "Warning", errorCode: Int = 0) {
         

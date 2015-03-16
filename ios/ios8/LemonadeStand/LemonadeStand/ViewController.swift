@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var dollarTotalLabel: UILabel!
     @IBOutlet weak var lemonsTotalLabel: UILabel!
     @IBOutlet weak var iceCubeTotalLabel: UILabel!
@@ -20,63 +20,76 @@ class ViewController: UIViewController {
     
     // Messages
     let kNoMoneyMessage = "No money"
-    
+    var game: Inventory!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let game = Inventory()
+        game = Inventory()
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    @IBAction func startDayButtonPressed(sender: UIButton) {
-       
-        
-    }
     
     // IBAction button pressed functions for updating purchased and mixed values
     
-    @IBAction func mixRemoveIceCubeButtonPressed(sender: UIButton) {
-        mixIceCubs(-1)
-    }
-    @IBAction func mixAddIceCubeButtonPressed(sender: UIButton) {
-        mixIceCubs(1)
-    }
-    @IBAction func mixRemoveLemonButtonPressed(sender: UIButton) {
-        mixLemons(-1)
-    }
-    @IBAction func mixAddLemonButtonPressed(sender: UIButton) {
-        mixLemons(1)
-    }
-    @IBAction func removeIceCubesButtonPressed(sender: UIButton) {
-        iceCubeUpdate(-1)
-    }
-    @IBAction func removeLemonsButtonPressed(sender: UIButton) {
-        lemonUpdate(-1)
-    }
     @IBAction func addLemonsButtonPressed(sender: UIButton) {
-        lemonUpdate(1)
-        updateLabelText(lemonsAddLabel, update: purchaseLemons)
+        game.purchaseLemons(1)
+        updateAllLabels()
     }
+    
+    @IBAction func removeLemonsButtonPressed(sender: UIButton) {
+        game.purchaseLemons(-1)
+        updateAllLabels()
+    }
+    
     @IBAction func addIceCubesButtonPressed(sender: UIButton) {
-        iceCubeUpdate(1)
+        game.purchaseCubes(1)
+        updateAllLabels()
     }
     
-    // Prepare a random number of customers and their taste preference between 0 and 1
-    
-
-    
-    func updateLabelText(label: UILabel, update:Int) {
-        label.text = "\(update)"
+    @IBAction func removeIceCubesButtonPressed(sender: UIButton) {
+        game.purchaseCubes(-1)
+        updateAllLabels()
     }
     
-    // Updates the values for a new day
+    @IBAction func mixAddLemonButtonPressed(sender: UIButton) {
+        game.mixLemons(1)
+        updateAllLabels()
+    }
     
-
+    @IBAction func mixRemoveLemonButtonPressed(sender: UIButton) {
+        game.mixLemons(1)
+        updateAllLabels()
+    }
+    
+    @IBAction func mixAddIceCubeButtonPressed(sender: UIButton) {
+        game.mixIceCubes(1)
+        updateAllLabels()
+    }
+    
+    @IBAction func mixRemoveIceCubeButtonPressed(sender: UIButton) {
+        game.mixIceCubes(-1)
+        updateAllLabels()
+    }
+    
+    @IBAction func startDayButtonPressed(sender: UIButton) {
+        game.startToday()
+        updateAllLabels()
+    }
+    
+    func updateAllLabels() {
+        mixIceCubesLabel.text = "\(game.getMixIceCubes())"
+        mixLemonsLabel.text = "\(game.getMixLemons())"
+        iceCubesAddLabel.text = "\(game.getPurchasedIceCubes())"
+        lemonsAddLabel.text = "\(game.getPurchaseLemons())"
+        dollarTotalLabel.text = "\(game.getTotalDollar())"
+        lemonsTotalLabel.text = "\(game.getTotalLemons())"
+        iceCubeTotalLabel.text = "\(game.getTotalIceCubes())"
+    }
     
     func showAlertWithText(var header: String = "Warning", var message: String = "Warning", errorCode: Int = 0) {
         

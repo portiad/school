@@ -14,13 +14,7 @@ class Inventory {
     var totalLemons: Int
     var totalIceCubes: Int
     
-    var purchaseLemons = 0
-    var purchaseIceCubes = 0
-    
-    var mixLemons = 0
-    var mixIceCubes = 0
-    
-    
+
     init (totalDollar: Int = 10, totalLemons: Int = 1, totalIceCubes: Int = 1) {
         self.totalDollar = totalDollar
         self.totalLemons = totalLemons
@@ -34,40 +28,6 @@ class Inventory {
     /*
     // Getters & setters
     */
-    
-    func getPurchaseLemons() -> Int {
-        return self.purchaseLemons
-    }
-    
-    func purchaseLemons(num: Int) -> Int {
-        
-        if num * 2 > self.totalDollar - (self.purchaseLemons * 2) - self.purchaseIceCubes {
-            return 1
-        } else if self.purchaseLemons + num < 0 {
-            return 2
-        }else {
-            self.purchaseLemons += num
-            return 0
-        }
-    }
-    
-    func getPurchasedIceCubes() -> Int {
-        return self.purchaseIceCubes
-    }
-    
-    
-    func purchaseCubes(num: Int) -> Int {
-        
-        if num > self.totalDollar - (self.purchaseLemons * 2) - self.purchaseIceCubes {
-            return 1
-        } else if self.purchaseIceCubes + num < 0 {
-            return 2
-        }
-        else {
-            self.purchaseIceCubes += num
-            return 0
-        }
-    }
     
     func getTotalDollar() -> Int {
         return self.totalDollar
@@ -109,25 +69,6 @@ class Inventory {
         }
     }
     
-    func getMixLemons() -> Int {
-        return self.mixLemons
-    }
-    
-    func mixIceCubes(num: Int) -> Int {
-        if self.purchaseIceCubes + self.totalIceCubes - self.mixIceCubes - num < 0 {
-            return 1
-        } else if self.mixIceCubes + num < 0 {
-            return 2
-        } else {
-            self.mixIceCubes += num
-            return 0
-        }
-    }
-    
-    func getMixIceCubes() -> Int {
-        return self.mixIceCubes
-    }
-    
     /*
     // Helper Functions
     */
@@ -144,50 +85,126 @@ class Inventory {
         consoleLogging("\(customerPreference)")
         return customerPreference
     }
-    
-    // Starting a new day for sales
-    
-    func startToday() -> Int {
-    
-        var mixRatio = 0
-        var totalSales = 0
-        var totalCustomers = 0
-        
-        // Prepare lemon to ice cube mix ratio
-        
-        if self.mixIceCubes == 0 && self.mixLemons == 0 {
-            return 1
-        } else if self.mixLemons > self.mixIceCubes {
-            mixRatio = 1
-        } else if self.mixLemons == self.mixIceCubes {
-            mixRatio = 0
-        } else {
-            mixRatio = -1
-        }
-        
-        let customers = prepareCustomer()
-        
-        // Iterate over your customers array and determine who will buy lemonade based on mix ratio
+}
 
-        for customer in customers {
-            if customer >= 0.0 && customer <= 0.4 && mixRatio == 1 {
-            totalCustomers += 1
-            totalSales += 1
-            } else if customer >= 0.4 && customer <= 0.6 && mixRatio == 0 {
-                totalCustomers += 1
-                totalSales += 1
-            } else if customer >= 0.6 && customer <= 1.0 && mixRatio == -1{
-                totalCustomers += 1
-                totalSales += 1
-            }
+class Purchases {
+    
+    var totalDollar: Int
+    var totalLemons: Int
+    var totalIceCubes: Int
+    
+    var purchaseLemons = 0
+    var purchaseIceCubes = 0
+    
+    let kCostOfLemon = 2
+    let kCostOfIceCube = 1
+    
+    init (totalDollar: Int, totalLemons: Int, totalIceCubes: Int) {
+        self.totalDollar = totalDollar
+        self.totalLemons = totalLemons
+        self.totalIceCubes = totalIceCubes
+    }
+    
+    /*
+    // Getters & setters
+    */
+    
+    func getPurchaseLemons() -> Int {
+        return self.purchaseLemons
+    }
+    
+    func purchaseLemons(num: Int) -> Int {
+        
+        if num * self.kCostOfLemon > self.totalDollar - (self.purchaseLemons * self.kCostOfLemon) - (self.purchaseIceCubes * self.kCostOfIceCube) {
+            return 1 // no money
+        } else if self.purchaseLemons + num < 0 {
+            return 2 // negative lemons
+        } else {
+            self.purchaseLemons += num
+            return 0
         }
+    }
+    
+    func getPurchaseIceCubes() -> Int {
+        return self.purchaseIceCubes
+    }
+    
+    func purchaseIceCubes(num: Int) -> Int {
         
-        consoleLogging("Sales: \(totalSales); Customers: \(totalCustomers); Lemons: \(self.mixLemons); Ice: \(self.mixIceCubes); Ratio: \(mixRatio)")
+        if num * kCostOfIceCube > self.totalDollar - (self.purchaseLemons * self.kCostOfLemon) - (self.purchaseIceCubes * self.kCostOfIceCube) {
+            return 1 // no money
+        } else if self.purchaseIceCubes + num < 0 {
+            return 2 // negative ice
+        } else {
+            self.purchaseIceCubes += num
+            return 0
+        }
+    }
+    
+    func getAllIceCubes() -> Int {
+        return self.purchaseIceCubes + self.totalIceCubes
+    }
+    
+    func getAllLemons() -> Int {
+        return self.purchaseLemons + self.totalLemons
+    }
+
+}
+
+class Mix {
+    var allLemons: Int
+    var allIceCubes: Int
+    
+    var mixLemons = 0
+    var mixIceCubes = 0
+    
+    init (allLemons: Int, allIceCubes: Int) {
         
-        setTotalDollar(sales: totalSales)
-        setTotalLemons()
-        setTotalIceCubes()
-        
-        return 0
+        self.allLemons = allLemons
+        self.allIceCubes = allIceCubes
+    }
+    
+    func getMixLemons() -> Int {
+        return self.mixLemons
+    }
+    
+    func mixLemons(num: Int) -> Int {
+        if self.allLemons - self.mixLemons - num < 0 {
+            return 1 // no lemons
+        } else if self.mixLemons + num < 0 {
+            return 2 // negative lemons
+        } else {
+            self.mixLemons += num
+            return 0
+        }
+    }
+    
+    func getMixIceCubes() -> Int {
+        return self.mixIceCubes
+    }
+    
+    func mixIceCubes(num: Int) -> Int {
+        if self.allIceCubes - self.mixIceCubes - num < 0 {
+            return 1 // no ice
+        } else if self.mixIceCubes + num < 0 {
+            return 2 // negative ice
+        } else {
+            self.mixIceCubes += num
+            return 0
+        }
+    }
+    
+    // Prepare lemon to ice cube mix ratio
+    
+    func mixLemonade() -> Int {
+        if self.mixIceCubes == 0 && self.mixLemons == 0 {
+            return 2
+        } else if self.mixLemons > self.mixIceCubes {
+            return 1
+        } else if self.mixLemons == self.mixIceCubes {
+            return 0
+        } else {
+            return -1
+        }
     }
 }

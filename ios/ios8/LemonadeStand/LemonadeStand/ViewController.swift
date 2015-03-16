@@ -20,13 +20,17 @@ class ViewController: UIViewController {
     
     // Messages
     let kNoMoneyMessage = "No money"
-    var game: Inventory!
+    
+    var inventory: Inventory!
+    var purchases: Purchases!
+    var mix: Mix!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        game = Inventory()
-        
+        inventory = Inventory()
+        purchases = Purchases(totalDollar: inventory.getTotalDollar(), totalLemons: inventory.getTotalLemons(), totalIceCubes: inventory.getTotalIceCubes())
+        mix = Mix(allLemons: purchases.getAllLemons(), allIceCubes: purchases.getAllIceCubes())
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,6 +83,44 @@ class ViewController: UIViewController {
     @IBAction func startDayButtonPressed(sender: UIButton) {
         game.startToday()
         updateAllLabels()
+    }
+    
+    // Starting a new day for sales
+    
+    func startToday(mixRatio: Int) -> Int {
+        
+        var totalSales = 0
+        var totalCustomers = 0
+        var mixRatio = transaction.mixLemonade()
+        
+        if mixRatio == 2{
+            return 1
+        }
+        
+        let customers = prepareCustomer()
+        
+        // Iterate over your customers array and determine who will buy lemonade based on mix ratio
+        
+        for customer in customers {
+            if customer >= 0.0 && customer <= 0.4 && mixRatio == 1 {
+                totalCustomers += 1
+                totalSales += 1
+            } else if customer >= 0.4 && customer <= 0.6 && mixRatio == 0 {
+                totalCustomers += 1
+                totalSales += 1
+            } else if customer >= 0.6 && customer <= 1.0 && mixRatio == -1{
+                totalCustomers += 1
+                totalSales += 1
+            }
+        }
+        
+        consoleLogging("Sales: \(totalSales); Customers: \(totalCustomers); Lemons: \(self.mixLemons); Ice: \(self.mixIceCubes); Ratio: \(mixRatio)")
+        
+        setTotalDollar(sales: totalSales)
+        setTotalLemons()
+        setTotalIceCubes()
+        
+        return 0
     }
     
     func updateAllLabels() {

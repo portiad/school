@@ -8,88 +8,58 @@
 
 import Foundation
 
+/*********************************************************************************
+// Inventory class to manage the total amount of dollars, lemons and ice cubes
+**********************************************************************************/
+
 class Inventory {
     
-    var totalDollar: Int
+    var totalDollars: Int
     var totalLemons: Int
     var totalIceCubes: Int
     
 
-    init (totalDollar: Int = 10, totalLemons: Int = 1, totalIceCubes: Int = 1) {
-        self.totalDollar = totalDollar
+    init (totalDollars: Int = 10, totalLemons: Int = 1, totalIceCubes: Int = 1) {
+        self.totalDollars = totalDollars
         self.totalLemons = totalLemons
         self.totalIceCubes = totalIceCubes
     }
+
     
-    func consoleLogging(action: String){
-        println(action)
-    }
-    
-    /*
     // Getters & setters
-    */
     
-    func getTotalDollar() -> Int {
-        return self.totalDollar
+    func getTotalDollars() -> Int {
+        return self.totalDollars
     }
     
-    func setTotalDollar(sales: Int = 0) {
-        self.totalDollar = self.totalDollar + sales - (self.purchaseLemons * 2) - self.purchaseIceCubes
+    func setTotalDollars(sales: Int, costs: Int) {
+        self.totalDollars = self.totalDollars + sales - costs
     }
     
     func getTotalLemons() -> Int {
         return self.totalLemons
     }
     
-    func setTotalLemons() {
-        self.totalLemons = self.totalLemons + self.purchaseLemons - self.mixLemons
-        self.purchaseLemons = 0
-        self.mixLemons = 0
+    func setTotalLemons(totalLemons: Int) {
+        self.totalLemons = totalLemons
     }
     
     func getTotalIceCubes() -> Int{
         return self.totalIceCubes
     }
     
-    func setTotalIceCubes() {
-        self.totalIceCubes = self.totalIceCubes + self.purchaseIceCubes - self.mixIceCubes
-        self.purchaseIceCubes = 0
-        self.mixIceCubes = 0
-    }
-    
-    func mixLemons(num: Int) -> Int {
-        
-        if self.purchaseLemons + self.totalLemons - self.mixLemons - num < 0 {
-            return 1
-        } else if self.mixLemons + num < 0 {
-            return 2
-        } else {
-            self.mixLemons += num
-            return 0
-        }
-    }
-    
-    /*
-    // Helper Functions
-    */
-    
-    // Preparing 1 - 10 customers for the day with taste preference
-    
-    func prepareCustomer() -> Array<Float> {
-        var totalCustomers = Int(arc4random_uniform(UInt32(9)))
-        var customerPreference: [Float] = []
-        for totalCustomers; totalCustomers >= 0 ; --totalCustomers{
-           var random = Float(arc4random()) /  Float(UInt32.max)
-            customerPreference.append(random)
-        }
-        consoleLogging("\(customerPreference)")
-        return customerPreference
+    func setTotalIceCubes(totalIceCubes: Int) {
+        self.totalIceCubes = totalIceCubes
     }
 }
 
+/*********************************************************************************
+// Purchases class to manage the proposed changes to dollars, lemons and ice cubes
+**********************************************************************************/
+
 class Purchases {
     
-    var totalDollar: Int
+    var totalDollars: Int
     var totalLemons: Int
     var totalIceCubes: Int
     
@@ -100,22 +70,25 @@ class Purchases {
     let kCostOfIceCube = 1
     
     init (totalDollar: Int, totalLemons: Int, totalIceCubes: Int) {
-        self.totalDollar = totalDollar
+        self.totalDollars = totalDollar
         self.totalLemons = totalLemons
         self.totalIceCubes = totalIceCubes
     }
     
-    /*
+    
     // Getters & setters
-    */
+    
+    func getCurrentDollarTotal() -> Int {
+        return self.totalDollars - (self.purchaseLemons * self.kCostOfLemon) - (self.purchaseIceCubes * self.kCostOfIceCube)
+    }
     
     func getPurchaseLemons() -> Int {
         return self.purchaseLemons
     }
     
-    func purchaseLemons(num: Int) -> Int {
+    func setPurchaseLemons(num: Int) -> Int {
         
-        if num * self.kCostOfLemon > self.totalDollar - (self.purchaseLemons * self.kCostOfLemon) - (self.purchaseIceCubes * self.kCostOfIceCube) {
+        if num * self.kCostOfLemon > getCurrentDollarTotal() {
             return 1 // no money
         } else if self.purchaseLemons + num < 0 {
             return 2 // negative lemons
@@ -129,9 +102,9 @@ class Purchases {
         return self.purchaseIceCubes
     }
     
-    func purchaseIceCubes(num: Int) -> Int {
+    func setPurchaseIceCubes(num: Int) -> Int {
         
-        if num * kCostOfIceCube > self.totalDollar - (self.purchaseLemons * self.kCostOfLemon) - (self.purchaseIceCubes * self.kCostOfIceCube) {
+        if num * kCostOfIceCube > getCurrentDollarTotal() {
             return 1 // no money
         } else if self.purchaseIceCubes + num < 0 {
             return 2 // negative ice
@@ -148,8 +121,16 @@ class Purchases {
     func getAllLemons() -> Int {
         return self.purchaseLemons + self.totalLemons
     }
+    
+    func getTotalCost() -> Int {
+        return (self.purchaseLemons * self.kCostOfLemon) + (self.purchaseIceCubes * self.kCostOfIceCube)
+    }
 
 }
+
+/**************************************************************************************
+// Mix class to manage the proposed mixed amounts and final change to lemon & ice cube
+**************************************************************************************/
 
 class Mix {
     var allLemons: Int
@@ -168,7 +149,7 @@ class Mix {
         return self.mixLemons
     }
     
-    func mixLemons(num: Int) -> Int {
+    func setMixLemons(num: Int) -> Int {
         if self.allLemons - self.mixLemons - num < 0 {
             return 1 // no lemons
         } else if self.mixLemons + num < 0 {
@@ -183,7 +164,7 @@ class Mix {
         return self.mixIceCubes
     }
     
-    func mixIceCubes(num: Int) -> Int {
+    func setMixIceCubes(num: Int) -> Int {
         if self.allIceCubes - self.mixIceCubes - num < 0 {
             return 1 // no ice
         } else if self.mixIceCubes + num < 0 {
@@ -194,17 +175,19 @@ class Mix {
         }
     }
     
-    // Prepare lemon to ice cube mix ratio
+    func getCurrentLemons() -> Int {
+        return self.allLemons - self.mixLemons
+    }
     
-    func mixLemonade() -> Int {
-        if self.mixIceCubes == 0 && self.mixLemons == 0 {
-            return 2
-        } else if self.mixLemons > self.mixIceCubes {
-            return 1
-        } else if self.mixLemons == self.mixIceCubes {
-            return 0
-        } else {
-            return -1
-        }
+    func setCurrentLemons(allLemons: Int) {
+        self.allLemons = allLemons
+    }
+    
+    func getCurrentIceCubes() -> Int {
+        return self.allIceCubes - self.mixIceCubes
+    }
+    
+    func setCurrentIceCubes(allIceCubes: Int) {
+        self.allIceCubes = allIceCubes
     }
 }

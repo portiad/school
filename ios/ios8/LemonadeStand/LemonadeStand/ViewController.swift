@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var mixIceCubesLabel: UILabel!
     
     // Messages
-    let kNoMoneyMessage = "No money"
+    let kNoMoneyMessage = "Not enough money"
     
     var inventory: Inventory!
     var purchases: Purchases!
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         inventory = Inventory()
-        purchases = Purchases(totalDollar: inventory.getTotalDollar(), totalLemons: inventory.getTotalLemons(), totalIceCubes: inventory.getTotalIceCubes())
+        purchases = Purchases(totalDollar: inventory.getTotalDollars(), totalLemons: inventory.getTotalLemons(), totalIceCubes: inventory.getTotalIceCubes())
         mix = Mix(allLemons: purchases.getAllLemons(), allIceCubes: purchases.getAllIceCubes())
     }
 
@@ -38,65 +38,96 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // IBAction button pressed functions for updating purchased and mixed values
+    /*
+    // IBAction functions
+    */
     
     @IBAction func addLemonsButtonPressed(sender: UIButton) {
-        game.purchaseLemons(1)
+        purchases.setPurchaseLemons(1)
         updateAllLabels()
     }
     
     @IBAction func removeLemonsButtonPressed(sender: UIButton) {
-        game.purchaseLemons(-1)
+        purchases.setPurchaseLemons(-1)
         updateAllLabels()
     }
     
     @IBAction func addIceCubesButtonPressed(sender: UIButton) {
-        game.purchaseCubes(1)
+        purchases.setPurchaseIceCubes(1)
         updateAllLabels()
     }
     
     @IBAction func removeIceCubesButtonPressed(sender: UIButton) {
-        game.purchaseCubes(-1)
+        purchases.setPurchaseIceCubes(-1)
         updateAllLabels()
     }
     
     @IBAction func mixAddLemonButtonPressed(sender: UIButton) {
-        game.mixLemons(1)
+        mix.setCurrentLemons(purchases.getAllLemons())
+        mix.setMixLemons(1)
         updateAllLabels()
     }
     
     @IBAction func mixRemoveLemonButtonPressed(sender: UIButton) {
-        game.mixLemons(1)
+        mix.setCurrentLemons(purchases.getAllLemons())
+        mix.setMixLemons(-1)
         updateAllLabels()
     }
     
     @IBAction func mixAddIceCubeButtonPressed(sender: UIButton) {
-        game.mixIceCubes(1)
+        mix.setCurrentIceCubes(purchases.getAllIceCubes())
+        mix.setMixIceCubes(1)
         updateAllLabels()
     }
     
     @IBAction func mixRemoveIceCubeButtonPressed(sender: UIButton) {
-        game.mixIceCubes(-1)
+        mix.setCurrentIceCubes(purchases.getAllIceCubes())
+        mix.setMixIceCubes(-1)
         updateAllLabels()
     }
     
     @IBAction func startDayButtonPressed(sender: UIButton) {
-        game.startToday()
+        startToday()
         updateAllLabels()
+    }
+    
+    // Preparing 1 - 10 customers for the day with taste preference
+    
+    func prepareCustomer() -> Array<Float> {
+        var totalCustomers = Int(arc4random_uniform(UInt32(9)))
+        var customers: [Float] = []
+        for totalCustomers; totalCustomers >= 0 ; --totalCustomers{
+            var random = Float(arc4random()) /  Float(UInt32.max)
+            customers.append(random)
+        }
+        return customers
+    }
+    
+    // Prepare lemon to ice cube mix ratio
+    
+    func getLemonadeRatio() -> Int {
+        var iceCubes = mix.getMixIceCubes()
+        var lemons = mix.getMixLemons()
+        
+        if lemons == 0 && iceCubes == 0 {
+            return 2
+        } else if lemons > iceCubes {
+            return 1
+        } else if lemons == iceCubes {
+            return 0
+        } else {
+            return -1
+        }
     }
     
     // Starting a new day for sales
     
-    func startToday(mixRatio: Int) -> Int {
+    func startToday() {
         
         var totalSales = 0
         var totalCustomers = 0
-        var mixRatio = transaction.mixLemonade()
         
-        if mixRatio == 2{
-            return 1
-        }
-        
+        let mixRatio = getLemonadeRatio()
         let customers = prepareCustomer()
         
         // Iterate over your customers array and determine who will buy lemonade based on mix ratio
@@ -114,27 +145,37 @@ class ViewController: UIViewController {
             }
         }
         
-        consoleLogging("Sales: \(totalSales); Customers: \(totalCustomers); Lemons: \(self.mixLemons); Ice: \(self.mixIceCubes); Ratio: \(mixRatio)")
+        inventory.setTotalDollars(totalSales, costs: purchases.getTotalCost())
+        inventory.setTotalLemons(mix.getCurrentLemons())
+        inventory.setTotalIceCubes(mix.getCurrentIceCubes())
         
-        setTotalDollar(sales: totalSales)
-        setTotalLemons()
-        setTotalIceCubes()
+        resetDay()
+    }
+    
+    func resetDay() {
+        purchases = Purchases(totalDollar: inventory.getTotalDollars(), totalLemons: inventory.getTotalLemons(), totalIceCubes: inventory.getTotalIceCubes())
+        mix = Mix(allLemons: purchases.getAllLemons(), allIceCubes: purchases.getAllIceCubes())
         
-        return 0
+    }
+    
+    func resetGame() {
+        inventory = Inventory()
+        
     }
     
     func updateAllLabels() {
-        mixIceCubesLabel.text = "\(game.getMixIceCubes())"
-        mixLemonsLabel.text = "\(game.getMixLemons())"
-        iceCubesAddLabel.text = "\(game.getPurchasedIceCubes())"
-        lemonsAddLabel.text = "\(game.getPurchaseLemons())"
-        dollarTotalLabel.text = "\(game.getTotalDollar())"
-        lemonsTotalLabel.text = "\(game.getTotalLemons())"
-        iceCubeTotalLabel.text = "\(game.getTotalIceCubes())"
+        mixIceCubesLabel.text = "\(mix.getMixIceCubes())"
+        mixLemonsLabel.text = "\(mix.getMixLemons())"
+        iceCubesAddLabel.text = "\(purchases.getPurchaseIceCubes())"
+        lemonsAddLabel.text = "\(purchases.getPurchaseLemons())"
+        dollarTotalLabel.text = "\(inventory.getTotalDollars())"
+        lemonsTotalLabel.text = "\(inventory.getTotalLemons())"
+        iceCubeTotalLabel.text = "\(inventory.getTotalIceCubes())"
     }
     
+
+    
     func showAlertWithText(var header: String = "Warning", var message: String = "Warning", errorCode: Int = 0) {
-        
         
         if errorCode == -99 {
             header = "No money"

@@ -18,12 +18,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var mixLemonsLabel: UILabel!
     @IBOutlet weak var mixIceCubesLabel: UILabel!
     
-    // Messages
-    let kNoMoneyMessage = "Not enough money"
-    
+    // Classes
     var inventory: Inventory!
     var purchases: Purchases!
     var mix: Mix!
+    
+    // Messages
+    let kmNoMoneyMessage = "You do not have enough money"
+    let kmZeroLemons = "You have no more lemons"
+    let kmZeroIceCubes = "You have no more ice cubes"
+    let kmNegativeLemons = "Lemons can not be less than 0"
+    let kmNegativeIceCubes = "Ice cubes can not be less than 0"
+    
+    var weatherEffectOnCustomers: Int
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,81 +52,53 @@ class ViewController: UIViewController {
     
     @IBAction func addLemonsButtonPressed(sender: UIButton) {
         purchases.setPurchaseLemons(1)
-        updateAllLabels()
+        setAllLabels()
     }
     
     @IBAction func removeLemonsButtonPressed(sender: UIButton) {
         purchases.setPurchaseLemons(-1)
-        updateAllLabels()
+        setAllLabels()
     }
     
     @IBAction func addIceCubesButtonPressed(sender: UIButton) {
         purchases.setPurchaseIceCubes(1)
-        updateAllLabels()
+        setAllLabels()
     }
     
     @IBAction func removeIceCubesButtonPressed(sender: UIButton) {
         purchases.setPurchaseIceCubes(-1)
-        updateAllLabels()
+        setAllLabels()
     }
     
     @IBAction func mixAddLemonButtonPressed(sender: UIButton) {
         mix.setCurrentLemons(purchases.getAllLemons())
         mix.setMixLemons(1)
-        updateAllLabels()
+        setAllLabels()
     }
     
     @IBAction func mixRemoveLemonButtonPressed(sender: UIButton) {
         mix.setCurrentLemons(purchases.getAllLemons())
         mix.setMixLemons(-1)
-        updateAllLabels()
+        setAllLabels()
     }
     
     @IBAction func mixAddIceCubeButtonPressed(sender: UIButton) {
         mix.setCurrentIceCubes(purchases.getAllIceCubes())
         mix.setMixIceCubes(1)
-        updateAllLabels()
+        setAllLabels()
     }
     
     @IBAction func mixRemoveIceCubeButtonPressed(sender: UIButton) {
         mix.setCurrentIceCubes(purchases.getAllIceCubes())
         mix.setMixIceCubes(-1)
-        updateAllLabels()
+        setAllLabels()
     }
     
     @IBAction func startDayButtonPressed(sender: UIButton) {
         startToday()
-        updateAllLabels()
+        setAllLabels()
     }
     
-    // Preparing 1 - 10 customers for the day with taste preference
-    
-    func prepareCustomer() -> Array<Float> {
-        var totalCustomers = Int(arc4random_uniform(UInt32(9)))
-        var customers: [Float] = []
-        for totalCustomers; totalCustomers >= 0 ; --totalCustomers{
-            var random = Float(arc4random()) /  Float(UInt32.max)
-            customers.append(random)
-        }
-        return customers
-    }
-    
-    // Prepare lemon to ice cube mix ratio
-    
-    func getLemonadeRatio() -> Int {
-        var iceCubes = mix.getMixIceCubes()
-        var lemons = mix.getMixLemons()
-        
-        if lemons == 0 && iceCubes == 0 {
-            return 2
-        } else if lemons > iceCubes {
-            return 1
-        } else if lemons == iceCubes {
-            return 0
-        } else {
-            return -1
-        }
-    }
     
     // Starting a new day for sales
     
@@ -152,10 +132,55 @@ class ViewController: UIViewController {
         resetDay()
     }
     
+    func setTodaysWeather() {
+        var random = Int(arc4random_uniform(UInt32(2)))
+        
+        switch random {
+        case 0: // cloudy
+            weatherEffectOnCustomers = -3
+        case 1: // sunny
+            weatherEffectOnCustomers = 4
+        default: // fair
+            weatherEffectOnCustomers = 0
+        }
+    }
+    
+    // Preparing 1 - 10 customers for the day with taste preference
+    
+    func prepareCustomer() -> Array<Float> {
+        var totalCustomers = Int(arc4random_uniform(UInt32(9))) + weatherEffectOnCustomers
+        var customers: [Float] = []
+        for totalCustomers; totalCustomers >= 0 ; --totalCustomers{
+            var random = Float(arc4random()) /  Float(UInt32.max)
+            customers.append(random)
+        }
+        return customers
+    }
+    
+    // Prepare lemon to ice cube mix ratio
+    
+    func getLemonadeRatio() -> Int {
+        var iceCubes = mix.getMixIceCubes()
+        var lemons = mix.getMixLemons()
+        
+        if lemons == 0 && iceCubes == 0 {
+            return 2
+        } else if lemons > iceCubes {
+            return 1
+        } else if lemons == iceCubes {
+            return 0
+        } else {
+            return -1
+        }
+    }
+
     func resetDay() {
         purchases = Purchases(totalDollar: inventory.getTotalDollars(), totalLemons: inventory.getTotalLemons(), totalIceCubes: inventory.getTotalIceCubes())
         mix = Mix(allLemons: purchases.getAllLemons(), allIceCubes: purchases.getAllIceCubes())
         
+        if inventory.totalDollars + inventory.totalIceCubes + inventory.totalLemons <= 0{
+            resetGame()
+        }
     }
     
     func resetGame() {
@@ -163,7 +188,7 @@ class ViewController: UIViewController {
         
     }
     
-    func updateAllLabels() {
+    func setAllLabels() {
         mixIceCubesLabel.text = "\(mix.getMixIceCubes())"
         mixLemonsLabel.text = "\(mix.getMixLemons())"
         iceCubesAddLabel.text = "\(purchases.getPurchaseIceCubes())"
@@ -172,8 +197,6 @@ class ViewController: UIViewController {
         lemonsTotalLabel.text = "\(inventory.getTotalLemons())"
         iceCubeTotalLabel.text = "\(inventory.getTotalIceCubes())"
     }
-    
-
     
     func showAlertWithText(var header: String = "Warning", var message: String = "Warning", errorCode: Int = 0) {
         

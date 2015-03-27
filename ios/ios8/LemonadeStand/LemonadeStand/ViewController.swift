@@ -33,6 +33,7 @@ class ViewController: UIViewController {
     var mixIceCubesLabel: UILabel!
     var calendarLabel: UILabel!
     var weatherLabel: UILabel!
+    var purchaseSuppliesLabel: UILabel!
     
     // Weather
     var weatherEffectOnCustomers = 0
@@ -64,6 +65,11 @@ class ViewController: UIViewController {
     
     // Constants for Views
     let kTwelfth:CGFloat = 1.0/12.0
+    let kHalf:CGFloat = 1.0/2.0
+    let kFourth: CGFloat = 1.0/4.0
+    let kThirteenHundreds: CGFloat = 13.0/100.0
+    let kOneTwentyFifths: CGFloat = 1.0/25.0
+    
     
     let kNumberOfInfoBars = 8
     let kNumberOfSkinnyBars = 2
@@ -76,8 +82,11 @@ class ViewController: UIViewController {
         
         // Setting up views
         setupContainerViews()
+        setupBackgroundContainer()
         setupFirstContainer()
         setupSecondContainer()
+        setupThirdContainer()
+        setupFouthContainer()
         
     }
 
@@ -311,11 +320,14 @@ class ViewController: UIViewController {
         self.tenthContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: firstContainer.frame.height + secondContainer.frame.height + thirdContainer.frame.height + fourthContainer.frame.height + fifthContainer.frame.height + sixthContainer.frame.height + seventhContainer.frame.height + eighthContainer.frame.height + ninthContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * 1.5))
         self.tenthContainer.backgroundColor = UIColor.redColor()
         self.view.addSubview(tenthContainer)
-        
+    }
+    
+    func setupBackgroundContainer() {
         let backGroundImage = UIImageView()
         backGroundImage.image = UIImage(named: "AppBackground")
         backGroundImage.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y, width: self.view.bounds.width, height: self.view.bounds.height)
         self.view.addSubview(backGroundImage)
+
     }
     
     func setupFirstContainer() {
@@ -420,11 +432,41 @@ class ViewController: UIViewController {
     }
     
     func setupThirdContainer() {
+        purchaseSuppliesLabel = UILabel()
+        purchaseSuppliesLabel.text = "Purchase Supplies"
+        purchaseSuppliesLabel.frame = CGRect(x: CGRectGetMidX(thirdContainer.frame)/2, y: CGRectGetMidY(thirdContainer.frame)/1.1, width: thirdContainer.frame.width/2, height: thirdContainer.frame.height/2)
+        purchaseSuppliesLabel.font = UIFont(name: "Lobster 1.4", size: 30)
+        purchaseSuppliesLabel.textAlignment = .Center
+        purchaseSuppliesLabel.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
+        purchaseSuppliesLabel.adjustsFontSizeToFitWidth = true
+        self.view.addSubview(purchaseSuppliesLabel)
+    }
+    
+    func setupFouthContainer() {
+        var backgroundBar = UIView()
+        backgroundBar.backgroundColor = UIColor(red: 223/255, green: 207/255, blue: 109/255, alpha: 1)
+        backgroundBar.frame = CGRect(x: fourthContainer.frame.origin.x, y: fourthContainer.frame.origin.y, width: fourthContainer.frame.width, height: fourthContainer.frame.height)
+        self.view.addSubview(backgroundBar)
         
-        let purchaseSuppliesImage = UIImageView()
-        purchaseSuppliesImage.image = UIImage(named: "LemonadeStandLogo")
-        purchaseSuppliesImage.frame = CGRect(x: CGRectGetMidX(thirdContainer.frame)/2, y: CGRectGetMidY(thirdContainer.frame)/2, width: thirdContainer.frame.width/2, height: thirdContainer.frame.height/2)
-        self.view.addSubview(purchaseSuppliesImage)
+        var infoBar = UIView()
+        infoBar.backgroundColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
+        infoBar.frame = CGRect(x: fourthContainer.frame.origin.x, y: fourthContainer.frame.origin.y + (fourthContainer.frame.height * 2.0/3.0), width: fourthContainer.frame.width, height: fourthContainer.frame.height/3.0)
+        self.view.addSubview(infoBar)
+        
+        var lemonRemove = UIImageView()
+        lemonRemove.image = UIImage(named: "IconMinus")
+        lemonRemove.frame = CGRect(x: fourthContainer.frame.origin.x + fourthContainer.frame.width * 1.0/14.0, y: fourthContainer.frame.origin.y + fourthContainer.frame.height * 1.0/3.0, width: fourthContainer.frame.width * 1.0/20.0, height: fourthContainer.frame.height * 1.0/30.0)
+        self.view.addSubview(lemonRemove)
+        
+        var lemon = UIImageView()
+        lemon.image = UIImage(named: "IconLemonSolid")
+        lemon.frame = CGRect(x: fourthContainer.frame.origin.x + (fourthContainer.frame.width * 1.0/14.0) * 2.0, y: fourthContainer.frame.origin.y + fourthContainer.frame.height * 1.0/6.0, width: fourthContainer.frame.width * 1.0/10.0, height: fourthContainer.frame.height * 1.0/3.0)
+        self.view.addSubview(lemon)
+        
+        var lemonPlus = UIImageView()
+        lemonPlus.image = UIImage(named: "IconPlus")
+        lemonPlus.frame = CGRect(x: fourthContainer.frame.origin.x + (fourthContainer.frame.width * 1.0/10.0) * 3, y: fourthContainer.frame.origin.y + fourthContainer.frame.height * 1.0/3.0, width: fourthContainer.frame.width * 1.0/20.0, height: fourthContainer.frame.height * 1.0/5.0)
+        self.view.addSubview(lemonPlus)
         
     }
     

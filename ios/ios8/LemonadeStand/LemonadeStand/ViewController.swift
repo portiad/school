@@ -60,10 +60,8 @@ class ViewController: UIViewController {
     var eighthContainer: UIView!
     var ninthContainer: UIView!
     var tenthContainer: UIView!
-
-    // Margin for Views
-    let kMarginForYStatusBar: CGFloat = 1.0/8.0
-    let kMarginForIcons: CGFloat = 1.0/15.0
+    
+    var weatherIcon: UIImageView!
     
     // Constants for Views
     let kTwelfth: CGFloat = 1.0/12.0
@@ -112,51 +110,59 @@ class ViewController: UIViewController {
     
     @IBAction func addLemonsButtonPressed(sender: UIButton) {
         purchases.setPurchaseLemons(1)
-        setAllLabels()
+        lemonsAddLabel.text = "\(purchases.getPurchaseLemons())"
     }
     
     @IBAction func removeLemonsButtonPressed(sender: UIButton) {
         purchases.setPurchaseLemons(-1)
-        setAllLabels()
+        lemonsAddLabel.text = "\(purchases.getPurchaseLemons())"
     }
     
     @IBAction func addIceCubesButtonPressed(sender: UIButton) {
         purchases.setPurchaseIceCubes(1)
-        setAllLabels()
+        iceCubesAddLabel.text = "\(purchases.getPurchaseIceCubes())"
     }
     
     @IBAction func removeIceCubesButtonPressed(sender: UIButton) {
         purchases.setPurchaseIceCubes(-1)
-        setAllLabels()
+        iceCubesAddLabel.text = "\(purchases.getPurchaseIceCubes())"
     }
     
     @IBAction func mixAddLemonButtonPressed(sender: UIButton) {
         mix.setCurrentLemons(purchases.getAllLemons())
         mix.setMixLemons(1)
-        setAllLabels()
+        mixLemonsLabel.text = "\(mix.getMixLemons())"
+        getLemonadeRatio()
+        tasteLabel.text = "\(taste)"
     }
     
     @IBAction func mixRemoveLemonButtonPressed(sender: UIButton) {
         mix.setCurrentLemons(purchases.getAllLemons())
         mix.setMixLemons(-1)
-        setAllLabels()
+        mixLemonsLabel.text = "\(mix.getMixLemons())"
+        getLemonadeRatio()
+        tasteLabel.text = "\(taste)"
     }
     
     @IBAction func mixAddIceCubeButtonPressed(sender: UIButton) {
         mix.setCurrentIceCubes(purchases.getAllIceCubes())
         mix.setMixIceCubes(1)
-        setAllLabels()
+        mixIceCubesLabel.text = "\(mix.getMixIceCubes())"
+        getLemonadeRatio()
+        tasteLabel.text = "\(taste)"
     }
     
     @IBAction func mixRemoveIceCubeButtonPressed(sender: UIButton) {
         mix.setCurrentIceCubes(purchases.getAllIceCubes())
         mix.setMixIceCubes(-1)
-        setAllLabels()
+        mixIceCubesLabel.text = "\(mix.getMixIceCubes())"
+        getLemonadeRatio()
+        tasteLabel.text = "\(taste)"
     }
     
     @IBAction func startDayButtonPressed(sender: UIButton) {
         startToday()
-        setAllLabels()
+        getLabelsContainer()
     }
     
     // Restarting game
@@ -167,11 +173,7 @@ class ViewController: UIViewController {
         mix = Mix(allLemons: purchases.getAllLemons(), allIceCubes: purchases.getAllIceCubes())
         
         setTodaysWeather()
-        
-        println("hey")
-        println(weatherTemperature)
-
-            
+  
         day = 1
     }
     
@@ -259,7 +261,6 @@ class ViewController: UIViewController {
     func getLemonadeRatio() -> Int {
         var iceCubes = mix.getMixIceCubes()
         var lemons = mix.getMixLemons()
-        
         tasteLabel.hidden = false
         
         if lemons == 0 && iceCubes == 0 {
@@ -280,11 +281,13 @@ class ViewController: UIViewController {
     // Resetting Day
 
     func resetDay() {
-        inventory = Inventory()
         purchases = Purchases(totalDollar: inventory.getTotalDollars(), totalLemons: inventory.getTotalLemons(), totalIceCubes: inventory.getTotalIceCubes())
         mix = Mix(allLemons: purchases.getAllLemons(), allIceCubes: purchases.getAllIceCubes())
         day += 1
         setTodaysWeather()
+        weatherIcon.removeFromSuperview()
+        setupWeatherView()
+        tasteLabel.hidden = true
         
         
         if inventory.totalDollars + inventory.totalIceCubes + inventory.totalLemons <= 0{
@@ -361,10 +364,6 @@ class ViewController: UIViewController {
         self.view.addSubview(settingsButton)
     }
     
-    func settingsButtonPressed() {
-        
-    }
-    
     func setupSecondContainer() {
         let statusBar = UIImageView()
         statusBar.image = UIImage(named: "HUDBackground")
@@ -373,13 +372,10 @@ class ViewController: UIViewController {
         
         let dayIcon = UIImageView()
         dayIcon.image = UIImage(named: "IconCalendar")
-        dayIcon.frame = CGRect(x: secondContainer.frame.origin.x + (kTwentyFifths * secondContainer.frame.width) * 1.5, y: secondContainer.frame.origin.y + (kTwentyFifths * secondContainer.frame.height) * 2.0 , width: secondContainer.frame.width * (kTwentyFifths * 3.0), height: secondContainer.frame.height * (kNinths * 5.0))
+        dayIcon.frame = CGRect(x: secondContainer.frame.origin.x + (kTwentyFifths * secondContainer.frame.width) * 1.75, y: secondContainer.frame.origin.y + (kTwentyFifths * secondContainer.frame.height) * 2.0 , width: secondContainer.frame.width * (kTwentyFifths * 3.0), height: secondContainer.frame.height * (kNinths * 5.0))
         self.view.addSubview(dayIcon)
  
-        let weatherIcon = UIImageView()
-        weatherIcon.image = UIImage(named: getCurrentWeatherIcon())
-        weatherIcon.frame = CGRect(x: dayIcon.frame.maxX + (kTwentyFifths * secondContainer.frame.width) * 2.0, y: secondContainer.frame.origin.y + (kTwentyFifths * secondContainer.frame.height) * 2.0, width: secondContainer.frame.width * (kTwentyFifths * 3.0), height: secondContainer.frame.height * (kNinths * 5.0))
-        self.view.addSubview(weatherIcon)
+        let weatherIcon = setupWeatherView()
         
         let moneyIcon = UIImageView()
         moneyIcon.image = UIImage(named: "IconMoney")
@@ -438,6 +434,14 @@ class ViewController: UIViewController {
         self.view.addSubview(iceCubesTotalLabel)
     }
     
+    func setupWeatherView() -> UIView {
+        weatherIcon = UIImageView()
+        weatherIcon.image = UIImage(named: getCurrentWeatherIcon())
+        weatherIcon.frame = CGRect(x: (kTwentyFifths * secondContainer.frame.width) * 6.25, y: secondContainer.frame.origin.y + (kTwentyFifths * secondContainer.frame.height) * 2.0, width: secondContainer.frame.width * (kTwentyFifths * 3.0), height: secondContainer.frame.height * (kNinths * 5.0))
+        self.view.addSubview(weatherIcon)
+        return weatherIcon
+    }
+    
     func getLabelsContainer() {
         calendarLabel.text = "\(day)"
         weatherLabel.text = "\(getWeatherTemperature())\u{00B0}"
@@ -448,6 +452,7 @@ class ViewController: UIViewController {
         iceCubesAddLabel.text = "\(purchases.getPurchaseIceCubes())"
         mixIceCubesLabel.text = "\(mix.getMixIceCubes())"
         mixLemonsLabel.text = "\(mix.getMixLemons())"
+        tasteLabel.text = "\(taste)"
     }
     
     func setupThirdContainer() {
@@ -687,17 +692,6 @@ class ViewController: UIViewController {
         self.view.addSubview(startDayButton)
     }
     
-    
-    func setAllLabels() {
-        mixIceCubesLabel.text = "\(mix.getMixIceCubes())"
-        mixLemonsLabel.text = "\(mix.getMixLemons())"
-        iceCubesAddLabel.text = "\(purchases.getPurchaseIceCubes())"
-        lemonsAddLabel.text = "\(purchases.getPurchaseLemons())"
-        dollarsTotalLabel.text = "\(inventory.getTotalDollars())"
-        lemonsTotalLabel.text = "\(inventory.getTotalLemons())"
-        iceCubesTotalLabel.text = "\(inventory.getTotalIceCubes())"
-        tasteLabel.text = "\(taste)"
-    }
 //
 //
 //    func showAlertWithText(var header: String = "Warning", var message: String = "Warning", errorCode: Int = 0) {

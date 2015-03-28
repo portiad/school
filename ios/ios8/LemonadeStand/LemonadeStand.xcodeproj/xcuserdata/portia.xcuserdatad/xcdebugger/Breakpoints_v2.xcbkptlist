@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LemonadeStand/ViewController.swift"
-            timestampString = "449207693.19654"
+            timestampString = "449215801.805074"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "442"
-            endingLineNumber = "442"
+            startingLineNumber = "446"
+            endingLineNumber = "446"
             landmarkName = "getLabelsContainer()"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LemonadeStand/ViewController.swift"
-            timestampString = "449207693.19654"
+            timestampString = "449215801.805074"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "458"
-            endingLineNumber = "458"
+            startingLineNumber = "463"
+            endingLineNumber = "463"
             landmarkName = "setupThirdContainer()"
             landmarkType = "5">
          </BreakpointContent>

@@ -24,14 +24,14 @@ class ViewController: UIViewController {
     
     
     // UILabels
-    var dollarsTotalLabel: UILabel!
+    var moneyLabel: UILabel!
     var lemonsTotalLabel: UILabel!
     var iceCubesTotalLabel: UILabel!
     var lemonsAddLabel: UILabel!
     var iceCubesAddLabel: UILabel!
     var mixLemonsLabel: UILabel!
     var mixIceCubesLabel: UILabel!
-    var calendarLabel: UILabel!
+    var dayLabel: UILabel!
     var weatherLabel: UILabel!
     var purchaseSuppliesLabel: UILabel!
     var tasteLabel: UILabel!
@@ -74,7 +74,6 @@ class ViewController: UIViewController {
     let kTenths: CGFloat = 1.0/10.0
     let kThirteenHundreds: CGFloat = 13.0/100.0
     let kTwentyFifths: CGFloat = 1.0/25.0
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,7 +179,6 @@ class ViewController: UIViewController {
     
     
     // Starting a new day for sales
-    
     func startToday() {
         
         var totalSales = 0
@@ -300,7 +298,7 @@ class ViewController: UIViewController {
     // Views
     */
     
-    func setupViewSizes(multiplier: CGFloat, currentHeight: CGFloat) -> CGRect {
+    func setupViewContainerFramework(multiplier: CGFloat, currentHeight: CGFloat) -> CGRect {
         heightContainers = currentHeight + self.view.bounds.height * kTwelfth * multiplier
         
         return CGRect(x: self.view.bounds.origin.x, y: currentHeight, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * multiplier)
@@ -308,16 +306,16 @@ class ViewController: UIViewController {
     
     func setupContainerViews() {
         
-        titleContainer = UIView(frame: setupViewSizes(1.5, currentHeight: heightContainers))
-        iconStatusContainer = UIView(frame: setupViewSizes(1.5, currentHeight: heightContainers))
-        purchaseTitleContainer = UIView(frame: setupViewSizes(1, currentHeight: heightContainers))
-        purchaseInventoryContainer = UIView(frame: setupViewSizes(1.5, currentHeight: heightContainers))
-        mixTitleContainer = UIView(frame: setupViewSizes(1, currentHeight: heightContainers))
-        mixQuestionContainer = UIView(frame: setupViewSizes(kHalf, currentHeight: heightContainers))
-        mixInventoryContainer = UIView(frame: setupViewSizes(1.5, currentHeight: heightContainers))
-        sellLemonadeTitleContainer = UIView(frame: setupViewSizes(1, currentHeight: heightContainers))
-        sellLemonadeInfoContainer = UIView(frame: setupViewSizes(kHalf, currentHeight: heightContainers))
-        sellButtonContainer = UIView(frame: setupViewSizes(1.75, currentHeight: heightContainers))
+        titleContainer = UIView(frame: setupViewContainerFramework(1.5, currentHeight: heightContainers))
+        iconStatusContainer = UIView(frame: setupViewContainerFramework(1.5, currentHeight: heightContainers))
+        purchaseTitleContainer = UIView(frame: setupViewContainerFramework(1, currentHeight: heightContainers))
+        purchaseInventoryContainer = UIView(frame: setupViewContainerFramework(1.5, currentHeight: heightContainers))
+        mixTitleContainer = UIView(frame: setupViewContainerFramework(1, currentHeight: heightContainers))
+        mixQuestionContainer = UIView(frame: setupViewContainerFramework(kHalf, currentHeight: heightContainers))
+        mixInventoryContainer = UIView(frame: setupViewContainerFramework(1.5, currentHeight: heightContainers))
+        sellLemonadeTitleContainer = UIView(frame: setupViewContainerFramework(1, currentHeight: heightContainers))
+        sellLemonadeInfoContainer = UIView(frame: setupViewContainerFramework(kHalf, currentHeight: heightContainers))
+        sellButtonContainer = UIView(frame: setupViewContainerFramework(1.75, currentHeight: heightContainers))
     }
     
     func setupBackgroundContainer() {
@@ -341,6 +339,20 @@ class ViewController: UIViewController {
         self.view.addSubview(settingsButton)
     }
     
+    func setupIconContainerIcons(icon: UIImageView, iconHeight: CGFloat, container: UIView) -> CGRect {
+        self.view.addSubview(icon)
+        return CGRect(x: iconHeight + (kTwentyFifths * container.frame.width) * 1.75, y: container.frame.origin.y + (kTwentyFifths * container.frame.height) * 2.0, width: container.frame.width * (kTwentyFifths * 3.0), height: container.frame.height * (kNinths * 5.0))
+    }
+    
+    func setupIconContainerLabels(label: UILabel, icon:UIImageView, container: UIView) {
+        label.frame = CGRect(x: icon.frame.midX - container.frame.width/36, y: icon.frame.maxY + (kTwentyFifths * container.frame.height) * 3.0, width: container.frame.width/16, height: container.frame.height * kSixth)
+        label.textColor = UIColor.yellowColor()
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .Center
+        label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
+        self.view.addSubview(label)
+    }
+    
     func setupIconStatusContainer() {
         let statusBar = UIImageView()
         statusBar.image = UIImage(named: "HUDBackground")
@@ -349,69 +361,31 @@ class ViewController: UIViewController {
         
         let dayIcon = UIImageView()
         dayIcon.image = UIImage(named: "IconCalendar")
-        dayIcon.frame = CGRect(x: iconStatusContainer.frame.origin.x + (kTwentyFifths * iconStatusContainer.frame.width) * 1.75, y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0 , width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
-        self.view.addSubview(dayIcon)
- 
+        dayIcon.frame = setupIconContainerIcons(dayIcon, iconHeight: iconStatusContainer.frame.origin.x, container:iconStatusContainer)
         let weatherIcon = setupWeatherView()
-        
         let moneyIcon = UIImageView()
         moneyIcon.image = UIImage(named: "IconMoney")
-        moneyIcon.frame = CGRect(x: weatherIcon.frame.maxX + (kTwentyFifths * iconStatusContainer.frame.width) * 2.0, y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0 , width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
-        self.view.addSubview(moneyIcon)
-        
+        moneyIcon.frame = setupIconContainerIcons(moneyIcon, iconHeight: weatherIcon.frame.maxX, container:iconStatusContainer)
         let lemonIcon = UIImageView()
         lemonIcon.image = UIImage(named: "IconLemon")
-        lemonIcon.frame = CGRect(x: moneyIcon.frame.maxX + (kTwentyFifths * iconStatusContainer.frame.width) * 2.0, y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0, width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
-        self.view.addSubview(lemonIcon)
-        
+        lemonIcon.frame = setupIconContainerIcons(lemonIcon, iconHeight: moneyIcon.frame.maxX, container:iconStatusContainer)
         let iceIcon = UIImageView()
         iceIcon.image = UIImage(named: "IconIceCube")
-        iceIcon.frame = CGRect(x: lemonIcon.frame.maxX + (kTwentyFifths * iconStatusContainer.frame.width), y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0, width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
-        self.view.addSubview(iceIcon)
+        iceIcon.frame = setupIconContainerIcons(iceIcon, iconHeight: lemonIcon.frame.maxX, container:iconStatusContainer)
         
-        
-        calendarLabel = UILabel()
-        calendarLabel.frame = CGRect(x: dayIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY + (kTwentyFifths * iconStatusContainer.frame.height) * 3.0, width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height * kSixth)
-        calendarLabel.textColor = UIColor.yellowColor()
-        calendarLabel.adjustsFontSizeToFitWidth = true
-        calendarLabel.textAlignment = .Center
-        calendarLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
-        self.view.addSubview(calendarLabel)
-        
+        dayLabel = UILabel()
+        setupIconContainerLabels(dayLabel, icon: dayIcon, container: iconStatusContainer)
         weatherLabel = UILabel()
-        weatherLabel.frame = CGRect(x: weatherIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY + (kTwentyFifths * iconStatusContainer.frame.height) * 3.0, width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height * kSixth)
-        weatherLabel.adjustsFontSizeToFitWidth = true
-        weatherLabel.textAlignment = .Center
-        weatherLabel.textColor = UIColor.yellowColor()
-        weatherLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
-        self.view.addSubview(weatherLabel)
-        
-        dollarsTotalLabel = UILabel()
-        dollarsTotalLabel.frame = CGRect(x: moneyIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY + (kTwentyFifths * iconStatusContainer.frame.height) * 3.0, width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height * kSixth)
-        dollarsTotalLabel.textColor = UIColor.yellowColor()
-        dollarsTotalLabel.adjustsFontSizeToFitWidth = true
-        dollarsTotalLabel.textAlignment = .Center
-        dollarsTotalLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
-        self.view.addSubview(dollarsTotalLabel)
-        
+        setupIconContainerLabels(weatherLabel, icon: weatherIcon, container: iconStatusContainer)
+        moneyLabel = UILabel()
+        setupIconContainerLabels(moneyLabel, icon: moneyIcon, container: iconStatusContainer)
         lemonsTotalLabel = UILabel()
-        lemonsTotalLabel.frame = CGRect(x: lemonIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY - (kTwentyFifths * iconStatusContainer.frame.height), width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height/2)
-        lemonsTotalLabel.textColor = UIColor.yellowColor()
-        lemonsTotalLabel.adjustsFontSizeToFitWidth = true
-        lemonsTotalLabel.textAlignment = .Center
-        lemonsTotalLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
-        self.view.addSubview(lemonsTotalLabel)
-        
+        setupIconContainerLabels(lemonsTotalLabel, icon: lemonIcon, container: iconStatusContainer)
         iceCubesTotalLabel = UILabel()
-        iceCubesTotalLabel.frame = CGRect(x: iceIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY - (kTwentyFifths * iconStatusContainer.frame.height), width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height/2)
-        iceCubesTotalLabel.textColor = UIColor.yellowColor()
-        iceCubesTotalLabel.adjustsFontSizeToFitWidth = true
-        iceCubesTotalLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
-        iceCubesTotalLabel.textAlignment = .Center
-        self.view.addSubview(iceCubesTotalLabel)
+        setupIconContainerLabels(iceCubesTotalLabel, icon: iceIcon, container: iconStatusContainer)
     }
     
-    func setupWeatherView() -> UIView {
+    func setupWeatherView() -> UIImageView {
         weatherIcon = UIImageView()
         weatherIcon.image = UIImage(named: getCurrentWeatherIcon())
         weatherIcon.frame = CGRect(x: (kTwentyFifths * iconStatusContainer.frame.width) * 6.25, y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0, width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
@@ -420,9 +394,9 @@ class ViewController: UIViewController {
     }
     
     func getLabelsContainer() {
-        calendarLabel.text = "\(day)"
+        dayLabel.text = "\(day)"
         weatherLabel.text = "\(getWeatherTemperature())\u{00B0}"
-        dollarsTotalLabel.text = "$\(inventory.getTotalDollars())"
+        moneyLabel.text = "$\(inventory.getTotalDollars())"
         lemonsTotalLabel.text = "\(inventory.getTotalLemons())"
         iceCubesTotalLabel.text = "\(inventory.getTotalIceCubes())"
         lemonsAddLabel.text = "\(purchases.getPurchaseLemons())"

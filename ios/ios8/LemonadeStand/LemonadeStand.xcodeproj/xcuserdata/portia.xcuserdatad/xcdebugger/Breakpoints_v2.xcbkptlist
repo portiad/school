@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LemonadeStand/ViewController.swift"
-            timestampString = "449215801.805074"
+            timestampString = "449377223.721407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "446"
-            endingLineNumber = "446"
+            startingLineNumber = "426"
+            endingLineNumber = "426"
             landmarkName = "getLabelsContainer()"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,12 +26,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LemonadeStand/ViewController.swift"
-            timestampString = "449215801.805074"
+            timestampString = "449377223.721407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
-            landmarkName = "setupThirdContainer()"
+            startingLineNumber = "443"
+            endingLineNumber = "443"
+            landmarkName = "setupPurchaseTitleContainer()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LemonadeStand/ViewController.swift"
+            timestampString = "449376335.190803"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
+            landmarkName = "setupViewSizes(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

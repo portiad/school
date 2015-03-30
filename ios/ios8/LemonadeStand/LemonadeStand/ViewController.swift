@@ -48,18 +48,19 @@ class ViewController: UIViewController {
     var day = 0
     
     var taste = ""
+    var heightContainers: CGFloat = 0.0
     
     // Views
-    var firstContainer: UIView!
-    var secondContainer: UIView!
-    var thirdContainer: UIView!
-    var fourthContainer: UIView!
-    var fifthContainer: UIView!
-    var sixthContainer: UIView!
-    var seventhContainer: UIView!
-    var eighthContainer: UIView!
-    var ninthContainer: UIView!
-    var tenthContainer: UIView!
+    var titleContainer: UIView!
+    var iconStatusContainer: UIView!
+    var purchaseTitleContainer: UIView!
+    var purchaseInventoryContainer: UIView!
+    var mixTitleContainer: UIView!
+    var mixQuestionContainer: UIView!
+    var mixInventoryContainer: UIView!
+    var sellLemonadeTitleContainer: UIView!
+    var sellLemonadeInfoContainer: UIView!
+    var sellButtonContainer: UIView!
     
     var weatherIcon: UIImageView!
     
@@ -84,16 +85,16 @@ class ViewController: UIViewController {
         // Setting up views
         setupContainerViews()
         setupBackgroundContainer()
-        setupFirstContainer()
-        setupSecondContainer()
-        setupThirdContainer()
-        setupFouthContainer()
-        setupFifthContainer()
-        setupSixthContainer()
-        setupSeventhContainer()
-        setupEighthContainer()
-        setupNinthContainer()
-        setupTenthContainer()
+        setupTitleContainer()
+        setupIconStatusContainer()
+        setupPurchaseTitleContainer()
+        setupPurchaseInventoryContainer()
+        setupMixTitleContainer()
+        setupMixQuestionContainer()
+        setupMixInventoryContainer()
+        setupSellLemonadeTitleContainer()
+        setupSellLemonadeInfoContainer()
+        setupSellButtonContainer()
         
         
         getLabelsContainer()
@@ -299,47 +300,24 @@ class ViewController: UIViewController {
     // Views
     */
     
+    func setupViewSizes(multiplier: CGFloat, currentHeight: CGFloat) -> CGRect {
+        heightContainers = currentHeight + self.view.bounds.height * kTwelfth * multiplier
+        
+        return CGRect(x: self.view.bounds.origin.x, y: currentHeight, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * multiplier)
+    }
+    
     func setupContainerViews() {
         
-        self.firstContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * 1.5))
-        self.firstContainer.backgroundColor = UIColor.redColor()
-        self.view.addSubview(firstContainer)
-        
-        self.secondContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: firstContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * 1.5))
-        self.secondContainer.backgroundColor = UIColor.blackColor()
-        self.view.addSubview(secondContainer)
-        
-        self.thirdContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y:firstContainer.frame.height + secondContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth))
-        self.thirdContainer.backgroundColor = UIColor.grayColor()
-        self.view.addSubview(thirdContainer)
-        
-        self.fourthContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: firstContainer.frame.height + secondContainer.frame.height + thirdContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * 1.5))
-        self.fourthContainer.backgroundColor = UIColor.redColor()
-        self.view.addSubview(fourthContainer)
-        
-        self.fifthContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: firstContainer.frame.height + secondContainer.frame.height + thirdContainer.frame.height + fourthContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth))
-        self.fifthContainer.backgroundColor = UIColor.grayColor()
-        self.view.addSubview(fifthContainer)
-        
-        self.sixthContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: firstContainer.frame.height + secondContainer.frame.height + thirdContainer.frame.height + fourthContainer.frame.height + fifthContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * kHalf))
-        self.sixthContainer.backgroundColor = UIColor.blackColor()
-        self.view.addSubview(sixthContainer)
-        
-        self.seventhContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: firstContainer.frame.height + secondContainer.frame.height + thirdContainer.frame.height + fourthContainer.frame.height + fifthContainer.frame.height + sixthContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * 1.5))
-        self.seventhContainer.backgroundColor = UIColor.redColor()
-        self.view.addSubview(seventhContainer)
-        
-        self.eighthContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: firstContainer.frame.height + secondContainer.frame.height + thirdContainer.frame.height + fourthContainer.frame.height + fifthContainer.frame.height + sixthContainer.frame.height + seventhContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth))
-        self.eighthContainer.backgroundColor = UIColor.grayColor()
-        self.view.addSubview(eighthContainer)
-        
-        self.ninthContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: firstContainer.frame.height + secondContainer.frame.height + thirdContainer.frame.height + fourthContainer.frame.height + fifthContainer.frame.height + sixthContainer.frame.height + seventhContainer.frame.height + eighthContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * kHalf))
-        self.ninthContainer.backgroundColor = UIColor.blackColor()
-        self.view.addSubview(ninthContainer)
-        
-        self.tenthContainer = UIView(frame: CGRect(x: self.view.bounds.origin.x, y: firstContainer.frame.height + secondContainer.frame.height + thirdContainer.frame.height + fourthContainer.frame.height + fifthContainer.frame.height + sixthContainer.frame.height + seventhContainer.frame.height + eighthContainer.frame.height + ninthContainer.frame.height, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * 1.75))
-        self.tenthContainer.backgroundColor = UIColor.redColor()
-        self.view.addSubview(tenthContainer)
+        titleContainer = UIView(frame: setupViewSizes(1.5, currentHeight: heightContainers))
+        iconStatusContainer = UIView(frame: setupViewSizes(1.5, currentHeight: heightContainers))
+        purchaseTitleContainer = UIView(frame: setupViewSizes(1, currentHeight: heightContainers))
+        purchaseInventoryContainer = UIView(frame: setupViewSizes(1.5, currentHeight: heightContainers))
+        mixTitleContainer = UIView(frame: setupViewSizes(1, currentHeight: heightContainers))
+        mixQuestionContainer = UIView(frame: setupViewSizes(kHalf, currentHeight: heightContainers))
+        mixInventoryContainer = UIView(frame: setupViewSizes(1.5, currentHeight: heightContainers))
+        sellLemonadeTitleContainer = UIView(frame: setupViewSizes(1, currentHeight: heightContainers))
+        sellLemonadeInfoContainer = UIView(frame: setupViewSizes(kHalf, currentHeight: heightContainers))
+        sellButtonContainer = UIView(frame: setupViewSizes(1.75, currentHeight: heightContainers))
     }
     
     func setupBackgroundContainer() {
@@ -347,54 +325,53 @@ class ViewController: UIViewController {
         backGroundImage.image = UIImage(named: "AppBackground")
         backGroundImage.frame = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y, width: self.view.bounds.width, height: self.view.bounds.height)
         self.view.addSubview(backGroundImage)
-
     }
     
-    func setupFirstContainer() {
+    func setupTitleContainer() {
         let lemonadeStandTopImage = UIImageView()
         lemonadeStandTopImage.image = UIImage(named: "LemonadeStandLogo")
-        lemonadeStandTopImage.frame = CGRect(x: firstContainer.frame.width * kNinths * 1.5, y: firstContainer.frame.height * kNinths * 4.0, width: firstContainer.frame.width * kNinths * 6.0, height: firstContainer.frame.height * kHalf)
+        lemonadeStandTopImage.frame = CGRect(x: titleContainer.frame.width * kNinths * 1.5, y: titleContainer.frame.height * kNinths * 4.0, width: titleContainer.frame.width * kNinths * 6.0, height: titleContainer.frame.height * kHalf)
         self.view.addSubview(lemonadeStandTopImage)
         
         let settingsImage = UIImage(named: "IconSettings")
         let settingsButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        settingsButton.frame = CGRect(x: firstContainer.frame.width * (kTenths * 9.0), y: firstContainer.frame.height * kNinths * 4.0, width: firstContainer.frame.width * (kTwentyFifths * 2), height: firstContainer.frame.height * kHalf)
+        settingsButton.frame = CGRect(x: titleContainer.frame.width * (kTenths * 9.0), y: titleContainer.frame.height * kNinths * 4.0, width: titleContainer.frame.width * (kTwentyFifths * 2), height: titleContainer.frame.height * kHalf)
         settingsButton.setImage(settingsImage, forState: .Normal)
         settingsButton.addTarget(self, action: "settingsButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(settingsButton)
     }
     
-    func setupSecondContainer() {
+    func setupIconStatusContainer() {
         let statusBar = UIImageView()
         statusBar.image = UIImage(named: "HUDBackground")
-        statusBar.frame = CGRect(x: secondContainer.frame.origin.x, y: secondContainer.frame.origin.y, width: secondContainer.frame.width, height: secondContainer.frame.height)
+        statusBar.frame = CGRect(x: iconStatusContainer.frame.origin.x, y: iconStatusContainer.frame.origin.y, width: iconStatusContainer.frame.width, height: iconStatusContainer.frame.height)
         self.view.addSubview(statusBar)
         
         let dayIcon = UIImageView()
         dayIcon.image = UIImage(named: "IconCalendar")
-        dayIcon.frame = CGRect(x: secondContainer.frame.origin.x + (kTwentyFifths * secondContainer.frame.width) * 1.75, y: secondContainer.frame.origin.y + (kTwentyFifths * secondContainer.frame.height) * 2.0 , width: secondContainer.frame.width * (kTwentyFifths * 3.0), height: secondContainer.frame.height * (kNinths * 5.0))
+        dayIcon.frame = CGRect(x: iconStatusContainer.frame.origin.x + (kTwentyFifths * iconStatusContainer.frame.width) * 1.75, y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0 , width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
         self.view.addSubview(dayIcon)
  
         let weatherIcon = setupWeatherView()
         
         let moneyIcon = UIImageView()
         moneyIcon.image = UIImage(named: "IconMoney")
-        moneyIcon.frame = CGRect(x: weatherIcon.frame.maxX + (kTwentyFifths * secondContainer.frame.width) * 2.0, y: secondContainer.frame.origin.y + (kTwentyFifths * secondContainer.frame.height) * 2.0 , width: secondContainer.frame.width * (kTwentyFifths * 3.0), height: secondContainer.frame.height * (kNinths * 5.0))
+        moneyIcon.frame = CGRect(x: weatherIcon.frame.maxX + (kTwentyFifths * iconStatusContainer.frame.width) * 2.0, y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0 , width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
         self.view.addSubview(moneyIcon)
         
         let lemonIcon = UIImageView()
         lemonIcon.image = UIImage(named: "IconLemon")
-        lemonIcon.frame = CGRect(x: moneyIcon.frame.maxX + (kTwentyFifths * secondContainer.frame.width) * 2.0, y: secondContainer.frame.origin.y + (kTwentyFifths * secondContainer.frame.height) * 2.0, width: secondContainer.frame.width * (kTwentyFifths * 3.0), height: secondContainer.frame.height * (kNinths * 5.0))
+        lemonIcon.frame = CGRect(x: moneyIcon.frame.maxX + (kTwentyFifths * iconStatusContainer.frame.width) * 2.0, y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0, width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
         self.view.addSubview(lemonIcon)
         
         let iceIcon = UIImageView()
         iceIcon.image = UIImage(named: "IconIceCube")
-        iceIcon.frame = CGRect(x: lemonIcon.frame.maxX + (kTwentyFifths * secondContainer.frame.width), y: secondContainer.frame.origin.y + (kTwentyFifths * secondContainer.frame.height) * 2.0, width: secondContainer.frame.width * (kTwentyFifths * 3.0), height: secondContainer.frame.height * (kNinths * 5.0))
+        iceIcon.frame = CGRect(x: lemonIcon.frame.maxX + (kTwentyFifths * iconStatusContainer.frame.width), y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0, width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
         self.view.addSubview(iceIcon)
         
         
         calendarLabel = UILabel()
-        calendarLabel.frame = CGRect(x: dayIcon.frame.midX - secondContainer.frame.width/36, y: dayIcon.frame.maxY + (kTwentyFifths * secondContainer.frame.height) * 3.0, width: secondContainer.frame.width/16, height: secondContainer.frame.height * kSixth)
+        calendarLabel.frame = CGRect(x: dayIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY + (kTwentyFifths * iconStatusContainer.frame.height) * 3.0, width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height * kSixth)
         calendarLabel.textColor = UIColor.yellowColor()
         calendarLabel.adjustsFontSizeToFitWidth = true
         calendarLabel.textAlignment = .Center
@@ -402,7 +379,7 @@ class ViewController: UIViewController {
         self.view.addSubview(calendarLabel)
         
         weatherLabel = UILabel()
-        weatherLabel.frame = CGRect(x: weatherIcon.frame.midX - secondContainer.frame.width/36, y: dayIcon.frame.maxY + (kTwentyFifths * secondContainer.frame.height) * 3.0, width: secondContainer.frame.width/16, height: secondContainer.frame.height * kSixth)
+        weatherLabel.frame = CGRect(x: weatherIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY + (kTwentyFifths * iconStatusContainer.frame.height) * 3.0, width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height * kSixth)
         weatherLabel.adjustsFontSizeToFitWidth = true
         weatherLabel.textAlignment = .Center
         weatherLabel.textColor = UIColor.yellowColor()
@@ -410,7 +387,7 @@ class ViewController: UIViewController {
         self.view.addSubview(weatherLabel)
         
         dollarsTotalLabel = UILabel()
-        dollarsTotalLabel.frame = CGRect(x: moneyIcon.frame.midX - secondContainer.frame.width/36, y: dayIcon.frame.maxY + (kTwentyFifths * secondContainer.frame.height) * 3.0, width: secondContainer.frame.width/16, height: secondContainer.frame.height * kSixth)
+        dollarsTotalLabel.frame = CGRect(x: moneyIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY + (kTwentyFifths * iconStatusContainer.frame.height) * 3.0, width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height * kSixth)
         dollarsTotalLabel.textColor = UIColor.yellowColor()
         dollarsTotalLabel.adjustsFontSizeToFitWidth = true
         dollarsTotalLabel.textAlignment = .Center
@@ -418,7 +395,7 @@ class ViewController: UIViewController {
         self.view.addSubview(dollarsTotalLabel)
         
         lemonsTotalLabel = UILabel()
-        lemonsTotalLabel.frame = CGRect(x: lemonIcon.frame.midX - secondContainer.frame.width/36, y: dayIcon.frame.maxY - (kTwentyFifths * secondContainer.frame.height), width: secondContainer.frame.width/16, height: secondContainer.frame.height/2)
+        lemonsTotalLabel.frame = CGRect(x: lemonIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY - (kTwentyFifths * iconStatusContainer.frame.height), width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height/2)
         lemonsTotalLabel.textColor = UIColor.yellowColor()
         lemonsTotalLabel.adjustsFontSizeToFitWidth = true
         lemonsTotalLabel.textAlignment = .Center
@@ -426,7 +403,7 @@ class ViewController: UIViewController {
         self.view.addSubview(lemonsTotalLabel)
         
         iceCubesTotalLabel = UILabel()
-        iceCubesTotalLabel.frame = CGRect(x: iceIcon.frame.midX - secondContainer.frame.width/36, y: dayIcon.frame.maxY - (kTwentyFifths * secondContainer.frame.height), width: secondContainer.frame.width/16, height: secondContainer.frame.height/2)
+        iceCubesTotalLabel.frame = CGRect(x: iceIcon.frame.midX - iconStatusContainer.frame.width/36, y: dayIcon.frame.maxY - (kTwentyFifths * iconStatusContainer.frame.height), width: iconStatusContainer.frame.width/16, height: iconStatusContainer.frame.height/2)
         iceCubesTotalLabel.textColor = UIColor.yellowColor()
         iceCubesTotalLabel.adjustsFontSizeToFitWidth = true
         iceCubesTotalLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
@@ -437,7 +414,7 @@ class ViewController: UIViewController {
     func setupWeatherView() -> UIView {
         weatherIcon = UIImageView()
         weatherIcon.image = UIImage(named: getCurrentWeatherIcon())
-        weatherIcon.frame = CGRect(x: (kTwentyFifths * secondContainer.frame.width) * 6.25, y: secondContainer.frame.origin.y + (kTwentyFifths * secondContainer.frame.height) * 2.0, width: secondContainer.frame.width * (kTwentyFifths * 3.0), height: secondContainer.frame.height * (kNinths * 5.0))
+        weatherIcon.frame = CGRect(x: (kTwentyFifths * iconStatusContainer.frame.width) * 6.25, y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0, width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
         self.view.addSubview(weatherIcon)
         return weatherIcon
     }
@@ -455,11 +432,11 @@ class ViewController: UIViewController {
         tasteLabel.text = "\(taste)"
     }
     
-    func setupThirdContainer() {
+    func setupPurchaseTitleContainer() {
         
         purchaseSuppliesLabel = UILabel()
         purchaseSuppliesLabel.text = "Purchase Supplies"
-        purchaseSuppliesLabel.frame = CGRect(x: thirdContainer.frame.width * kFourth, y: thirdContainer.frame.minY, width: thirdContainer.frame.width * kHalf, height: thirdContainer.frame.height)
+        purchaseSuppliesLabel.frame = CGRect(x: purchaseTitleContainer.frame.width * kFourth, y: purchaseTitleContainer.frame.minY, width: purchaseTitleContainer.frame.width * kHalf, height: purchaseTitleContainer.frame.height)
         purchaseSuppliesLabel.font = UIFont(name: "Lobster 1.4", size: 25)
         purchaseSuppliesLabel.textAlignment = .Center
         purchaseSuppliesLabel.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
@@ -467,15 +444,15 @@ class ViewController: UIViewController {
         self.view.addSubview(purchaseSuppliesLabel)
     }
     
-    func setupFouthContainer() {
+    func setupPurchaseInventoryContainer() {
         var backgroundBar = UIView()
         backgroundBar.backgroundColor = UIColor(red: 223/255, green: 207/255, blue: 109/255, alpha: 1)
-        backgroundBar.frame = CGRect(x: fourthContainer.frame.origin.x, y: fourthContainer.frame.origin.y, width: fourthContainer.frame.width, height: fourthContainer.frame.height * kThird * 2.0)
+        backgroundBar.frame = CGRect(x: purchaseInventoryContainer.frame.origin.x, y: purchaseInventoryContainer.frame.origin.y, width: purchaseInventoryContainer.frame.width, height: purchaseInventoryContainer.frame.height * kThird * 2.0)
         self.view.addSubview(backgroundBar)
         
         var infoBar = UIView()
         infoBar.backgroundColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
-        infoBar.frame = CGRect(x: fourthContainer.frame.origin.x, y: fourthContainer.frame.origin.y + (fourthContainer.frame.height * 2.0/3.0), width: fourthContainer.frame.width, height: fourthContainer.frame.height/3.0)
+        infoBar.frame = CGRect(x: purchaseInventoryContainer.frame.origin.x, y: purchaseInventoryContainer.frame.origin.y + (purchaseInventoryContainer.frame.height * 2.0/3.0), width: purchaseInventoryContainer.frame.width, height: purchaseInventoryContainer.frame.height/3.0)
         self.view.addSubview(infoBar)
         
         let lemonRemoveImage = UIImage(named: "IconMinus")
@@ -487,26 +464,26 @@ class ViewController: UIViewController {
         
         let lemon = UIImageView()
         lemon.image = UIImage(named: "IconLemonSolid")
-        lemon.frame = CGRect(x: lemonRemoveButton.frame.maxX + backgroundBar.frame.width * kTwentyFifths, y: backgroundBar.frame.midY - fourthContainer.frame.height * kSixth, width: fourthContainer.frame.width * kTenths, height: fourthContainer.frame.height * kThird)
+        lemon.frame = CGRect(x: lemonRemoveButton.frame.maxX + backgroundBar.frame.width * kTwentyFifths, y: backgroundBar.frame.midY - purchaseInventoryContainer.frame.height * kSixth, width: purchaseInventoryContainer.frame.width * kTenths, height: purchaseInventoryContainer.frame.height * kThird)
         self.view.addSubview(lemon)
         
         let lemonPlusImage = UIImage(named: "IconPlus")
         let lemonPlusButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        lemonPlusButton.frame = CGRect(x: lemon.frame.maxX + backgroundBar.frame.width * kTwentyFifths, y: backgroundBar.frame.midY - fourthContainer.frame.height * kSixth, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: fourthContainer.frame.height * kThird)
+        lemonPlusButton.frame = CGRect(x: lemon.frame.maxX + backgroundBar.frame.width * kTwentyFifths, y: backgroundBar.frame.midY - purchaseInventoryContainer.frame.height * kSixth, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: purchaseInventoryContainer.frame.height * kThird)
         lemonPlusButton.setImage(lemonPlusImage, forState: .Normal)
         lemonPlusButton.addTarget(self, action: "addLemonsButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(lemonPlusButton)
         
         let icePlusImage = UIImage(named: "IconPlus")
         let icePlusButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        icePlusButton.frame = CGRect(x: backgroundBar.frame.maxX - backgroundBar.frame.width * kTwentyFifths * 3, y: backgroundBar.frame.midY - fourthContainer.frame.height * kSixth, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: fourthContainer.frame.height * kThird)
+        icePlusButton.frame = CGRect(x: backgroundBar.frame.maxX - backgroundBar.frame.width * kTwentyFifths * 3, y: backgroundBar.frame.midY - purchaseInventoryContainer.frame.height * kSixth, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: purchaseInventoryContainer.frame.height * kThird)
         icePlusButton.setImage(icePlusImage, forState: .Normal)
         icePlusButton.addTarget(self, action: "addIceCubesButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(icePlusButton)
         
         let ice = UIImageView()
         ice.image = UIImage(named: "IconIceCubesSolid")
-        ice.frame = CGRect(x: icePlusButton.frame.minX - (backgroundBar.frame.width * kTwentyFifths) - fourthContainer.frame.width * kTenths, y: backgroundBar.frame.midY - fourthContainer.frame.height * kSixth, width: fourthContainer.frame.width * kNinths, height: fourthContainer.frame.height * kThird)
+        ice.frame = CGRect(x: icePlusButton.frame.minX - (backgroundBar.frame.width * kTwentyFifths) - purchaseInventoryContainer.frame.width * kTenths, y: backgroundBar.frame.midY - purchaseInventoryContainer.frame.height * kSixth, width: purchaseInventoryContainer.frame.width * kNinths, height: purchaseInventoryContainer.frame.height * kThird)
         self.view.addSubview(ice)
         
         let iceRemoveImage = UIImage(named: "IconMinus")
@@ -547,11 +524,11 @@ class ViewController: UIViewController {
         self.view.addSubview(iceCostLabel)
     }
     
-    func setupFifthContainer() {
+    func setupMixTitleContainer() {
         
         let mixLemonadeLabel = UILabel()
         mixLemonadeLabel.text = "Mix Lemonade"
-        mixLemonadeLabel.frame = CGRect(x: fifthContainer.frame.width * kFourth, y: fifthContainer.frame.minY, width: fifthContainer.frame.width * kHalf, height: fifthContainer.frame.height)
+        mixLemonadeLabel.frame = CGRect(x: mixTitleContainer.frame.width * kFourth, y: mixTitleContainer.frame.minY, width: mixTitleContainer.frame.width * kHalf, height: mixTitleContainer.frame.height)
         mixLemonadeLabel.font = UIFont(name: "Lobster 1.4", size: 23)
         mixLemonadeLabel.textAlignment = .Center
         mixLemonadeLabel.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
@@ -560,9 +537,9 @@ class ViewController: UIViewController {
         
     }
     
-    func setupSixthContainer() {
+    func setupMixQuestionContainer() {
        let mixMessage = UILabel()
-        mixMessage.frame = CGRect(x: self.view.frame.width * kTwentyFifths * 1.5, y: sixthContainer.frame.minY, width: sixthContainer.frame.width * 11 * kTwelfth, height: sixthContainer.frame.height * kHalf)
+        mixMessage.frame = CGRect(x: self.view.frame.width * kTwentyFifths * 1.5, y: mixQuestionContainer.frame.minY, width: mixQuestionContainer.frame.width * 11 * kTwelfth, height: mixQuestionContainer.frame.height * kHalf)
         mixMessage.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
         mixMessage.adjustsFontSizeToFitWidth = true
         mixMessage.text = "Mix your lemons and ice"
@@ -572,16 +549,16 @@ class ViewController: UIViewController {
         
     }
     
-    func setupSeventhContainer() {
+    func setupMixInventoryContainer() {
         
         var backgroundBar = UIView()
         backgroundBar.backgroundColor = UIColor(red: 223/255, green: 207/255, blue: 109/255, alpha: 1)
-        backgroundBar.frame = CGRect(x: seventhContainer.frame.origin.x, y: seventhContainer.frame.origin.y, width: seventhContainer.frame.width, height: seventhContainer.frame.height * kThird * 2.0)
+        backgroundBar.frame = CGRect(x: mixInventoryContainer.frame.origin.x, y: mixInventoryContainer.frame.origin.y, width: mixInventoryContainer.frame.width, height: mixInventoryContainer.frame.height * kThird * 2.0)
         self.view.addSubview(backgroundBar)
         
         var infoBar = UIView()
         infoBar.backgroundColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
-        infoBar.frame = CGRect(x: seventhContainer.frame.origin.x, y: seventhContainer.frame.origin.y + (seventhContainer.frame.height * 2.0/3.0), width: seventhContainer.frame.width, height: seventhContainer.frame.height/3.0)
+        infoBar.frame = CGRect(x: mixInventoryContainer.frame.origin.x, y: mixInventoryContainer.frame.origin.y + (mixInventoryContainer.frame.height * 2.0/3.0), width: mixInventoryContainer.frame.width, height: mixInventoryContainer.frame.height/3.0)
         self.view.addSubview(infoBar)
         
         let lemonRemoveImage = UIImage(named: "IconMinus")
@@ -593,26 +570,26 @@ class ViewController: UIViewController {
         
         let lemon = UIImageView()
         lemon.image = UIImage(named: "IconLemonSolid")
-        lemon.frame = CGRect(x: lemonRemoveButton.frame.maxX + backgroundBar.frame.width * kTwentyFifths, y: backgroundBar.frame.midY - seventhContainer.frame.height * kSixth, width: seventhContainer.frame.width * kTenths, height: seventhContainer.frame.height * kThird)
+        lemon.frame = CGRect(x: lemonRemoveButton.frame.maxX + backgroundBar.frame.width * kTwentyFifths, y: backgroundBar.frame.midY - mixInventoryContainer.frame.height * kSixth, width: mixInventoryContainer.frame.width * kTenths, height: mixInventoryContainer.frame.height * kThird)
         self.view.addSubview(lemon)
         
         let lemonPlusImage = UIImage(named: "IconPlus")
         let lemonPlusButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        lemonPlusButton.frame = CGRect(x: lemon.frame.maxX + backgroundBar.frame.width * kTwentyFifths, y: backgroundBar.frame.midY - seventhContainer.frame.height * kSixth, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: seventhContainer.frame.height * kThird)
+        lemonPlusButton.frame = CGRect(x: lemon.frame.maxX + backgroundBar.frame.width * kTwentyFifths, y: backgroundBar.frame.midY - mixInventoryContainer.frame.height * kSixth, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: mixInventoryContainer.frame.height * kThird)
         lemonPlusButton.setImage(lemonPlusImage, forState: .Normal)
         lemonPlusButton.addTarget(self, action: "mixAddLemonButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(lemonPlusButton)
         
         let icePlusImage = UIImage(named: "IconPlus")
         let icePlusButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        icePlusButton.frame = CGRect(x: backgroundBar.frame.maxX - backgroundBar.frame.width * kTwentyFifths * 3, y: backgroundBar.frame.midY - seventhContainer.frame.height * kSixth, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: seventhContainer.frame.height * kThird)
+        icePlusButton.frame = CGRect(x: backgroundBar.frame.maxX - backgroundBar.frame.width * kTwentyFifths * 3, y: backgroundBar.frame.midY - mixInventoryContainer.frame.height * kSixth, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: mixInventoryContainer.frame.height * kThird)
         icePlusButton.setImage(icePlusImage, forState: .Normal)
         icePlusButton.addTarget(self, action: "mixAddIceCubeButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(icePlusButton)
         
         let ice = UIImageView()
         ice.image = UIImage(named: "IconIceCubesSolid")
-        ice.frame = CGRect(x: icePlusButton.frame.minX - (backgroundBar.frame.width * kTwentyFifths) - seventhContainer.frame.width * kTenths, y: backgroundBar.frame.midY - seventhContainer.frame.height * kSixth, width: seventhContainer.frame.width * kNinths, height: seventhContainer.frame.height * kThird)
+        ice.frame = CGRect(x: icePlusButton.frame.minX - (backgroundBar.frame.width * kTwentyFifths) - mixInventoryContainer.frame.width * kTenths, y: backgroundBar.frame.midY - mixInventoryContainer.frame.height * kSixth, width: mixInventoryContainer.frame.width * kNinths, height: mixInventoryContainer.frame.height * kThird)
         self.view.addSubview(ice)
         
         let iceRemoveImage = UIImage(named: "IconMinus")
@@ -649,11 +626,11 @@ class ViewController: UIViewController {
         self.view.addSubview(tasteLabel)
     }
     
-    func setupEighthContainer() {
+    func setupSellLemonadeTitleContainer() {
         
         let sellLemonadeLabel = UILabel()
         sellLemonadeLabel.text = "Sell Lemonade"
-        sellLemonadeLabel.frame = CGRect(x: eighthContainer.frame.width * kFourth, y: eighthContainer.frame.minY, width: eighthContainer.frame.width * kHalf, height: eighthContainer.frame.height)
+        sellLemonadeLabel.frame = CGRect(x: sellLemonadeTitleContainer.frame.width * kFourth, y: sellLemonadeTitleContainer.frame.minY, width: sellLemonadeTitleContainer.frame.width * kHalf, height: sellLemonadeTitleContainer.frame.height)
         sellLemonadeLabel.font = UIFont(name: "Lobster 1.4", size: 23)
         sellLemonadeLabel.textAlignment = .Center
         sellLemonadeLabel.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
@@ -662,9 +639,9 @@ class ViewController: UIViewController {
         
     }
     
-    func setupNinthContainer() {
+    func setupSellLemonadeInfoContainer() {
         let mixMessage = UILabel()
-        mixMessage.frame = CGRect(x: self.view.frame.width * kTwentyFifths * 1.5, y: ninthContainer.frame.minY, width: ninthContainer.frame.width * 11 * kTwelfth, height: ninthContainer.frame.height * kHalf)
+        mixMessage.frame = CGRect(x: self.view.frame.width * kTwentyFifths * 1.5, y: sellLemonadeInfoContainer.frame.minY, width: sellLemonadeInfoContainer.frame.width * 11 * kTwelfth, height: sellLemonadeInfoContainer.frame.height * kHalf)
         mixMessage.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
         mixMessage.adjustsFontSizeToFitWidth = true
         mixMessage.text = "Each day you'll either make or lose money."
@@ -673,14 +650,14 @@ class ViewController: UIViewController {
         self.view.addSubview(mixMessage)
     }
     
-    func setupTenthContainer() {
+    func setupSellButtonContainer() {
         var backgroundBar = UIView()
         backgroundBar.backgroundColor = UIColor(red: 223/255, green: 207/255, blue: 109/255, alpha: 1)
-        backgroundBar.frame = CGRect(x: tenthContainer.frame.origin.x, y: tenthContainer.frame.origin.y, width: tenthContainer.frame.width, height: tenthContainer.frame.height)
+        backgroundBar.frame = CGRect(x: sellButtonContainer.frame.origin.x, y: sellButtonContainer.frame.origin.y, width: sellButtonContainer.frame.width, height: sellButtonContainer.frame.height)
         self.view.addSubview(backgroundBar)
         
         var startDayButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        startDayButton.frame = CGRect(x: tenthContainer.frame.width * kTwentyFifths, y: tenthContainer.frame.minY + tenthContainer.frame.height * kSixth, width: tenthContainer.frame.width * 23 * kTwentyFifths, height: tenthContainer.frame.height * 4 * kSixth)
+        startDayButton.frame = CGRect(x: sellButtonContainer.frame.width * kTwentyFifths, y: sellButtonContainer.frame.minY + sellButtonContainer.frame.height * kSixth, width: sellButtonContainer.frame.width * 23 * kTwentyFifths, height: sellButtonContainer.frame.height * 4 * kSixth)
         startDayButton.backgroundColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
         startDayButton.layer.cornerRadius = 5
         startDayButton.layer.borderWidth = 1

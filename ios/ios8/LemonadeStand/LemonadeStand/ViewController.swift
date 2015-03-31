@@ -22,7 +22,6 @@ class ViewController: UIViewController {
     let kmNegativeLemons = "Lemons can not be less than 0"
     let kmNegativeIceCubes = "Ice cubes can not be less than 0"
     
-    
     // UILabels
     var moneyLabel: UILabel!
     var lemonsTotalLabel: UILabel!
@@ -65,15 +64,14 @@ class ViewController: UIViewController {
     var weatherIcon: UIImageView!
     
     // Constants for Views
-    let kTwelfth: CGFloat = 1.0/12.0
-    let kHalf: CGFloat = 1.0/2.0
-    let kThird: CGFloat = 1.0/3.0
-    let kFourth: CGFloat = 1.0/4.0
-    let kSixth: CGFloat = 1.0/6.0
-    let kNinths: CGFloat = 1.0/9.0
-    let kTenths: CGFloat = 1.0/10.0
-    let kThirteenHundreds: CGFloat = 13.0/100.0
     let kTwentyFifths: CGFloat = 1.0/25.0
+    let kTwelvth: CGFloat = 1.0/12.0
+    let kTenths: CGFloat = 1.0/10.0
+    let kNinths: CGFloat = 1.0/9.0
+    let kSixth: CGFloat = 1.0/6.0
+    let kFourth: CGFloat = 1.0/4.0
+    let kThird: CGFloat = 1.0/3.0
+    let kHalf: CGFloat = 1.0/2.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -166,7 +164,6 @@ class ViewController: UIViewController {
     }
     
     // Restarting game
-    
     func resetGame() {
         inventory = Inventory()
         purchases = Purchases(totalDollar: inventory.getTotalDollars(), totalLemons: inventory.getTotalLemons(), totalIceCubes: inventory.getTotalIceCubes())
@@ -176,7 +173,6 @@ class ViewController: UIViewController {
   
         day = 1
     }
-    
     
     // Starting a new day for sales
     func startToday() {
@@ -188,7 +184,6 @@ class ViewController: UIViewController {
         let customers = prepareCustomer()
         
         // Iterate over your customers array and determine who will buy lemonade based on mix ratio
-        
         for customer in customers {
             if customer >= 0.0 && customer <= 0.4 && mixRatio == 1 {
                 totalCustomers += 1
@@ -210,7 +205,6 @@ class ViewController: UIViewController {
     }
     
     // Setting weather
-    
     func setTodaysWeather() {
         var random = Int(arc4random_uniform(UInt32(2)))
         
@@ -244,7 +238,6 @@ class ViewController: UIViewController {
     }
     
     // Preparing 1 - 10 customers for the day with taste preference
-    
     func prepareCustomer() -> Array<Float> {
         var totalCustomers = Int(arc4random_uniform(UInt32(9))) + getWeatherEffect()
         var customers: [Float] = []
@@ -256,7 +249,6 @@ class ViewController: UIViewController {
     }
     
     // Prepare lemon to ice cube mix ratio
-    
     func getLemonadeRatio() -> Int {
         var iceCubes = mix.getMixIceCubes()
         var lemons = mix.getMixLemons()
@@ -278,14 +270,12 @@ class ViewController: UIViewController {
     }
     
     // Resetting Day
-
     func resetDay() {
         purchases = Purchases(totalDollar: inventory.getTotalDollars(), totalLemons: inventory.getTotalLemons(), totalIceCubes: inventory.getTotalIceCubes())
         mix = Mix(allLemons: purchases.getAllLemons(), allIceCubes: purchases.getAllIceCubes())
         day += 1
         setTodaysWeather()
         weatherIcon.removeFromSuperview()
-        setupWeatherView()
         tasteLabel.hidden = true
         
         
@@ -298,24 +288,25 @@ class ViewController: UIViewController {
     // Views
     */
     
-    func setupViewContainerFramework(multiplier: CGFloat, currentHeight: CGFloat) -> CGRect {
-        heightContainers = currentHeight + self.view.bounds.height * kTwelfth * multiplier
-        
-        return CGRect(x: self.view.bounds.origin.x, y: currentHeight, width: self.view.bounds.width, height: self.view.bounds.height * kTwelfth * multiplier)
+    func setupViewContainerFramework(multiplier: CGFloat) -> UIView {
+        var newContainer = UIView()
+        newContainer.frame = CGRect(x: self.view.bounds.origin.x, y: heightContainers, width: self.view.bounds.width, height: self.view.bounds.height * kTwelvth * multiplier)
+        heightContainers += newContainer.frame.height
+        return newContainer
     }
     
     func setupContainerViews() {
         
-        titleContainer = UIView(frame: setupViewContainerFramework(1.5, currentHeight: heightContainers))
-        iconStatusContainer = UIView(frame: setupViewContainerFramework(1.5, currentHeight: heightContainers))
-        purchaseTitleContainer = UIView(frame: setupViewContainerFramework(1, currentHeight: heightContainers))
-        purchaseInventoryContainer = UIView(frame: setupViewContainerFramework(1.5, currentHeight: heightContainers))
-        mixTitleContainer = UIView(frame: setupViewContainerFramework(1, currentHeight: heightContainers))
-        mixQuestionContainer = UIView(frame: setupViewContainerFramework(kHalf, currentHeight: heightContainers))
-        mixInventoryContainer = UIView(frame: setupViewContainerFramework(1.5, currentHeight: heightContainers))
-        sellLemonadeTitleContainer = UIView(frame: setupViewContainerFramework(1, currentHeight: heightContainers))
-        sellLemonadeInfoContainer = UIView(frame: setupViewContainerFramework(kHalf, currentHeight: heightContainers))
-        sellButtonContainer = UIView(frame: setupViewContainerFramework(1.75, currentHeight: heightContainers))
+        titleContainer = setupViewContainerFramework(1.5)
+        iconStatusContainer = setupViewContainerFramework(1.5)
+        purchaseTitleContainer = setupViewContainerFramework(1)
+        purchaseInventoryContainer = setupViewContainerFramework(1.5)
+        mixTitleContainer = setupViewContainerFramework(1)
+        mixQuestionContainer = setupViewContainerFramework(kHalf)
+        mixInventoryContainer = setupViewContainerFramework(1.5)
+        sellLemonadeTitleContainer = setupViewContainerFramework(1)
+        sellLemonadeInfoContainer = setupViewContainerFramework(kHalf)
+        sellButtonContainer = setupViewContainerFramework(1.75)
     }
     
     func setupBackgroundContainer() {
@@ -328,29 +319,41 @@ class ViewController: UIViewController {
     func setupTitleContainer() {
         let lemonadeStandTopImage = UIImageView()
         lemonadeStandTopImage.image = UIImage(named: "LemonadeStandLogo")
-        lemonadeStandTopImage.frame = CGRect(x: titleContainer.frame.width * kNinths * 1.5, y: titleContainer.frame.height * kNinths * 4.0, width: titleContainer.frame.width * kNinths * 6.0, height: titleContainer.frame.height * kHalf)
+        lemonadeStandTopImage.frame = CGRect(x: titleContainer.frame.width * kSixth, y: titleContainer.frame.height * kNinths * 4.0, width: titleContainer.frame.width * kThird * 2.0, height: titleContainer.frame.height * kHalf)
         self.view.addSubview(lemonadeStandTopImage)
         
         let settingsImage = UIImage(named: "IconSettings")
         let settingsButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        settingsButton.frame = CGRect(x: titleContainer.frame.width * (kTenths * 9.0), y: titleContainer.frame.height * kNinths * 4.0, width: titleContainer.frame.width * (kTwentyFifths * 2), height: titleContainer.frame.height * kHalf)
+        settingsButton.frame = CGRect(x: titleContainer.frame.width * kTenths * 9.0, y: titleContainer.frame.height * kNinths * 4.0, width: titleContainer.frame.width * kTwentyFifths * 2.0, height: titleContainer.frame.height * kHalf)
         settingsButton.setImage(settingsImage, forState: .Normal)
         settingsButton.addTarget(self, action: "settingsButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(settingsButton)
     }
     
-    func setupIconContainerIcons(icon: UIImageView, iconHeight: CGFloat, container: UIView) -> CGRect {
-        self.view.addSubview(icon)
-        return CGRect(x: iconHeight + (kTwentyFifths * container.frame.width) * 1.75, y: container.frame.origin.y + (kTwentyFifths * container.frame.height) * 2.0, width: container.frame.width * (kTwentyFifths * 3.0), height: container.frame.height * (kNinths * 5.0))
+    func setupIconStatusContainerIcons(name: String, iconHeight: CGFloat, container: UIView) -> UIImageView {
+        var newIcon = UIImageView()
+        newIcon.image = UIImage(named:  name)
+        newIcon.frame = CGRect(x: iconHeight + container.frame.width * kTwentyFifths * 1.75, y: container.frame.origin.y + container.frame.height * kTwentyFifths * 2.0, width: container.frame.width * kTwentyFifths * 3.0, height: container.frame.height * kNinths * 5.0)
+        self.view.addSubview(newIcon)
+        return newIcon
     }
     
-    func setupIconContainerLabels(label: UILabel, icon:UIImageView, container: UIView) {
-        label.frame = CGRect(x: icon.frame.midX - container.frame.width/36, y: icon.frame.maxY + (kTwentyFifths * container.frame.height) * 3.0, width: container.frame.width/16, height: container.frame.height * kSixth)
+    func setupContainerLabels(icon:UIImageView, x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, yMax: Bool = true, size: CGFloat = 15, font: String = "AppleSDGothicNeo-Bold", hidden: Bool = false) -> UILabel {
+        
+        var yFrame = icon.frame.maxY
+        if yMax == false {
+            yFrame = icon.frame.minY
+        }
+        
+        var label = UILabel()
+        label.frame = CGRect(x: icon.frame.midX - x, y: yFrame + y, width: width, height: height)
         label.textColor = UIColor.yellowColor()
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .Center
-        label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
+        label.font = UIFont(name: font, size: size)
+        label.hidden = hidden
         self.view.addSubview(label)
+        return label
     }
     
     func setupIconStatusContainer() {
@@ -359,41 +362,23 @@ class ViewController: UIViewController {
         statusBar.frame = CGRect(x: iconStatusContainer.frame.origin.x, y: iconStatusContainer.frame.origin.y, width: iconStatusContainer.frame.width, height: iconStatusContainer.frame.height)
         self.view.addSubview(statusBar)
         
-        let dayIcon = UIImageView()
-        dayIcon.image = UIImage(named: "IconCalendar")
-        dayIcon.frame = setupIconContainerIcons(dayIcon, iconHeight: iconStatusContainer.frame.origin.x, container:iconStatusContainer)
-        let weatherIcon = setupWeatherView()
-        let moneyIcon = UIImageView()
-        moneyIcon.image = UIImage(named: "IconMoney")
-        moneyIcon.frame = setupIconContainerIcons(moneyIcon, iconHeight: weatherIcon.frame.maxX, container:iconStatusContainer)
-        let lemonIcon = UIImageView()
-        lemonIcon.image = UIImage(named: "IconLemon")
-        lemonIcon.frame = setupIconContainerIcons(lemonIcon, iconHeight: moneyIcon.frame.maxX, container:iconStatusContainer)
-        let iceIcon = UIImageView()
-        iceIcon.image = UIImage(named: "IconIceCube")
-        iceIcon.frame = setupIconContainerIcons(iceIcon, iconHeight: lemonIcon.frame.maxX, container:iconStatusContainer)
+        let dayIcon = setupIconStatusContainerIcons("IconCalendar", iconHeight: iconStatusContainer.frame.origin.x, container:iconStatusContainer)
+        let weatherIcon = setupIconStatusContainerIcons(getCurrentWeatherIcon(), iconHeight: dayIcon.frame.maxX, container: iconStatusContainer)
+        let moneyIcon = setupIconStatusContainerIcons("IconMoney", iconHeight: weatherIcon.frame.maxX, container:iconStatusContainer)
+        let lemonIcon = setupIconStatusContainerIcons("IconLemon", iconHeight: moneyIcon.frame.maxX, container:iconStatusContainer)
+        let iceIcon = setupIconStatusContainerIcons("IconIceCube", iconHeight: lemonIcon.frame.maxX, container:iconStatusContainer)
         
-        dayLabel = UILabel()
-        setupIconContainerLabels(dayLabel, icon: dayIcon, container: iconStatusContainer)
-        weatherLabel = UILabel()
-        setupIconContainerLabels(weatherLabel, icon: weatherIcon, container: iconStatusContainer)
-        moneyLabel = UILabel()
-        setupIconContainerLabels(moneyLabel, icon: moneyIcon, container: iconStatusContainer)
-        lemonsTotalLabel = UILabel()
-        setupIconContainerLabels(lemonsTotalLabel, icon: lemonIcon, container: iconStatusContainer)
-        iceCubesTotalLabel = UILabel()
-        setupIconContainerLabels(iceCubesTotalLabel, icon: iceIcon, container: iconStatusContainer)
-    }
-    
-    func setupWeatherView() -> UIImageView {
-        weatherIcon = UIImageView()
-        weatherIcon.image = UIImage(named: getCurrentWeatherIcon())
-        weatherIcon.frame = CGRect(x: (kTwentyFifths * iconStatusContainer.frame.width) * 6.25, y: iconStatusContainer.frame.origin.y + (kTwentyFifths * iconStatusContainer.frame.height) * 2.0, width: iconStatusContainer.frame.width * (kTwentyFifths * 3.0), height: iconStatusContainer.frame.height * (kNinths * 5.0))
-        self.view.addSubview(weatherIcon)
-        return weatherIcon
+        var labelContainer = CGRect(x: iconStatusContainer.frame.width * 1.0/36.0, y: iconStatusContainer.frame.height * kTwentyFifths * 3.0, width: iconStatusContainer.frame.width * 1.0/16.0, height: iconStatusContainer.frame.height * kSixth)
+        
+        dayLabel = setupContainerLabels(dayIcon, x: labelContainer.origin.x, y: labelContainer.origin.y, width: labelContainer.width, height: labelContainer.height)
+        weatherLabel = setupContainerLabels(weatherIcon, x: labelContainer.origin.x, y: labelContainer.origin.y, width: labelContainer.width, height: labelContainer.height)
+        moneyLabel = setupContainerLabels(moneyIcon, x: labelContainer.origin.x, y: labelContainer.origin.y, width: labelContainer.width, height: labelContainer.height)
+        lemonsTotalLabel = setupContainerLabels(lemonIcon, x: labelContainer.origin.x, y: labelContainer.origin.y, width: labelContainer.width, height: labelContainer.height)
+        iceCubesTotalLabel = setupContainerLabels(iceIcon, x: labelContainer.origin.x, y: labelContainer.origin.y, width: labelContainer.width, height: labelContainer.height)
     }
     
     func getLabelsContainer() {
+        
         dayLabel.text = "\(day)"
         weatherLabel.text = "\(getWeatherTemperature())\u{00B0}"
         moneyLabel.text = "$\(inventory.getTotalDollars())"
@@ -406,29 +391,45 @@ class ViewController: UIViewController {
         tasteLabel.text = "\(taste)"
     }
     
+    func setupSubHeaderTitles(titleName: String, container: UIView, size: CGFloat) -> UILabel{
+        var label = UILabel()
+        label.text = titleName
+        label.frame = CGRect(x: container.frame.width * kFourth, y: container.frame.minY, width: container.frame.width * kHalf, height: container.frame.height)
+        label.font = UIFont(name: "Lobster 1.4", size: size)
+        label.textAlignment = .Center
+        label.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
+        label.adjustsFontSizeToFitWidth = true
+        self.view.addSubview(label)
+        return label
+    }
+
     func setupPurchaseTitleContainer() {
         
-        purchaseSuppliesLabel = UILabel()
-        purchaseSuppliesLabel.text = "Purchase Supplies"
-        purchaseSuppliesLabel.frame = CGRect(x: purchaseTitleContainer.frame.width * kFourth, y: purchaseTitleContainer.frame.minY, width: purchaseTitleContainer.frame.width * kHalf, height: purchaseTitleContainer.frame.height)
-        purchaseSuppliesLabel.font = UIFont(name: "Lobster 1.4", size: 25)
-        purchaseSuppliesLabel.textAlignment = .Center
-        purchaseSuppliesLabel.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
-        purchaseSuppliesLabel.adjustsFontSizeToFitWidth = true
-        self.view.addSubview(purchaseSuppliesLabel)
+        purchaseSuppliesLabel = setupSubHeaderTitles("Purchase Supplies", container: purchaseTitleContainer, size: 25.0)
+    }
+    
+    func setupInformationBar(container: UIView) -> UIView{
+        
+        var bar = UIView()
+        bar.backgroundColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
+        bar.frame = CGRect(x: container.frame.origin.x, y: container.frame.origin.y + container.frame.height * kThird * 2.0, width: container.frame.width, height: container.frame.height * kThird)
+        self.view.addSubview(bar)
+        return bar
+    }
+    
+    func setupHighlightBackgroud(container: UIView, multiplier: CGFloat) -> UIView {
+        var backgroundBar = UIView()
+        backgroundBar.backgroundColor = UIColor(red: 223/255, green: 207/255, blue: 109/255, alpha: 1)
+        backgroundBar.frame = CGRect(x: container.frame.origin.x, y: container.frame.origin.y, width: container.frame.width, height: container.frame.height * multiplier)
+        self.view.addSubview(backgroundBar)
+        return backgroundBar
     }
     
     func setupPurchaseInventoryContainer() {
-        var backgroundBar = UIView()
-        backgroundBar.backgroundColor = UIColor(red: 223/255, green: 207/255, blue: 109/255, alpha: 1)
-        backgroundBar.frame = CGRect(x: purchaseInventoryContainer.frame.origin.x, y: purchaseInventoryContainer.frame.origin.y, width: purchaseInventoryContainer.frame.width, height: purchaseInventoryContainer.frame.height * kThird * 2.0)
-        self.view.addSubview(backgroundBar)
-        
-        var infoBar = UIView()
-        infoBar.backgroundColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
-        infoBar.frame = CGRect(x: purchaseInventoryContainer.frame.origin.x, y: purchaseInventoryContainer.frame.origin.y + (purchaseInventoryContainer.frame.height * 2.0/3.0), width: purchaseInventoryContainer.frame.width, height: purchaseInventoryContainer.frame.height/3.0)
-        self.view.addSubview(infoBar)
-        
+
+        var backgroundBar = setupHighlightBackgroud(purchaseInventoryContainer, multiplier: kThird * 2.0)
+        var infoBar = setupInformationBar(purchaseInventoryContainer)
+
         let lemonRemoveImage = UIImage(named: "IconMinus")
         let lemonRemoveButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
         lemonRemoveButton.frame = CGRect(x: backgroundBar.frame.origin.x + backgroundBar.frame.width * kTwentyFifths * 1.5, y: backgroundBar.frame.midY - backgroundBar.frame.height * kTwentyFifths, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: backgroundBar.frame.height * kTwentyFifths * 2.0)
@@ -459,29 +460,15 @@ class ViewController: UIViewController {
         ice.image = UIImage(named: "IconIceCubesSolid")
         ice.frame = CGRect(x: icePlusButton.frame.minX - (backgroundBar.frame.width * kTwentyFifths) - purchaseInventoryContainer.frame.width * kTenths, y: backgroundBar.frame.midY - purchaseInventoryContainer.frame.height * kSixth, width: purchaseInventoryContainer.frame.width * kNinths, height: purchaseInventoryContainer.frame.height * kThird)
         self.view.addSubview(ice)
-        
         let iceRemoveImage = UIImage(named: "IconMinus")
         let iceRemoveButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        iceRemoveButton.frame = CGRect(x: ice.frame.minX - backgroundBar.frame.width * kTwentyFifths * 2.5, y: backgroundBar.frame.midY - backgroundBar.frame.height * kTwentyFifths, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: backgroundBar.frame.height * kTwentyFifths * 2.0)
+        iceRemoveButton.frame = CGRect(x: ice.frame.minX - backgroundBar.frame.width * kTenths, y: backgroundBar.frame.midY - backgroundBar.frame.height * kTwentyFifths, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: backgroundBar.frame.height * kTwentyFifths * 2.0)
         iceRemoveButton.setImage(iceRemoveImage, forState: .Normal)
         iceRemoveButton.addTarget(self, action: "removeIceCubesButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(iceRemoveButton)
         
-        lemonsAddLabel = UILabel()
-        lemonsAddLabel.frame = CGRect(x: lemon.frame.midX - lemon.frame.width * kFourth, y: lemon.frame.minY + lemon.frame.height * kFourth, width: lemon.frame.width * kHalf, height: lemon.frame.height * kHalf)
-        lemonsAddLabel.textColor = UIColor.yellowColor()
-        lemonsAddLabel.adjustsFontSizeToFitWidth = true
-        lemonsAddLabel.textAlignment = .Center
-        lemonsAddLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
-        self.view.addSubview(lemonsAddLabel)
-        
-        iceCubesAddLabel = UILabel()
-        iceCubesAddLabel.frame = CGRect(x: ice.frame.midX - ice.frame.width * kFourth, y: ice.frame.minY + ice.frame.height * kFourth, width: ice.frame.width * kHalf, height: ice.frame.height * kHalf)
-        iceCubesAddLabel.textColor = UIColor.yellowColor()
-        iceCubesAddLabel.adjustsFontSizeToFitWidth = true
-        iceCubesAddLabel.textAlignment = .Center
-        iceCubesAddLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
-        self.view.addSubview(iceCubesAddLabel)
+        lemonsAddLabel = setupContainerLabels(lemon, x: lemon.frame.width * kFourth, y: lemon.frame.height * kFourth, width: lemon.frame.width * kHalf, height: lemon.frame.height * kHalf, yMax: false)
+        iceCubesAddLabel = setupContainerLabels(ice, x: ice.frame.width * kFourth, y: ice.frame.height * kFourth, width: ice.frame.width * kHalf, height: ice.frame.height * kHalf, yMax: false)
         
         let lemonsCostLabel = UILabel()
         lemonsCostLabel.text = "Lemons: $2"
@@ -500,20 +487,12 @@ class ViewController: UIViewController {
     
     func setupMixTitleContainer() {
         
-        let mixLemonadeLabel = UILabel()
-        mixLemonadeLabel.text = "Mix Lemonade"
-        mixLemonadeLabel.frame = CGRect(x: mixTitleContainer.frame.width * kFourth, y: mixTitleContainer.frame.minY, width: mixTitleContainer.frame.width * kHalf, height: mixTitleContainer.frame.height)
-        mixLemonadeLabel.font = UIFont(name: "Lobster 1.4", size: 23)
-        mixLemonadeLabel.textAlignment = .Center
-        mixLemonadeLabel.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
-        mixLemonadeLabel.adjustsFontSizeToFitWidth = true
-        self.view.addSubview(mixLemonadeLabel)
-        
+        let mixLemonadeLabel = setupSubHeaderTitles("Mix Lemonade", container: mixTitleContainer, size: 23.0)
     }
     
     func setupMixQuestionContainer() {
        let mixMessage = UILabel()
-        mixMessage.frame = CGRect(x: self.view.frame.width * kTwentyFifths * 1.5, y: mixQuestionContainer.frame.minY, width: mixQuestionContainer.frame.width * 11 * kTwelfth, height: mixQuestionContainer.frame.height * kHalf)
+        mixMessage.frame = CGRect(x: self.view.frame.width * kTwentyFifths * 1.5, y: mixQuestionContainer.frame.minY, width: mixQuestionContainer.frame.width * kTwelvth * 11, height: mixQuestionContainer.frame.height * kHalf)
         mixMessage.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
         mixMessage.adjustsFontSizeToFitWidth = true
         mixMessage.text = "Mix your lemons and ice"
@@ -525,15 +504,8 @@ class ViewController: UIViewController {
     
     func setupMixInventoryContainer() {
         
-        var backgroundBar = UIView()
-        backgroundBar.backgroundColor = UIColor(red: 223/255, green: 207/255, blue: 109/255, alpha: 1)
-        backgroundBar.frame = CGRect(x: mixInventoryContainer.frame.origin.x, y: mixInventoryContainer.frame.origin.y, width: mixInventoryContainer.frame.width, height: mixInventoryContainer.frame.height * kThird * 2.0)
-        self.view.addSubview(backgroundBar)
-        
-        var infoBar = UIView()
-        infoBar.backgroundColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
-        infoBar.frame = CGRect(x: mixInventoryContainer.frame.origin.x, y: mixInventoryContainer.frame.origin.y + (mixInventoryContainer.frame.height * 2.0/3.0), width: mixInventoryContainer.frame.width, height: mixInventoryContainer.frame.height/3.0)
-        self.view.addSubview(infoBar)
+        var backgroundBar = setupHighlightBackgroud(mixInventoryContainer, multiplier: kThird * 2.0)
+        var infoBar = setupInformationBar(mixInventoryContainer)
         
         let lemonRemoveImage = UIImage(named: "IconMinus")
         let lemonRemoveButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
@@ -568,30 +540,17 @@ class ViewController: UIViewController {
         
         let iceRemoveImage = UIImage(named: "IconMinus")
         let iceRemoveButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        iceRemoveButton.frame = CGRect(x: ice.frame.minX - backgroundBar.frame.width * kTwentyFifths * 2.5, y: backgroundBar.frame.midY - backgroundBar.frame.height * kTwentyFifths, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: backgroundBar.frame.height * kTwentyFifths * 2.0)
+        iceRemoveButton.frame = CGRect(x: ice.frame.minX - backgroundBar.frame.width * kTenths, y: backgroundBar.frame.midY - backgroundBar.frame.height * kTwentyFifths, width: backgroundBar.frame.width * kTwentyFifths * 1.5, height: backgroundBar.frame.height * kTwentyFifths * 2.0)
         iceRemoveButton.setImage(iceRemoveImage, forState: .Normal)
         iceRemoveButton.addTarget(self, action: "mixRemoveIceCubeButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(iceRemoveButton)
         
-        mixLemonsLabel = UILabel()
-        mixLemonsLabel.frame = CGRect(x: lemon.frame.midX - lemon.frame.width * kFourth, y: lemon.frame.minY + lemon.frame.height * kFourth, width: lemon.frame.width * kHalf, height: lemon.frame.height * kHalf)
-        mixLemonsLabel.textColor = UIColor.yellowColor()
-        mixLemonsLabel.adjustsFontSizeToFitWidth = true
-        mixLemonsLabel.textAlignment = .Center
-        mixLemonsLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
-        self.view.addSubview(mixLemonsLabel)
-        
-        mixIceCubesLabel = UILabel()
-        mixIceCubesLabel.frame = CGRect(x: ice.frame.midX - ice.frame.width * kFourth, y: ice.frame.minY + ice.frame.height * kFourth, width: ice.frame.width * kHalf, height: ice.frame.height * kHalf)
-        mixIceCubesLabel.textColor = UIColor.yellowColor()
-        mixIceCubesLabel.adjustsFontSizeToFitWidth = true
-        mixIceCubesLabel.textAlignment = .Center
-        mixIceCubesLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 15)
-        self.view.addSubview(mixIceCubesLabel)
+        mixLemonsLabel = setupContainerLabels(lemon, x: lemon.frame.width * kFourth, y: lemon.frame.height * kFourth, width: lemon.frame.width * kHalf, height: lemon.frame.height * kHalf, yMax: false)
+        mixIceCubesLabel = setupContainerLabels(ice, x: ice.frame.width * kFourth, y: ice.frame.height * kFourth, width: ice.frame.width * kHalf, height: ice.frame.height * kHalf, yMax: false)
         
         tasteLabel = UILabel()
         tasteLabel.text = "\(taste) Taste"
-        tasteLabel.frame = CGRect(x: infoBar.frame.midX - infoBar.frame.width * kThird, y: infoBar.frame.minY + infoBar.frame.height * kSixth, width: infoBar.frame.width * kThird * 2, height: infoBar.frame.height * 2 * kThird)
+        tasteLabel.frame = CGRect(x: infoBar.frame.midX - infoBar.frame.width * kThird, y: infoBar.frame.minY + infoBar.frame.height * kSixth, width: infoBar.frame.width * kThird * 2.0, height: infoBar.frame.height * 2 * kThird)
         tasteLabel.textColor = UIColor.yellowColor()
         tasteLabel.font = UIFont(name: "Lobster 1.4", size: 13)
         tasteLabel.textAlignment = .Center
@@ -602,20 +561,12 @@ class ViewController: UIViewController {
     
     func setupSellLemonadeTitleContainer() {
         
-        let sellLemonadeLabel = UILabel()
-        sellLemonadeLabel.text = "Sell Lemonade"
-        sellLemonadeLabel.frame = CGRect(x: sellLemonadeTitleContainer.frame.width * kFourth, y: sellLemonadeTitleContainer.frame.minY, width: sellLemonadeTitleContainer.frame.width * kHalf, height: sellLemonadeTitleContainer.frame.height)
-        sellLemonadeLabel.font = UIFont(name: "Lobster 1.4", size: 23)
-        sellLemonadeLabel.textAlignment = .Center
-        sellLemonadeLabel.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
-        sellLemonadeLabel.adjustsFontSizeToFitWidth = true
-        self.view.addSubview(sellLemonadeLabel)
-        
+        let sellLemonadeLabel = setupSubHeaderTitles("Sell Lemonade", container: sellLemonadeTitleContainer, size: 23.0)
     }
     
     func setupSellLemonadeInfoContainer() {
         let mixMessage = UILabel()
-        mixMessage.frame = CGRect(x: self.view.frame.width * kTwentyFifths * 1.5, y: sellLemonadeInfoContainer.frame.minY, width: sellLemonadeInfoContainer.frame.width * 11 * kTwelfth, height: sellLemonadeInfoContainer.frame.height * kHalf)
+        mixMessage.frame = CGRect(x: self.view.frame.width * kTwentyFifths * 1.5, y: sellLemonadeInfoContainer.frame.minY, width: sellLemonadeInfoContainer.frame.width * kTwelvth * 11, height: sellLemonadeInfoContainer.frame.height * kHalf)
         mixMessage.textColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
         mixMessage.adjustsFontSizeToFitWidth = true
         mixMessage.text = "Each day you'll either make or lose money."
@@ -625,13 +576,10 @@ class ViewController: UIViewController {
     }
     
     func setupSellButtonContainer() {
-        var backgroundBar = UIView()
-        backgroundBar.backgroundColor = UIColor(red: 223/255, green: 207/255, blue: 109/255, alpha: 1)
-        backgroundBar.frame = CGRect(x: sellButtonContainer.frame.origin.x, y: sellButtonContainer.frame.origin.y, width: sellButtonContainer.frame.width, height: sellButtonContainer.frame.height)
-        self.view.addSubview(backgroundBar)
+        var backgroundBar = setupHighlightBackgroud(sellButtonContainer, multiplier: 1.0)
         
         var startDayButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        startDayButton.frame = CGRect(x: sellButtonContainer.frame.width * kTwentyFifths, y: sellButtonContainer.frame.minY + sellButtonContainer.frame.height * kSixth, width: sellButtonContainer.frame.width * 23 * kTwentyFifths, height: sellButtonContainer.frame.height * 4 * kSixth)
+        startDayButton.frame = CGRect(x: sellButtonContainer.frame.width * kTwentyFifths, y: sellButtonContainer.frame.minY + sellButtonContainer.frame.height * kSixth, width: sellButtonContainer.frame.width * kTwentyFifths * 23, height: sellButtonContainer.frame.height * kThird * 2.0)
         startDayButton.backgroundColor = UIColor(red: 0.23137254900000001, green: 0.10980392160000001, blue: 0.054901960780000002, alpha: 1)
         startDayButton.layer.cornerRadius = 5
         startDayButton.layer.borderWidth = 1

@@ -15,6 +15,7 @@
 		838296971ACB08860088D223 /* TaskItTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838296961ACB08860088D223 /* TaskItTests.swift */; };
 		838296A31ACB16D70088D223 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838296A21ACB16D70088D223 /* TaskCell.swift */; };
 		838296A51ACB29230088D223 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838296A41ACB29230088D223 /* TaskModel.swift */; };
+		838296A71ACB2C100088D223 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838296A61ACB2C100088D223 /* TaskDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		838296961ACB08860088D223 /* TaskItTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItTests.swift; sourceTree = "<group>"; };
 		838296A21ACB16D70088D223 /* TaskCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskCell.swift; path = ../TaskCell.swift; sourceTree = "<group>"; };
 		838296A41ACB29230088D223 /* TaskModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
+		838296A61ACB2C100088D223 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				838296801ACB08860088D223 /* AppDelegate.swift */,
 				838296821ACB08860088D223 /* ViewController.swift */,
+				838296A61ACB2C100088D223 /* TaskDetailViewController.swift */,
 				838296A41ACB29230088D223 /* TaskModel.swift */,
 				838296A21ACB16D70088D223 /* TaskCell.swift */,
 				838296841ACB08860088D223 /* Main.storyboard */,
@@ -222,6 +225,7 @@
 				838296A31ACB16D70088D223 /* TaskCell.swift in Sources */,
 				838296A51ACB29230088D223 /* TaskModel.swift in Sources */,
 				838296811ACB08860088D223 /* AppDelegate.swift in Sources */,
+				838296A71ACB2C100088D223 /* TaskDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

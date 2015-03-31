@@ -65,11 +65,53 @@
                     <navigationItem key="navigationItem" id="cK8-pm-Gcy"/>
                     <connections>
                         <outlet property="tableView" destination="fxf-Ev-7Yu" id="MMd-k5-GGb"/>
+                        <segue destination="Drc-6C-Iza" kind="show" identifier="showTaskDetail" id="csp-iZ-XdC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1192" y="311"/>
+            <point key="canvasLocation" x="1166" y="311"/>
+        </scene>
+        <!--Task Detail View Controller-->
+        <scene sceneID="2qN-Ec-iVT">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6yb-Ul-zTZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="Drc-6C-Iza" customClass="TaskDetailViewController" customModule="TaskIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kwn-Wf-gsS"/>
+                        <viewControllerLayoutGuide type="bottom" id="sCM-cE-AIl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tb5-oM-0WS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Task" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R7N-uu-kDh">
+                                <rect key="frame" x="20" y="86" width="280" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Subtask" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qdQ-Zk-HBV">
+                                <rect key="frame" x="20" y="146" width="280" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="O9g-sl-uc2">
+                                <rect key="frame" x="0.0" y="219" width="320" height="162"/>
+                                <date key="date" timeIntervalSinceReferenceDate="449523583.972206">
+                                    <!--2015-03-31 19:39:43 +0000-->
+                                </date>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="dueDatePicker" destination="O9g-sl-uc2" id="5cp-5w-REQ"/>
+                        <outlet property="subtaskTextField" destination="qdQ-Zk-HBV" id="IYg-Ua-nC0"/>
+                        <outlet property="taskTextField" destination="R7N-uu-kDh" id="WWp-Wq-W8q"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1868" y="311"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HN0-pi-EVC">

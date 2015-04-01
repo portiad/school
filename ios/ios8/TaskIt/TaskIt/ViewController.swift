@@ -18,9 +18,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let task1 = TaskModel(task: "Study French", subTask: "Verb in past and present", date: "01/10/14")
-        let task2 = TaskModel(task: "Eat Dinner", subTask: "Burgers", date: "01/10/2014")
-        let task3 = TaskModel(task: "Gym", subTask: "Leg day", date: "01/14/2014")
+        let date1 = Date.from(year: 2014, month: 5, day: 1)
+        let date2 = Date.from(year: 2014, month: 10, day: 1)
+        let date3 = Date.from(year: 2014, month: 12, day: 4)
+        
+        let task1 = TaskModel(task: "Study French", subTask: "Verb in past and present", date: date1)
+        let task2 = TaskModel(task: "Eat Dinner", subTask: "Burgers", date: date2)
+        let task3 = TaskModel(task: "Gym", subTask: "Leg day", date: date3)
         
         taskArray = [task1, task2, task3]
         
@@ -54,7 +58,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         cell.taskLabel.text = thisTask.task
         cell.descriptionLabel.text = thisTask.subTask
-        cell.dateLabel.text = thisTask.date
+        cell.dateLabel.text = Date.toString(date: thisTask.date)
         
         return cell
     }

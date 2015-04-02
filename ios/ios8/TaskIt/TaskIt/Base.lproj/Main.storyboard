@@ -121,7 +121,11 @@
                                 <action selector="cancelButtonTapped:" destination="Drc-6C-Iza" id="cPR-e7-vtr"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="Hpx-Kw-5kD"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="Hpx-Kw-5kD">
+                            <connections>
+                                <action selector="doneBarButtonItemPressed:" destination="Drc-6C-Iza" id="2s9-cD-9LU"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>

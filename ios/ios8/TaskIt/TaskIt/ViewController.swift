@@ -49,15 +49,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if segue.identifier == "showTaskDetail" {
             let detailVC: TaskDetailViewController = segue.destinationViewController as TaskDetailViewController
             let indexPath = tableView.indexPathForSelectedRow()
-            let thisTask =  baseArray[indexPath!.section][indexPath!.row]
+            let thisTask =  fetchedResultsController.objectAtIndexPath(indexPath!) as TaskModel
             detailVC.detailTaskModel = thisTask
-            detailVC.mainVC = self
         }
         else if segue.identifier == "showTaskAdd" {
             let addTaskVC: AddTaskViewController = segue.destinationViewController as AddTaskViewController
-            addTaskVC.mainVC = self
         }
-        
     }
     
     @IBAction func addButtonTapped(sender: UIBarButtonItem) {
@@ -109,19 +106,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // swipe to complete an item and remove from uncompleted array to completed array
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        let thisTask = baseArray[indexPath.section][indexPath.row]
+        let thisTask = fetchedResultsController.objectAtIndexPath(indexPath) as TaskModel
         
         if indexPath.section == 0 {
-            var newTask = TaskModel(task: thisTask.task, subTask: thisTask.subTask, date: thisTask.date, completed: true)
-            baseArray[1].append(newTask)
+            thisTask.completed = true
         }
         else if indexPath.section == 1 {
-            var newTask = TaskModel(task: thisTask.task, subTask: thisTask.subTask, date: thisTask.date, completed: false)
-            baseArray[0].append(newTask)
+            thisTask.completed = false
         }
-        
-        baseArray[indexPath.section].removeAtIndex(indexPath.row)
-        tableView.reloadData()
+        (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
     }
     
     // customize the swipe titles
@@ -132,6 +125,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         else {
             return "Uncomplete"
         }
+    }
+    
+    //NSFetchedResultsControllerDelegate
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        tableView.reloadData()
     }
     
     //Helper

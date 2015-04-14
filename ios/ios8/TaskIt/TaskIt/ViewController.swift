@@ -7,17 +7,22 @@
 //
 
 import UIKit
+import CoreData
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var baseArray:[[TaskModel]] = []
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
+    var fetchedResultsController: NSFetchedResultsController = NSFetchedResultsController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        fetchedResultsController = getFetchedResultsController()
+        fetchedResultsController.delegate = self
+        fetchedResultsController.performFetch(nil)
     }
     
     
@@ -62,20 +67,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return baseArray.count
+        return fetchedResultsController.sections!.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return baseArray[section].count
+        return fetchedResultsController.sections![section].numberOfObjects
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //get back an array (section) then index into that array
-        var thisTask:TaskModel = baseArray[indexPath.section][indexPath.row]
+        var thisTask:TaskModel = fetchedResultsController.objectAtIndexPath(indexPath) as TaskModel
         var cell: TaskCell = tableView.dequeueReusableCellWithIdentifier("myCell") as TaskCell
         
         cell.taskLabel.text = thisTask.task
-        cell.descriptionLabel.text = thisTask.subTask
+        cell.descriptionLabel.text = thisTask.subtask
         cell.dateLabel.text = Date.toString(date: thisTask.date)
         
         return cell
@@ -127,6 +132,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         else {
             return "Uncomplete"
         }
+    }
+    
+    //Helper
+    
+    func taskFetchRequest() -> NSFetchRequest {
+        let fetchRequest = NSFetchRequest(entityName: "TaskModel")
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        return fetchRequest
+    }
+    
+    func getFetchedResultsController() -> NSFetchedResultsController {
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        return fetchedResultsController
     }
 }
 

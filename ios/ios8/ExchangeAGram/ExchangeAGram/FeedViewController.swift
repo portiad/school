@@ -74,6 +74,15 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
+    //UIImagePicker controller delegate
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        let image = info[UIImagePickerControllerOriginalImage] as UIImage
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+    
     
     //UICollectionViewDataSource required to add in UICollectionViewDataSouce
     

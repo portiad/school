@@ -128,5 +128,19 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         return cell
     }
+    
+    //UICollectionViewDelegate add in filters
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let thisItem = feedArray[indexPath.row] as FeedItem
+        
+        var filterVC = FilterViewController()
+        filterVC.thisFeedItem = thisItem
+        
+        self.navigationController?.pushViewController(filterVC, animated: false)
+        
+    }
+    
+    
 
 }

@@ -16,6 +16,8 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     var context: CIContext = CIContext(options: nil)
     
     let kIntensity = 0.7
+    let kPlaceHolderImage = UIImage(named: "Placeholder")
+    let kTemp = NSTemporaryDirectory()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,13 +53,14 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell:FilterCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as FilterCell
-        
-        cell.imageView.image = UIImage(named: "Placeholder")
+    
+        cell.imageView.image = kPlaceHolderImage
         
         // Background queue for the filters to take away from the main queue (multi threaded)
         let filterQueue: dispatch_queue_t = dispatch_queue_create("filter queue", nil)
         dispatch_async(filterQueue, { () -> Void in
-            let filterImage = self.filteredImageFromImage(self.thisFeedItem.thumbNail, filter: self.filters[indexPath.row])
+            let filterImage = self.getCacheImage(indexPath.row)
+            
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 cell.imageView.image = filterImage
             })
@@ -111,5 +114,36 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         let finalImage = UIImage(CGImage: cgImage)
     
         return finalImage!
+    }
+    
+    // caching functions
+    func cacheImage(imageNumber: Int) {
+        let fileName = "\(imageNumber)"
+        
+        //unique path in the directory
+        let uniquePath = kTemp.stringByAppendingPathComponent(fileName)
+        
+        if !NSFileManager.defaultManager().fileExistsAtPath(fileName) {
+            let data = self.thisFeedItem.thumbNail
+            let filter = self.filters[imageNumber]
+            let image = filteredImageFromImage(data, filter: filter)
+            
+            // atomically true write to the backup file and if no errors rewritten
+            UIImageJPEGRepresentation(image, 1.0).writeToFile(uniquePath, atomically: true)
+        }
+    }
+    
+    func getCacheImage(imageNumber: Int) -> UIImage {
+        let fileName = "\(imageNumber)"
+        let uniquePath = kTemp.stringByAppendingPathComponent(fileName)
+        var image:UIImage
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(uniquePath) {
+            image = UIImage(contentsOfFile: uniquePath)!
+        } else {
+            self.cacheImage(imageNumber)
+                image = UIImage(contentsOfFile: uniquePath)!
+        }
+        return image
     }
 }

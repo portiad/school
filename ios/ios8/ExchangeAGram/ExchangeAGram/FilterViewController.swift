@@ -52,9 +52,17 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let cell:FilterCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as FilterCell
         
-//        cell.imageView.image = UIImage(named: "Placeholder")
+        cell.imageView.image = UIImage(named: "Placeholder")
         
-        cell.imageView.image = filteredImageFromImage(thisFeedItem.image, filter: filters[indexPath.row])
+        // Background queue for the filters to take away from the main queue (multi threaded)
+        let filterQueue: dispatch_queue_t = dispatch_queue_create("filter queue", nil)
+        dispatch_async(filterQueue, { () -> Void in
+            let filterImage = self.filteredImageFromImage(self.thisFeedItem.thumbNail, filter: self.filters[indexPath.row])
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                cell.imageView.image = filterImage
+            })
+        })
+        
         return cell
     }
     
@@ -97,11 +105,11 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         filter.setValue(unfilteredImage, forKey: kCIInputImageKey)
         let filteredImage:CIImage = filter.outputImage
         
+        // optimzed the main queue to allow filters to be applied to image
         let extent = filteredImage.extent()
         let cgImage: CGImageRef = context.createCGImage(filteredImage, fromRect: extent)
         let finalImage = UIImage(CGImage: cgImage)
     
         return finalImage!
     }
-
 }

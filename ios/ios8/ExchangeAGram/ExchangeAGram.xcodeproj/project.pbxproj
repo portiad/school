@@ -16,9 +16,9 @@
 		8324F5EF1ADEF6B00095F155 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8324F5EE1ADEF6B00095F155 /* FeedViewController.swift */; };
 		835A72CA1AE05B1700F36E7C /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A72C91AE05B1700F36E7C /* FeedCell.swift */; };
 		835A72CC1AE05CA200F36E7C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835A72CB1AE05CA200F36E7C /* MobileCoreServices.framework */; };
-		83602A701AE1645B00C361BE /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83602A6F1AE1645B00C361BE /* FeedItem.swift */; };
 		836F56231AE183BE00652D4B /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F56221AE183BE00652D4B /* FilterViewController.swift */; };
 		836F56251AE1894100652D4B /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F56241AE1894100652D4B /* FilterCell.swift */; };
+		83FBC3751AE2CF1600BDD620 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBC3741AE2CF1600BDD620 /* FeedItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,9 +45,9 @@
 		8324F5EE1ADEF6B00095F155 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		835A72C91AE05B1700F36E7C /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		835A72CB1AE05CA200F36E7C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		83602A6F1AE1645B00C361BE /* FeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		836F56221AE183BE00652D4B /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		836F56241AE1894100652D4B /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		83FBC3741AE2CF1600BDD620 /* FeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedItem.swift; path = ../FeedItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,10 +96,9 @@
 				8324F5D21ADEF5220095F155 /* Main.storyboard */,
 				835A72C91AE05B1700F36E7C /* FeedCell.swift */,
 				836F56241AE1894100652D4B /* FilterCell.swift */,
-				83602A6F1AE1645B00C361BE /* FeedItem.swift */,
 				8324F5D51ADEF5220095F155 /* Images.xcassets */,
 				8324F5D71ADEF5220095F155 /* LaunchScreen.xib */,
-				8324F5CD1ADEF5220095F155 /* ExchangeAGram.xcdatamodeld */,
+				83FBC3761AE2CF3C00BDD620 /* Model */,
 				8324F5C91ADEF5220095F155 /* Supporting Files */,
 			);
 			path = ExchangeAGram;
@@ -129,6 +128,15 @@
 				8324F5E31ADEF5220095F155 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		83FBC3761AE2CF3C00BDD620 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83FBC3741AE2CF1600BDD620 /* FeedItem.swift */,
+				8324F5CD1ADEF5220095F155 /* ExchangeAGram.xcdatamodeld */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,7 +244,7 @@
 				8324F5CC1ADEF5220095F155 /* AppDelegate.swift in Sources */,
 				835A72CA1AE05B1700F36E7C /* FeedCell.swift in Sources */,
 				8324F5EF1ADEF6B00095F155 /* FeedViewController.swift in Sources */,
-				83602A701AE1645B00C361BE /* FeedItem.swift in Sources */,
+				83FBC3751AE2CF1600BDD620 /* FeedItem.swift in Sources */,
 				8324F5CF1ADEF5220095F155 /* ExchangeAGram.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -35,8 +35,18 @@ class ProfileViewController: UIViewController, FBLoginViewDelegate {
         nameLabel.hidden = false
     }
     
+    //called after logged in and facebook passes info to the user
     func loginViewFetchedUserInfo(loginView: FBLoginView!, user: FBGraphUser!) {
+        println(user)
         
+        nameLabel.text = user.name
+    
+        let userImageURL = "https://graph.facebook.com/\(user.objectID)/picture?type=small"
+        let url = NSURL(string: userImageURL)
+        let imageData = NSData(contentsOfURL: url!)
+        let image = UIImage(data: imageData!)
+        
+        profileImageView.image = image
     }
     
     func loginViewShowingLoggedOutUser(loginView: FBLoginView!) {
@@ -45,7 +55,7 @@ class ProfileViewController: UIViewController, FBLoginViewDelegate {
     }
     
     func loginView(loginView: FBLoginView!, handleError error: NSError!) {
-        
+        println("Error: \(error.localizedDescription)"
     }
 
 }

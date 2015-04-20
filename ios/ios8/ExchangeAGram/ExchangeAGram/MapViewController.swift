@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MapViewController: UIViewController {
 
@@ -18,8 +19,14 @@ class MapViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        
-        
+        //sending a request to get back all the feed items back from coredata
+        let request = NSFetchRequest(entityName: "FeedItem")
+        let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
+        let context:NSManagedObjectContext = appDelegate.managedObjectContext!
+        var error:NSError?
+        //& is a pointer
+        let itemArray = context.executeFetchRequest(request, error: &error)
+        println(error)
         
         
         //Paris

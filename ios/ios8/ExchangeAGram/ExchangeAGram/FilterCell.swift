@@ -10,7 +10,7 @@ import UIKit
 
 class FilterCell: UICollectionViewCell {
     
-    let imageView: UIImageView!
+    var imageView: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,7 +19,6 @@ class FilterCell: UICollectionViewCell {
         contentView.addSubview(imageView)
     }
     
-    // filter subclass nscoding compliant
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

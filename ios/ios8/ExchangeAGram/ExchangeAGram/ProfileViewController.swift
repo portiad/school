@@ -55,7 +55,7 @@ class ProfileViewController: UIViewController, FBLoginViewDelegate {
     }
     
     func loginView(loginView: FBLoginView!, handleError error: NSError!) {
-        println("Error: \(error.localizedDescription)"
+        println("Error: \(error.localizedDescription)")
     }
 
 }

@@ -73,15 +73,9 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     //saving filtered image as the new image
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let filterImage = self.filteredImageFromImage(self.thisFeedItem.image, filter: filters[indexPath.row])
-        let imageData = UIImageJPEGRepresentation(filterImage, 1.0)
-        let thumbNailData = UIImageJPEGRepresentation(filterImage, 0.1)
         
-        self.thisFeedItem.image = imageData
-        self.thisFeedItem.thumbNail = thumbNailData
-        
-        (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
-        self.navigationController?.popViewControllerAnimated(true)
+        createUIAlertController(indexPath)
+
     }
     
     //Helper Functions: UICollectionViewDataSource
@@ -129,6 +123,58 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         let finalImage = UIImage(CGImage: cgImage)
     
         return finalImage!
+    }
+    
+    // UIAlertController Helper Functions
+    
+    func createUIAlertController(indexPath: NSIndexPath) {
+        let alert = UIAlertController(title: "Photo Options", message: "Please choose an option", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        // adding in a text field
+        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            textField.placeholder = "Add caption!"
+            textField.secureTextEntry = false
+        }
+        
+        var text:String
+        
+        let textField = alert.textFields![0] as! UITextField
+        
+        if textField.text != nil {
+            text = textField.text
+        }
+        
+        let photoAction = UIAlertAction(title: "Post Photo to Facebook with Caption", style: UIAlertActionStyle.Destructive) { (UIAlertAction) -> Void in
+            
+            self.saveFilterToCoreData(indexPath)
+        }
+        alert.addAction(photoAction)
+        
+        let saveFilterAction = UIAlertAction(title: "Save Filter without Posting on Facebook", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
+            
+            self.saveFilterToCoreData(indexPath)
+        }
+        alert.addAction(saveFilterAction)
+        
+        let cancelAction = UIAlertAction(title: "Select Another Filter", style: UIAlertActionStyle.Cancel) { (UIAlertAction) -> Void in
+            
+        }
+        alert.addAction(cancelAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func saveFilterToCoreData(indexPath: NSIndexPath) {
+        
+        let filterImage = self.filteredImageFromImage(self.thisFeedItem.image, filter: filters[indexPath.row])
+        let imageData = UIImageJPEGRepresentation(filterImage, 1.0)
+        let thumbNailData = UIImageJPEGRepresentation(filterImage, 0.1)
+        
+        self.thisFeedItem.image = imageData
+        self.thisFeedItem.thumbNail = thumbNailData
+        
+        (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // caching functions

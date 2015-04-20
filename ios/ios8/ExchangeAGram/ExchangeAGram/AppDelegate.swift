@@ -22,7 +22,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let cache = NSURLCache(memoryCapacity: 8 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         NSURLCache.setSharedURLCache(cache)
         
+        FBLoginView.self
+        FBProfilePictureView.self
+        
         return true
+    }
+    
+    
+    //application will open up again after user has verified login creds with Facebook
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        var wasHandled:Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+        return wasHandled
     }
     
     // clear out cache when you recieve memory warning, purge shared cache

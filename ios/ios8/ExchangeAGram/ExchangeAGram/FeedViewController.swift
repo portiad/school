@@ -9,20 +9,30 @@
 import UIKit
 import MobileCoreServices
 import CoreData
+import MapKit
 
 // UIImagePickerControllerDelegate, UINavigationControllerDelegate required for the camera
 
-class FeedViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class FeedViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
     var feedArray: [AnyObject] = []
+    
+    var locationManager: CLLocationManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        //Location Manager Setup
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.distanceFilter = 100.0
+        locationManager.startUpdatingLocation()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -110,6 +120,9 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         feedItem.caption = "test caption"
         feedItem.thumbNail = thumbNailData
         
+        feedItem.latitude = locationManager.location.coordinate.latitude
+        feedItem.longitude = locationManager.location.coordinate.longitude
+        
         (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
         
         feedArray.append(feedItem)
@@ -154,6 +167,9 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         
     }
     
+    //CLLOcation manager delegate
     
-
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        println("Locations: \(locations)")
+    }
 }

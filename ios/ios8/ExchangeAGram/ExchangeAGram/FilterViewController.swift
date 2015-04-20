@@ -126,7 +126,6 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     // UIAlertController Helper Functions
-    
     func createUIAlertController(indexPath: NSIndexPath) {
         let alert = UIAlertController(title: "Photo Options", message: "Please choose an option", preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -135,8 +134,6 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
             textField.placeholder = "Add caption!"
             textField.secureTextEntry = false
         }
-        
-        
         
         let textField = alert.textFields![0] as! UITextField
         var text = textField.text
@@ -190,8 +187,6 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
               println(error)
             }
         }
-        
-        
     }
     
     // caching functions

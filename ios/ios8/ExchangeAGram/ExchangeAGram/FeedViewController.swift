@@ -26,6 +26,9 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
 
         // Do any additional setup after loading the view.
         
+        let backgroundImage = UIImage(named: "AutumnBackground")
+        self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
+        
         //Location Manager Setup
         locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -158,7 +161,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         if thisItem.filtered == true {
             let returnedImage = UIImage(data: thisItem.image)
-            let image = UIImage(CGImage: returnedImage.CGImage, scale: 1.0, orientation: UIImageOrientation.Right)!
+            let image = UIImage(CGImage: returnedImage?.CGImage, scale: 1.0, orientation: UIImageOrientation.Right)
             cell.imageView.image = image
         } else {
             cell.imageView.image = UIImage(data: thisItem.image)

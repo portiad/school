@@ -18,5 +18,7 @@ class FeedItem: NSManagedObject {
     @NSManaged var thumbNail: NSData
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
+    @NSManaged var uniqueID: String
+    @NSManaged var filtered: NSNumber
 
 }

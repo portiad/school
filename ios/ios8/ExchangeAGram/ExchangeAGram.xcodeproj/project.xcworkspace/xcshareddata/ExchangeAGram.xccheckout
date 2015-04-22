@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>EACAE85C-2462-4FFB-9109-8ED7A34F9DED</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>ExchangeAGram</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>
 		<string>https://github.com/portiad/school.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/ios8/ExchangeAGram/ExchangeAGram.xcodeproj/project.xcworkspace</string>
+	<string>ios/ios8/ExchangeAGram/ExchangeAGram.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>

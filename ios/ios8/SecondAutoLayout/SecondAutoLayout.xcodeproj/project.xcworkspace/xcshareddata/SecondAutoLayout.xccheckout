@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>6BE98C61-176F-4C8D-811E-B7584CE60527</string>
+	<string>D3961763-DDF1-4FA9-A59D-4D614BFCF0A9</string>
 	<key>IDESourceControlProjectName</key>
-	<string>SlotMachine</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>
 		<string>https://github.com/portiad/school.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/ios8/SlotMachine/SlotMachine.xcodeproj</string>
+	<string>ios/ios8/SecondAutoLayout/SecondAutoLayout.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>

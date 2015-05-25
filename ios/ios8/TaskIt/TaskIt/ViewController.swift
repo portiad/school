@@ -12,6 +12,7 @@ import CoreData
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
     var fetchedResultsController: NSFetchedResultsController = NSFetchedResultsController()
@@ -23,6 +24,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
+        
+        settingsButton.title = NSString(string: "\u{2699}") as String
     }
     
     
@@ -52,6 +55,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.performSegueWithIdentifier("showTaskAdd", sender: self)
     }
     
+    @IBAction func settingsButtonTapped(sender: UIBarButtonItem) {
+        
+    }
     
     // UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

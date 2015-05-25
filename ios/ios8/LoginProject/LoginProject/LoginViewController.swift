@@ -8,12 +8,11 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, createAccountViewControllerDelegate {
 
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,15 +25,35 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "loginToCreateAccountSegue" {
+            var createAccountVC = segue.destinationViewController as! CreateAccountViewController
+            createAccountVC.delegate = self
+        }
+    }
+    
     @IBAction func loginButtonPressed(sender: UIButton) {
-        self.performSegueWithIdentifier("loginToMainSegue", sender: self)
+        let usernameSavedFromNSUserDefaults = NSUserDefaults.standardUserDefaults().objectForKey(kUsernameKey) as! String
+        let passwordSavedFromNSUserDefaults = NSUserDefaults.standardUserDefaults().objectForKey(kPasswordKey) as! String
+        
+        println(usernameSavedFromNSUserDefaults)
+        println(passwordSavedFromNSUserDefaults)
+        
+        if usernameTextField.text == usernameSavedFromNSUserDefaults && passwordTextField.text == passwordSavedFromNSUserDefaults {
+                self.performSegueWithIdentifier("loginToMainSegue", sender: self)
+            
+        }
     }
     
     
     @IBAction func createAccountButtonPressed(sender: UIButton) {
-        println("i'm here")
         
         self.performSegueWithIdentifier("loginToCreateAccountSegue", sender: self)
+    }
+    
+    // create account view controller delegate, required function
+    func accountCreated() {
+        self.performSegueWithIdentifier("loginToMainSegue", sender: nil)
     }
 
 }

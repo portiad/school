@@ -38,7 +38,7 @@ class TaskDetailViewController: UIViewController {
     }
 
     @IBAction func doneBarButtonItemPressed(sender: UIBarButtonItem) {
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         detailTaskModel.task = taskTextField.text
         detailTaskModel.subtask = subtaskTextField.text

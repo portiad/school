@@ -31,7 +31,7 @@ class AddTaskViewController: UIViewController {
     }
 
     @IBAction func addTaskButtonTapped(sender: UIButton) {
-        let appDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
+        let appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
         let managedObjectContext = appDelegate.managedObjectContext
         let entityDescription = NSEntityDescription.entityForName("TaskModel", inManagedObjectContext: managedObjectContext!)
         

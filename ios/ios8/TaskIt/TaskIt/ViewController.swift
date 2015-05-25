@@ -13,7 +13,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var tableView: UITableView!
     
-    let managedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
     var fetchedResultsController: NSFetchedResultsController = NSFetchedResultsController()
     
     override func viewDidLoad() {
@@ -39,13 +39,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //  transitioning between views
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showTaskDetail" {
-            let detailVC: TaskDetailViewController = segue.destinationViewController as TaskDetailViewController
+            let detailVC: TaskDetailViewController = segue.destinationViewController as! TaskDetailViewController
             let indexPath = tableView.indexPathForSelectedRow()
-            let thisTask =  fetchedResultsController.objectAtIndexPath(indexPath!) as TaskModel
+            let thisTask =  fetchedResultsController.objectAtIndexPath(indexPath!) as! TaskModel
             detailVC.detailTaskModel = thisTask
-        }
-        else if segue.identifier == "showTaskAdd" {
-            let addTaskVC: AddTaskViewController = segue.destinationViewController as AddTaskViewController
+        } else if segue.identifier == "showTaskAdd" {
+            let addTaskVC: AddTaskViewController = segue.destinationViewController as! AddTaskViewController
         }
     }
     
@@ -65,8 +64,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //get back an array (section) then index into that array
-        var thisTask:TaskModel = fetchedResultsController.objectAtIndexPath(indexPath) as TaskModel
-        var cell: TaskCell = tableView.dequeueReusableCellWithIdentifier("myCell") as TaskCell
+        var thisTask:TaskModel = fetchedResultsController.objectAtIndexPath(indexPath) as! TaskModel
+        var cell: TaskCell = tableView.dequeueReusableCellWithIdentifier("myCell") as! TaskCell
         
         cell.taskLabel.text = thisTask.task
         cell.descriptionLabel.text = thisTask.subtask
@@ -88,35 +87,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "To do"
+        if fetchedResultsController.sections?.count == 1 {
+            let fetchedObjects = fetchedResultsController.fetchedObjects!
+            let testTask: TaskModel = fetchedObjects[0] as! TaskModel
+            
+            if testTask.completed == true {
+                return "Completed"
+            }
+            return "To Do"
+            
+        } else if section == 0 {
+                return "To Do"
         }
-        else {
-            return "Completed"
-        }
+        return "Completed"
     }
     
     // swipe to complete an item and remove from uncompleted array to completed array
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        let thisTask = fetchedResultsController.objectAtIndexPath(indexPath) as TaskModel
+        let thisTask = fetchedResultsController.objectAtIndexPath(indexPath) as! TaskModel
         
-        if indexPath.section == 0 {
+        if thisTask.completed == true {
+            thisTask.completed = false
+        } else {
             thisTask.completed = true
         }
-        else if indexPath.section == 1 {
-            thisTask.completed = false
-        }
-        (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
+        
+        (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
     }
     
     // customize the swipe titles
     func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String! {
-        if indexPath.section == 0 {
+        let thisTask = fetchedResultsController.objectAtIndexPath(indexPath) as! TaskModel
+        
+        if  thisTask.completed == false {
             return "Complete"
         }
-        else {
             return "Uncomplete"
-        }
     }
     
     //NSFetchedResultsControllerDelegate

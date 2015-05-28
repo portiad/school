@@ -21,6 +21,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!)
+        
+        
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)

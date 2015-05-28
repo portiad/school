@@ -20,6 +20,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!)
+        
         
         self.capitalizeTableView.delegate = self
         self.capitalizeTableView.dataSource = self

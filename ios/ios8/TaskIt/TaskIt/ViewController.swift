@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, TaskDetailViewControllerDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, TaskDetailViewControllerDelegate, AddTaskViewControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
@@ -49,6 +49,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             detailVC.delegate = self
         } else if segue.identifier == "showTaskAdd" {
             let addTaskVC: AddTaskViewController = segue.destinationViewController as! AddTaskViewController
+            addTaskVC.delegate = self
         }
     }
     
@@ -109,7 +110,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return "Completed"
     }
     
-    // swipe to complete an item and remove from uncompleted array to completed array
+    // Swipe to complete an item and remove from uncompleted array to completed array
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let thisTask = fetchedResultsController.objectAtIndexPath(indexPath) as! TaskModel
         
@@ -138,7 +139,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     //Helper
-    
     func taskFetchRequest() -> NSFetchRequest {
         let fetchRequest = NSFetchRequest(entityName: "TaskModel")
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
@@ -161,8 +161,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         showAlert()
     }
     
-    func showAlert() {
-        var alert = UIAlertController(title: "Change made!", message: "Congratulations", preferredStyle: UIAlertControllerStyle.Alert)
+    // AddTaskViewControllerDelegate
+    func addTask(message: String) {
+        showAlert(message: message)
+    }
+    
+    func addTaskCancel(message: String) {
+        showAlert(message: message)
+    }
+    
+    // Alerts
+    func showAlert(message:String = "Congratulations") {
+        var alert = UIAlertController(title: "Change made!", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Ok!", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }

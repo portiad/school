@@ -95,14 +95,9 @@
 			isa = PBXGroup;
 			children = (
 				838296801ACB08860088D223 /* AppDelegate.swift */,
-				831F659F1AD85D7E003F1579 /* TaskItModel.xcdatamodeld */,
-				83B52CE01ADD7F8500F71F70 /* TaskModel.swift */,
-				8390B1C41B13CDB700025EE4 /* SettingsViewController.swift */,
-				838296821ACB08860088D223 /* ViewController.swift */,
-				838296A61ACB2C100088D223 /* TaskDetailViewController.swift */,
-				83205D3A1ACC63730016E270 /* AddTaskViewController.swift */,
 				838296A81ACB5E950088D223 /* Date.swift */,
-				838296A21ACB16D70088D223 /* TaskCell.swift */,
+				83BD25741B177D4D00DE4D6D /* Model */,
+				83BD25731B177D2C00DE4D6D /* Views */,
 				838296841ACB08860088D223 /* Main.storyboard */,
 				838296871ACB08860088D223 /* Images.xcassets */,
 				838296891ACB08860088D223 /* LaunchScreen.xib */,
@@ -135,6 +130,27 @@
 				838296951ACB08860088D223 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		83BD25731B177D2C00DE4D6D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				83205D3A1ACC63730016E270 /* AddTaskViewController.swift */,
+				8390B1C41B13CDB700025EE4 /* SettingsViewController.swift */,
+				838296A61ACB2C100088D223 /* TaskDetailViewController.swift */,
+				838296821ACB08860088D223 /* ViewController.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		83BD25741B177D4D00DE4D6D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				838296A21ACB16D70088D223 /* TaskCell.swift */,
+				83B52CE01ADD7F8500F71F70 /* TaskModel.swift */,
+				831F659F1AD85D7E003F1579 /* TaskItModel.xcdatamodeld */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

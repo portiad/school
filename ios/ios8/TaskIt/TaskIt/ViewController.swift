@@ -113,6 +113,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return "Completed"
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor.clearColor()
+    }
+    
     // Swipe to complete an item and remove from uncompleted array to completed array
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let thisTask = fetchedResultsController.objectAtIndexPath(indexPath) as! TaskModel

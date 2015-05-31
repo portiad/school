@@ -14,7 +14,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     
-    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
     var fetchedResultsController: NSFetchedResultsController = NSFetchedResultsController()
     
     override func viewDidLoad() {
@@ -29,6 +28,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         fetchedResultsController.performFetch(nil)
         
         settingsButton.title = NSString(string: "\u{2699}") as String
+        
+        // Notification center that listens for the iCloudUpdated from ModelManager
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("iCloudUpdated"), name: "coreDataUpdated", object: nil)
     }
     
     
@@ -127,7 +129,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             thisTask.completed = true
         }
         
-        (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+        ModelManager.instance.saveContext()
     }
     
     // customize the swipe titles
@@ -158,7 +160,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func getFetchedResultsController() -> NSFetchedResultsController {
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: managedObjectContext, sectionNameKeyPath: "completed", cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: ModelManager.instance.managedObjectContext!, sectionNameKeyPath: "completed", cacheName: nil)
         
         return fetchedResultsController
     }
@@ -182,6 +184,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var alert = UIAlertController(title: "Change made!", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Ok!", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    // iCloud Notification
+    
+    func iCloudUpdated() {
+        tableView.reloadData()
     }
 }
 

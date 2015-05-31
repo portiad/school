@@ -55,7 +55,7 @@ class TaskDetailViewController: UIViewController {
         detailTaskModel.date = dueDatePicker.date
         detailTaskModel.completed = detailTaskModel.completed
         
-        appDelegate.saveContext()
+        ModelManager.instance.saveContext()
         
         self.navigationController?.popViewControllerAnimated(true)
         delegate?.taskDetailEdited!()

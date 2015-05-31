@@ -466,7 +466,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qxq-vY-9Pp">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qxq-vY-9Pp">
                                 <rect key="frame" x="16" y="28" width="108" height="62"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="162" id="1nI-1r-Lut"/>
@@ -501,7 +501,7 @@
                                     <action selector="cancelButtonTapped:" destination="6Xb-Ls-BFy" eventType="touchUpInside" id="FUB-02-vmM"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GpM-9N-8bR">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GpM-9N-8bR">
                                 <rect key="frame" x="16" y="127" width="280" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="7wJ-PZ-iZK"/>
@@ -532,7 +532,7 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QKU-XE-2Ot">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QKU-XE-2Ot">
                                 <rect key="frame" x="16" y="215" width="280" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="512" id="2Bk-zx-OIu"/>
@@ -564,7 +564,7 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZpR-kn-HGY">
+                            <datePicker contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZpR-kn-HGY">
                                 <rect key="frame" x="0.0" y="304" width="320" height="162"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="162" id="LXd-eH-3di"/>
@@ -591,14 +591,14 @@
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
-                                    <rect key="frame" x="125" y="422" width="550" height="336"/>
+                                    <rect key="frame" x="125" y="422" width="550" height="216"/>
                                     <mask key="constraints">
                                         <include reference="bUg-cq-I8c"/>
                                         <include reference="cUc-0j-5m9"/>
                                     </mask>
                                 </variation>
                             </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Subtask" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9L0-iH-qkp">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Subtask" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9L0-iH-qkp">
                                 <rect key="frame" x="22" y="186" width="63" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="103" id="h3L-xc-nmm"/>
@@ -620,7 +620,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMq-ZN-IAU">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMq-ZN-IAU">
                                 <rect key="frame" x="16" y="275" width="36" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="36" id="3Pb-Ag-V4a"/>
@@ -653,7 +653,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmM-fa-9bF">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmM-fa-9bF">
                                 <rect key="frame" x="232" y="28" width="58" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="63" id="gpB-nw-7e5"/>
@@ -688,7 +688,7 @@
                                     <action selector="addTaskButtonTapped:" destination="6Xb-Ls-BFy" eventType="touchUpInside" id="2Gb-CS-Wau"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Task" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hY-0s-R0S">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Task" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hY-0s-R0S">
                                 <rect key="frame" x="16" y="98" width="35" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="103" id="4Pd-zh-xtV"/>
@@ -770,16 +770,16 @@
                                 <exclude reference="BhB-4d-KVU"/>
                                 <exclude reference="KIB-5x-fTd"/>
                                 <exclude reference="ujk-SF-9wH"/>
+                                <exclude reference="MDO-tn-Phd"/>
+                                <exclude reference="Ok0-yK-J0Y"/>
+                                <exclude reference="Wpk-Vj-gwJ"/>
+                                <exclude reference="ygc-tn-MHp"/>
                                 <exclude reference="Fbc-XJ-Ad6"/>
                                 <exclude reference="GPk-Az-L9O"/>
                                 <exclude reference="3eA-w2-6Fr"/>
                                 <exclude reference="Vrs-Hi-noF"/>
                                 <exclude reference="dqv-mY-jb0"/>
                                 <exclude reference="xQK-TI-BRb"/>
-                                <exclude reference="MDO-tn-Phd"/>
-                                <exclude reference="Ok0-yK-J0Y"/>
-                                <exclude reference="Wpk-Vj-gwJ"/>
-                                <exclude reference="ygc-tn-MHp"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -795,11 +795,11 @@
                                 <include reference="qgb-ba-Hx6"/>
                                 <include reference="BUE-Wt-5me"/>
                                 <include reference="KIB-5x-fTd"/>
+                                <include reference="Ok0-yK-J0Y"/>
+                                <include reference="Wpk-Vj-gwJ"/>
                                 <include reference="GPk-Az-L9O"/>
                                 <include reference="3eA-w2-6Fr"/>
                                 <include reference="xQK-TI-BRb"/>
-                                <include reference="Ok0-yK-J0Y"/>
-                                <include reference="Wpk-Vj-gwJ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -815,11 +815,11 @@
                                 <include reference="wZk-27-u5e"/>
                                 <include reference="BhB-4d-KVU"/>
                                 <include reference="ujk-SF-9wH"/>
+                                <include reference="MDO-tn-Phd"/>
+                                <include reference="ygc-tn-MHp"/>
                                 <include reference="Fbc-XJ-Ad6"/>
                                 <include reference="Vrs-Hi-noF"/>
                                 <include reference="dqv-mY-jb0"/>
-                                <include reference="MDO-tn-Phd"/>
-                                <include reference="ygc-tn-MHp"/>
                             </mask>
                         </variation>
                     </view>

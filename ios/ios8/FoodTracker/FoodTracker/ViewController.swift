@@ -17,6 +17,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // Setting up search controller
+        self.searchController = UISearchController(searchResultsController: nil)
+        self.searchController.searchResultsUpdater = self
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        
+        // Setting up search bar
+        self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0)
+        self.tableView.tableHeaderView = self.searchController.searchBar
+        self.searchController.searchBar.delegate = self
+        
+        // Search controller presented in the current ViewController
+        self.definesPresentationContext = true
+        
     }
 
     override func didReceiveMemoryWarning() {

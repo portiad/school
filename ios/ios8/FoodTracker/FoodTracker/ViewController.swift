@@ -14,6 +14,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var searchController: UISearchController!
     
+    let kAppID = "c9bacf36"
+    let kAppKey = "58e38595d1506b0aa252547a2b1e19ec"
+    
     var suggestedSearchFoods:[String] = []
     var filteredSuggestedSearchFoods:[String] = []
     var scopeButtonTitles:[String] = ["Recommended", "Search Results", "Saved"]
@@ -97,16 +100,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // Mark - API Requests
     func makeRequest(searchString:String) {
-        let url = NSURL(string: "https://api.nutritionix.com/v1_1/search/\(searchString)?results=0%3A20&cal_min=0&cal_max=50000&fields=item_name%2Cbrand_name%2Citem_id%2Cbrand_id&appId=c9bacf36&appKey=58e38595d1506b0aa252547a2b1e19ec")
-        // setup request
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
-            println(data)
-            var stringData = NSString(data: data, encoding: NSUTF8StringEncoding)
-            println(response)
-            println(stringData)
-        })
-        // execute request
-        task.resume()
-    }
+        let url = NSURL(string: "https://api.nutritionix.com/v1_1/search/")
+        var request = NSMutableURLRequest(URL: url!)
+        
+        let session = NSURLSession.sharedSession()
+        request.HTTPMethod = "POST"
+        
+        var params = [
+            "appId": kAppID,
+            "appKey": kAppKey,
+            "fields": ["item_name", "brand_name", "keywords", "usda_fields"],
+            "limit": 50,
+            "query": searchString,
+            "filters": ["exists" : ["usda_fields": true]]]
+        
+        var error: NSError?
+        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &error)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        
+        // How to make an HTTP get request
+//        let url = NSURL(string: "https://api.nutritionix.com/v1_1/search/\(searchString)?results=0%3A20&cal_min=0&cal_max=50000&fields=item_name%2Cbrand_name%2Citem_id%2Cbrand_id&appId=\(kAppID)&appKey=\(kAppKey)")
+//        // setup request
+//        let task = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
+//            println(data)
+//            var stringData = NSString(data: data, encoding: NSUTF8StringEncoding)
+//            println(response)
+//            println(stringData)
+//        })
+//        // execute request
+//        task.resume()
+   }
 }
 

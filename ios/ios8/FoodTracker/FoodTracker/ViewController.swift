@@ -119,6 +119,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
+        let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, err) -> Void in
+            var stringData = NSString(data: data, encoding: NSUTF8StringEncoding)
+            var conversionError: NSError?
+            var jsonDictionary = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &conversionError) as? NSDictionary
+        })
+        task.resume()
+        
         
         // How to make an HTTP get request
 //        let url = NSURL(string: "https://api.nutritionix.com/v1_1/search/\(searchString)?results=0%3A20&cal_min=0&cal_max=50000&fields=item_name%2Cbrand_name%2Citem_id%2Cbrand_id&appId=\(kAppID)&appKey=\(kAppKey)")

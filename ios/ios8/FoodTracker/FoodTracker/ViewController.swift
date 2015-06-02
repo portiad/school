@@ -144,6 +144,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         makeRequest(searchBar.text)
     }
     
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        self.tableView.reloadData()
+    }
+    
     // Mark - API Requests
     func makeRequest(searchString:String) {
         let url = NSURL(string: "https://api.nutritionix.com/v1_1/search/")

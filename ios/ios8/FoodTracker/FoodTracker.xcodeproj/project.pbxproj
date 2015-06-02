@@ -15,6 +15,7 @@
 		83DBBBAD1B1BB01100961E15 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DBBBAB1B1BB01100961E15 /* LaunchScreen.xib */; };
 		83DBBBB91B1BB01100961E15 /* FoodTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBBBB81B1BB01100961E15 /* FoodTrackerTests.swift */; };
 		83DBBBC31B1BBCA500961E15 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBBBC21B1BBCA500961E15 /* DetailViewController.swift */; };
+		83F94FB01B1E3B8000D75CC6 /* USDAItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F94FAF1B1E3B8000D75CC6 /* USDAItem.swift */; };
 		83FE50F11B1D01260000239B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE50F01B1D01260000239B /* DataController.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +42,8 @@
 		83DBBBB71B1BB01100961E15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83DBBBB81B1BB01100961E15 /* FoodTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTrackerTests.swift; sourceTree = "<group>"; };
 		83DBBBC21B1BBCA500961E15 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		83FE50F01B1D01260000239B /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		83F94FAF1B1E3B8000D75CC6 /* USDAItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = USDAItem.swift; sourceTree = "<group>"; };
+		83FE50F01B1D01260000239B /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataController.swift; path = ../DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +67,6 @@
 		83DBBB911B1BB01100961E15 = {
 			isa = PBXGroup;
 			children = (
-				83FE50F01B1D01260000239B /* DataController.swift */,
 				83DBBB9C1B1BB01100961E15 /* FoodTracker */,
 				83DBBBB51B1BB01100961E15 /* FoodTrackerTests */,
 				83DBBB9B1B1BB01100961E15 /* Products */,
@@ -84,6 +85,7 @@
 		83DBBB9C1B1BB01100961E15 /* FoodTracker */ = {
 			isa = PBXGroup;
 			children = (
+				83FE50F01B1D01260000239B /* DataController.swift */,
 				83DBBB9F1B1BB01100961E15 /* AppDelegate.swift */,
 				83DBBBA61B1BB01100961E15 /* Main.storyboard */,
 				83FE50EE1B1CD5020000239B /* Views */,
@@ -132,6 +134,7 @@
 		83FE50EF1B1CD5180000239B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				83F94FAF1B1E3B8000D75CC6 /* USDAItem.swift */,
 				83DBBBA11B1BB01100961E15 /* FoodTracker.xcdatamodeld */,
 			);
 			name = Model;
@@ -240,6 +243,7 @@
 				83FE50F11B1D01260000239B /* DataController.swift in Sources */,
 				83DBBBA51B1BB01100961E15 /* ViewController.swift in Sources */,
 				83DBBBA31B1BB01100961E15 /* FoodTracker.xcdatamodeld in Sources */,
+				83F94FB01B1E3B8000D75CC6 /* USDAItem.swift in Sources */,
 				83DBBBA01B1BB01100961E15 /* AppDelegate.swift in Sources */,
 				83DBBBC31B1BBCA500961E15 /* DetailViewController.swift in Sources */,
 			);

@@ -93,6 +93,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 0
     }
     
+    // Mark - UITableViewDelegate
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
+        
+        if selectedScopeButtonIndex == 0 {
+            var searchFoodName: String
+            
+            if self.searchController.active {
+                searchFoodName = filteredSuggestedSearchFoods[indexPath.row]
+            } else {
+                searchFoodName = suggestedSearchFoods[indexPath.row]
+            }
+            
+            self.searchController.searchBar.selectedScopeButtonIndex = 1
+            makeRequest(searchFoodName)
+            
+        } else if selectedScopeButtonIndex == 1 {
+            
+        } else {
+            
+        }
+    }
+    
     // Mark - UISearchResultsUpdating
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchString = self.searchController.searchBar.text
@@ -160,7 +184,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.tableView.reloadData()
                     })
-                    
                 } else {
                     let errorString = NSString(data: data, encoding: NSUTF8StringEncoding)
                     println("Error could not parse JSON \(errorString)")

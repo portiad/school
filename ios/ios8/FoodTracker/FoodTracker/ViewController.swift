@@ -129,7 +129,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             } else {
                 searchFoodName = suggestedSearchFoods[indexPath.row]
             }
-            
             self.searchController.searchBar.selectedScopeButtonIndex = 1
             makeRequest(searchFoodName)
             

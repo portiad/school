@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var suggestedSearchFoods:[String] = []
     var filteredSuggestedSearchFoods:[String] = []
     var apiSearchForFoods:[(name: String, idValue: String)] = []
-    var favoritedUSDAItems: [AnyObject] = []
+    var favoritedUSDAItems: [USDAItem] = []
     var filteredFavoritedUSDAItems: [USDAItem] = []
     
     var scopeButtonTitles:[String] = ["Recommended", "Search Results", "Saved"]
@@ -51,6 +51,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Search foods
         self.suggestedSearchFoods = ["apple", "bagel", "banana", "beer", "bread", "carrots", "cheddar cheese", "chicken breast", "chili with beans", "chocolate chip cookie", "coffee", "cola", "corn", "egg", "graham cracker", "granola bar", "green beans", "ground beef patty", "hot dog", "ice cream", "jelly doughnut", "ketchup", "milk", "mixed nuts", "mustard", "oatmeal", "orange juice", "peanut butter", "pizza", "pork chop", "potato", "potato chips", "pretzels", "raisins", "ranch salad dressing", "red wine", "rice", "salsa", "shrimp", "spaghetti", "spaghetti sauce", "tuna", "white wine", "yellow cake"]
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "usdaItemDidComplete:", name: kUSDAItemCompleted, object: nil)
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toDetailVCSegue" {
+            if sender != nil {
+                var detailVC = segue.destinationViewController as! DetailViewController
+                detailVC.usdaItem = sender as? USDAItem
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,7 +85,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else if selectedScopeButtonIndex == 1 {
             foodName = apiSearchForFoods[indexPath.row].name
         } else {
-            foodName = self.favoritedUSDAItems[indexPath.row].name!
+            if self.searchController.active {
+                foodName = self.filteredFavoritedUSDAItems[indexPath.row].name!
+            } else {
+                foodName = self.favoritedUSDAItems[indexPath.row].name!
+            }
         }
         
         cell.textLabel?.text = foodName
@@ -92,13 +107,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             return suggestedSearchFoods.count
         } else if selectedScopeButtonIndex == 1 {
-              return self.apiSearchForFoods.count
+            return self.apiSearchForFoods.count
+        } else {
+            if self.searchController.active {
+                return self.filteredFavoritedUSDAItems.count
+            } else {
+                return favoritedUSDAItems.count
             }
-        return favoritedUSDAItems.count
+        }
     }
     
     // Mark - UITableViewDelegate
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
         
@@ -115,11 +134,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             makeRequest(searchFoodName)
             
         } else if selectedScopeButtonIndex == 1 {
+            self.performSegueWithIdentifier("toDetailVCSegue", sender: nil)
             let idValue = apiSearchForFoods[indexPath.row].idValue
             dataController.saveUSDAItemFromId(idValue, json: self.jsonResponse)
             
-        } else {
-            
+        } else if selectedScopeButtonIndex == 2 {
+            if self.searchController.active {
+                let usdaItem = filteredFavoritedUSDAItems[indexPath.row]
+                self.performSegueWithIdentifier("toDetailVCSegue", sender: usdaItem)
+            } else {
+                let usdaItem = favoritedUSDAItems[indexPath.row]
+                self.performSegueWithIdentifier("toDetailVCSegue", sender: usdaItem)
+            }
         }
     }
     
@@ -140,7 +166,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 return foodMatch != nil
             })
         } else if scope == 2 {
-            self.filteredFavoritedUSDAItems = self.filteredFavoritedUSDAItems.filter({ (item: USDAItem) -> Bool in
+            self.filteredFavoritedUSDAItems = self.favoritedUSDAItems.filter({ (item: USDAItem) -> Bool in
                 // iterate over each element in suggestedSearchFoods to see if the search string exists in food
                 var stringMatch = item.name!.rangeOfString(searchText)
                 return stringMatch != nil
@@ -191,7 +217,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //            var stringData = NSString(data: data, encoding: NSUTF8StringEncoding)
             var conversionError: NSError?
             var jsonDictionary = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &conversionError) as? NSDictionary
-            println(jsonDictionary)
             
             if conversionError != nil {
                 println(conversionError?.localizedDescription)
@@ -236,6 +261,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
         self.favoritedUSDAItems = managedObjectContext?.executeFetchRequest(fetchRequest, error: nil) as! [USDAItem]
+    }
+    
+    // Mark - NSNotification Center
+    
+    func usdaItemDidComplete(notification: NSNotification) {
+        requestFavoritedUSDAItems()
+        let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
+        
+        if selectedScopeButtonIndex == 2 {
+            self.tableView.reloadData()
+        }
     }
 }
 

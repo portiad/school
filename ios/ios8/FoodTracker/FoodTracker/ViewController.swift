@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
 
@@ -20,6 +21,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var suggestedSearchFoods:[String] = []
     var filteredSuggestedSearchFoods:[String] = []
     var apiSearchForFoods:[(name: String, idValue: String)] = []
+    var favoritedUSDAItems: [AnyObject] = []
+    var filteredFavoritedUSDAItems: [USDAItem] = []
     
     var scopeButtonTitles:[String] = ["Recommended", "Search Results", "Saved"]
     
@@ -71,7 +74,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else if selectedScopeButtonIndex == 1 {
             foodName = apiSearchForFoods[indexPath.row].name
         } else {
-            foodName = ""
+            foodName = self.favoritedUSDAItems[indexPath.row].name!
         }
         
         cell.textLabel?.text = foodName
@@ -91,7 +94,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else if selectedScopeButtonIndex == 1 {
               return self.apiSearchForFoods.count
             }
-        return 0
+        return favoritedUSDAItems.count
     }
     
     // Mark - UITableViewDelegate
@@ -130,11 +133,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func filterContentForSearch(searchText:String, scope: Int) {
-        self.filteredSuggestedSearchFoods = self.suggestedSearchFoods.filter({ (food: String) -> Bool in
-            // iterate over each element in suggestedSearchFoods to see if the search string exists in food
-            var foodMatch = food.rangeOfString(searchText)
-            return foodMatch != nil
-        })
+        if scope == 0 {
+            self.filteredSuggestedSearchFoods = self.suggestedSearchFoods.filter({ (food: String) -> Bool in
+                // iterate over each element in suggestedSearchFoods to see if the search string exists in food
+                var foodMatch = food.rangeOfString(searchText)
+                return foodMatch != nil
+            })
+        } else if scope == 2 {
+            self.filteredFavoritedUSDAItems = self.filteredFavoritedUSDAItems.filter({ (item: USDAItem) -> Bool in
+                // iterate over each element in suggestedSearchFoods to see if the search string exists in food
+                var stringMatch = item.name!.rangeOfString(searchText)
+                return stringMatch != nil
+            })
+        }
     }
     
     
@@ -148,6 +159,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        if selectedScope == 2 {
+            requestFavoritedUSDAItems()
+        }
+        
         self.tableView.reloadData()
     }
     
@@ -212,5 +227,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //        // execute request
     //        task.resume()
    }
+    
+    
+    // Mark - Setup Core Data
+    
+    func requestFavoritedUSDAItems() {
+        let fetchRequest = NSFetchRequest(entityName: "USDAItem")
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        
+        self.favoritedUSDAItems = managedObjectContext?.executeFetchRequest(fetchRequest, error: nil) as! [USDAItem]
+    }
 }
 

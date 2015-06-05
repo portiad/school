@@ -56,7 +56,7 @@ class DataController {
                     //var count = managedObjectContext?.countForFetchRequest(requestForUSDAItem, error: &error)
                     
                     if items?.count != 0 {
-                        // item is already saved
+                        println("Already saved")
                         return
                     } else {
                         println("Lets save this to core data!")
@@ -131,7 +131,6 @@ class DataController {
                                 }
                                 
                                 (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
-                                println("test")
                             }
                         }
                     }

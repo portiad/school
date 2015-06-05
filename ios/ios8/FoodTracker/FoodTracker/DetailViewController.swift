@@ -75,52 +75,56 @@ class DetailViewController: UIViewController {
         
         // calcium
         let calciumTitleString = NSAttributedString(string: "Calcium ", attributes: styleFirstWordAttributesDictionary)
-        let calciumBodyString = NSAttributedString(string: "\(usdaItem.calcium)% \n", attributes: styleOneAttributesDictionary)
+        let calciumBodyString = NSAttributedString(string: stringConverter(usdaItem.calcium), attributes: styleOneAttributesDictionary)
         itemAttributedString.appendAttributedString(calciumTitleString)
         itemAttributedString.appendAttributedString(calciumBodyString)
         
         //carbohydrate
         let carbohydrateTitleString = NSAttributedString(string: "Carbohydrate ", attributes: styleFirstWordAttributesDictionary)
-        let carbohydrateBodyString = NSAttributedString(string: "\(usdaItem.carbohydrate)% \n", attributes: styleTwoAttributesDictionary)
+        let carbohydrateBodyString = NSAttributedString(string: stringConverter(usdaItem.carbohydrate), attributes: styleTwoAttributesDictionary)
         itemAttributedString.appendAttributedString(carbohydrateTitleString)
         itemAttributedString.appendAttributedString(carbohydrateBodyString)
         
         //cholesterol
         let cholesterolTitleString = NSAttributedString(string: "Cholesterol ", attributes: styleFirstWordAttributesDictionary)
-        let cholesterolBodyString = NSAttributedString(string: "\(usdaItem.cholesterol)% \n", attributes: styleOneAttributesDictionary)
+        let cholesterolBodyString = NSAttributedString(string: stringConverter(usdaItem.cholesterol), attributes: styleOneAttributesDictionary)
         itemAttributedString.appendAttributedString(cholesterolTitleString)
         itemAttributedString.appendAttributedString(cholesterolBodyString)
         
         //energy
         let energyTitleString = NSAttributedString(string: "Energy ", attributes: styleFirstWordAttributesDictionary)
-        let energyBodyString = NSAttributedString(string: "\(usdaItem.energy)% \n", attributes: styleTwoAttributesDictionary)
+        let energyBodyString = NSAttributedString(string: stringConverter(usdaItem.energy), attributes: styleTwoAttributesDictionary)
         itemAttributedString.appendAttributedString(energyTitleString)
         itemAttributedString.appendAttributedString(energyBodyString)
         
         //fat
         let fatTitleString = NSAttributedString(string: "Fat ", attributes: styleFirstWordAttributesDictionary)
-        let fatBodyString = NSAttributedString(string: "\(usdaItem.fatTotal)% \n", attributes: styleOneAttributesDictionary)
+        let fatBodyString = NSAttributedString(string: stringConverter(usdaItem.fatTotal), attributes: styleOneAttributesDictionary)
         itemAttributedString.appendAttributedString(fatTitleString)
         itemAttributedString.appendAttributedString(fatBodyString)
         
         //protein
         let proteinTitleString = NSAttributedString(string: "Protein ", attributes: styleFirstWordAttributesDictionary)
-        let proteinBodyString = NSAttributedString(string: "\(usdaItem.protein)% \n", attributes: styleTwoAttributesDictionary)
+        let proteinBodyString = NSAttributedString(string: stringConverter(usdaItem.protein), attributes: styleTwoAttributesDictionary)
         itemAttributedString.appendAttributedString(proteinTitleString)
         itemAttributedString.appendAttributedString(proteinBodyString)
         
         //sugar
         let sugarTitleString = NSAttributedString(string: "Sugar ", attributes: styleFirstWordAttributesDictionary)
-        let sugarBodyString = NSAttributedString(string: "\(usdaItem.sugar)% \n", attributes: styleOneAttributesDictionary)
+        let sugarBodyString = NSAttributedString(string: stringConverter(usdaItem.sugar), attributes: styleOneAttributesDictionary)
         itemAttributedString.appendAttributedString(sugarTitleString)
         itemAttributedString.appendAttributedString(sugarBodyString)
         
         //vitman c
         let vitaminCTitleString = NSAttributedString(string: "Vitamin C ", attributes: styleFirstWordAttributesDictionary)
-        let vitaminCBodyString = NSAttributedString(string: "\(usdaItem.vitaminC)% \n", attributes: styleTwoAttributesDictionary)
+        let vitaminCBodyString = NSAttributedString(string: stringConverter(usdaItem.vitaminC), attributes: styleTwoAttributesDictionary)
         itemAttributedString.appendAttributedString(vitaminCTitleString)
         itemAttributedString.appendAttributedString(vitaminCBodyString)
         
         return itemAttributedString
+    }
+    
+    func stringConverter(orginalString: NSString) -> String {
+        return String(format: "%.2f%% \n", orginalString.doubleValue)
     }
 }

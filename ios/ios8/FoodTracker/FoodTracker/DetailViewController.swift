@@ -45,7 +45,7 @@ class DetailViewController: UIViewController {
     }
 
     @IBAction func eatItBarButtonPressed(sender: UIBarButtonItem) {
-        
+        saveFoodItem(usdaItem!)
     }
     
     func usdaItemDidComplete(notification: NSNotification) {
@@ -132,5 +132,59 @@ class DetailViewController: UIViewController {
                 println("User canceled request")
             }
         })
+    }
+    
+    func saveFoodItem(foodItem: USDAItem) {
+        if HKHealthStore.isHealthDataAvailable() {
+            let timeFoodWasEntered = NSDate()
+            
+            let foodMetaData = NSDictionary(objectsAndKeys: foodItem.name!, HKMetadataKeyFoodType, "USDA Item", "HKBrandName", foodItem.idValue, "HKFoodTypeId") as [NSObject: AnyObject]
+            
+//            let foodMetaData = [
+//                HKMetadataKeyFoodType : foodItem.name,
+//                "HKBrandName" : "USDAItem",
+//                "HKFoodTypeID" : foodItem.idValue
+//            ]
+            
+            let calciumUnit = HKQuantity(unit: HKUnit.gramUnitWithMetricPrefix(HKMetricPrefix.Milli), doubleValue: (foodItem.calcium as NSString).doubleValue)
+            let calcium = HKQuantitySample(type: HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryCalcium), quantity: calciumUnit, startDate: timeFoodWasEntered, endDate: timeFoodWasEntered)
+            
+            let carborhydrateUnit = HKQuantity(unit: HKUnit.gramUnit(), doubleValue: (foodItem.carbohydrate as NSString).doubleValue)
+            let carborhydrate = HKQuantitySample(type: HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryCarbohydrates), quantity: carborhydrateUnit, startDate: timeFoodWasEntered, endDate: timeFoodWasEntered)
+            
+            let cholesterolUnit = HKQuantity(unit: HKUnit.gramUnitWithMetricPrefix(HKMetricPrefix.Milli), doubleValue: (foodItem.cholesterol as NSString).doubleValue)
+            let cholesterol = HKQuantitySample(type: HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryCholesterol), quantity: cholesterolUnit, startDate: timeFoodWasEntered, endDate: timeFoodWasEntered)
+            
+            let energyUnit = HKQuantity(unit: HKUnit.kilocalorieUnit(), doubleValue:(foodItem.energy as NSString).doubleValue)
+            let calories = HKQuantitySample(type: HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryEnergyConsumed), quantity: energyUnit, startDate: timeFoodWasEntered, endDate: timeFoodWasEntered)
+            
+            let fatUnit = HKQuantity(unit: HKUnit.gramUnit(), doubleValue: (foodItem.fatTotal as NSString).doubleValue)
+            let fat = HKQuantitySample(type: HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryFatTotal), quantity: fatUnit, startDate: timeFoodWasEntered, endDate: timeFoodWasEntered)
+            
+            let proteinUnit = HKQuantity(unit: HKUnit.gramUnit(), doubleValue: (foodItem.protein as NSString).doubleValue)
+            let protein = HKQuantitySample(type: HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryProtein), quantity: proteinUnit, startDate: timeFoodWasEntered, endDate: timeFoodWasEntered)
+            
+            let sugarUnit = HKQuantity(unit: HKUnit.gramUnit(), doubleValue: (foodItem.sugar as NSString).doubleValue)
+            let sugar = HKQuantitySample(type: HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietarySugar), quantity: sugarUnit, startDate: timeFoodWasEntered, endDate: timeFoodWasEntered)
+            
+            let vitaminCUnit = HKQuantity(unit: HKUnit.gramUnitWithMetricPrefix(HKMetricPrefix.Milli), doubleValue: (foodItem.vitaminC as NSString).doubleValue)
+            let vitaminC = HKQuantitySample(type: HKQuantityType.quantityTypeForIdentifier(HKQuantityTypeIdentifierDietaryVitaminC), quantity: vitaminCUnit, startDate: timeFoodWasEntered, endDate: timeFoodWasEntered)
+            
+            let foodDataSet = NSSet(array: [calories, calcium, carborhydrate, cholesterol, fat, protein, sugar, vitaminC]) as Set
+            
+            let foodCorrelation = HKCorrelation(type: HKCorrelationType.correlationTypeForIdentifier(HKCorrelationTypeIdentifierFood), startDate: timeFoodWasEntered, endDate: timeFoodWasEntered, objects: foodDataSet, metadata: foodMetaData)
+            
+            //store to health kit
+            var store:HealthStoreConstant = HealthStoreConstant()
+            store.healthStore?.saveObject(foodCorrelation, withCompletion: { (success, error) -> Void in
+                if success {
+                    println("Saved successfully")
+                }
+                else {
+                    println("Error Occured: \(error)")
+                }
+            })
+            
+        }
     }
 }

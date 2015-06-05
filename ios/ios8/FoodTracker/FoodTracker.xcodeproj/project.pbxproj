@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		831586CD1B22405000D191B4 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831586CC1B22405000D191B4 /* HealthKit.framework */; };
+		831586D01B2245AB00D191B4 /* HealthStoreConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831586CF1B2245AB00D191B4 /* HealthStoreConstant.swift */; };
 		835A64711B1FD65A003BBA83 /* USDAItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A64701B1FD65A003BBA83 /* USDAItem.swift */; };
 		83DBBBA01B1BB01100961E15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBBB9F1B1BB01100961E15 /* AppDelegate.swift */; };
 		83DBBBA31B1BB01100961E15 /* FoodTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83DBBBA11B1BB01100961E15 /* FoodTracker.xcdatamodeld */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		831586CC1B22405000D191B4 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		831586CE1B22405000D191B4 /* FoodTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = FoodTracker.entitlements; sourceTree = "<group>"; };
+		831586CF1B2245AB00D191B4 /* HealthStoreConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStoreConstant.swift; sourceTree = "<group>"; };
 		835A64701B1FD65A003BBA83 /* USDAItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = USDAItem.swift; sourceTree = "<group>"; };
 		83DBBB9A1B1BB01100961E15 /* FoodTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83DBBB9E1B1BB01100961E15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 		83DBBB9C1B1BB01100961E15 /* FoodTracker */ = {
 			isa = PBXGroup;
 			children = (
+				831586CF1B2245AB00D191B4 /* HealthStoreConstant.swift */,
 				831586CE1B22405000D191B4 /* FoodTracker.entitlements */,
 				83FE50F01B1D01260000239B /* DataController.swift */,
 				83DBBB9F1B1BB01100961E15 /* AppDelegate.swift */,
@@ -258,6 +261,7 @@
 				835A64711B1FD65A003BBA83 /* USDAItem.swift in Sources */,
 				83DBBBA01B1BB01100961E15 /* AppDelegate.swift in Sources */,
 				83DBBBC31B1BBCA500961E15 /* DetailViewController.swift in Sources */,
+				831586D01B2245AB00D191B4 /* HealthStoreConstant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

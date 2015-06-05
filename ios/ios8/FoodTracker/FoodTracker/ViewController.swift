@@ -265,6 +265,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // Mark - NSNotification Center
     
     func usdaItemDidComplete(notification: NSNotification) {
+        println("usdaItemDidComplete in ViewController")
         requestFavoritedUSDAItems()
         let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
         

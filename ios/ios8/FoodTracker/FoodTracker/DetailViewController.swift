@@ -73,58 +73,75 @@ class DetailViewController: UIViewController {
         var styleOneAttributesDictionary = [NSForegroundColorAttributeName: UIColor.darkGrayColor(), NSFontAttributeName: UIFont.systemFontOfSize(18.0), NSParagraphStyleAttributeName: leftAlignedParagraphStyle]
         var styleTwoAttributesDictionary = [NSForegroundColorAttributeName: UIColor.lightGrayColor(), NSFontAttributeName: UIFont.systemFontOfSize(18.0), NSParagraphStyleAttributeName: leftAlignedParagraphStyle]
         
-        // calcium
-        let calciumTitleString = NSAttributedString(string: "Calcium ", attributes: styleFirstWordAttributesDictionary)
-        let calciumBodyString = NSAttributedString(string: stringConverter(usdaItem.calcium), attributes: styleOneAttributesDictionary)
-        itemAttributedString.appendAttributedString(calciumTitleString)
-        itemAttributedString.appendAttributedString(calciumBodyString)
+        itemAttributedString.appendAttributedString(generateAttributeString("Calcium", usdaValue: usdaItem.calcium, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleOneAttributesDictionary))
+        itemAttributedString.appendAttributedString(generateAttributeString("Carbohydrate", usdaValue: usdaItem.carbohydrate, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleTwoAttributesDictionary))
+        itemAttributedString.appendAttributedString(generateAttributeString("Cholesterol", usdaValue: usdaItem.cholesterol, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleOneAttributesDictionary))
+        itemAttributedString.appendAttributedString(generateAttributeString("Energy", usdaValue: usdaItem.energy, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleTwoAttributesDictionary))
+        itemAttributedString.appendAttributedString(generateAttributeString("Fat", usdaValue: usdaItem.fatTotal, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleOneAttributesDictionary))
+        itemAttributedString.appendAttributedString(generateAttributeString("Protein", usdaValue: usdaItem.protein, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleTwoAttributesDictionary))
+        itemAttributedString.appendAttributedString(generateAttributeString("Sugar", usdaValue: usdaItem.sugar, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleOneAttributesDictionary))
+        itemAttributedString.appendAttributedString(generateAttributeString("Vitamin C", usdaValue: usdaItem.vitaminC, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleTwoAttributesDictionary))
         
-        //carbohydrate
-        let carbohydrateTitleString = NSAttributedString(string: "Carbohydrate ", attributes: styleFirstWordAttributesDictionary)
-        let carbohydrateBodyString = NSAttributedString(string: stringConverter(usdaItem.carbohydrate), attributes: styleTwoAttributesDictionary)
-        itemAttributedString.appendAttributedString(carbohydrateTitleString)
-        itemAttributedString.appendAttributedString(carbohydrateBodyString)
-        
-        //cholesterol
-        let cholesterolTitleString = NSAttributedString(string: "Cholesterol ", attributes: styleFirstWordAttributesDictionary)
-        let cholesterolBodyString = NSAttributedString(string: stringConverter(usdaItem.cholesterol), attributes: styleOneAttributesDictionary)
-        itemAttributedString.appendAttributedString(cholesterolTitleString)
-        itemAttributedString.appendAttributedString(cholesterolBodyString)
-        
-        //energy
-        let energyTitleString = NSAttributedString(string: "Energy ", attributes: styleFirstWordAttributesDictionary)
-        let energyBodyString = NSAttributedString(string: stringConverter(usdaItem.energy), attributes: styleTwoAttributesDictionary)
-        itemAttributedString.appendAttributedString(energyTitleString)
-        itemAttributedString.appendAttributedString(energyBodyString)
-        
-        //fat
-        let fatTitleString = NSAttributedString(string: "Fat ", attributes: styleFirstWordAttributesDictionary)
-        let fatBodyString = NSAttributedString(string: stringConverter(usdaItem.fatTotal), attributes: styleOneAttributesDictionary)
-        itemAttributedString.appendAttributedString(fatTitleString)
-        itemAttributedString.appendAttributedString(fatBodyString)
-        
-        //protein
-        let proteinTitleString = NSAttributedString(string: "Protein ", attributes: styleFirstWordAttributesDictionary)
-        let proteinBodyString = NSAttributedString(string: stringConverter(usdaItem.protein), attributes: styleTwoAttributesDictionary)
-        itemAttributedString.appendAttributedString(proteinTitleString)
-        itemAttributedString.appendAttributedString(proteinBodyString)
-        
-        //sugar
-        let sugarTitleString = NSAttributedString(string: "Sugar ", attributes: styleFirstWordAttributesDictionary)
-        let sugarBodyString = NSAttributedString(string: stringConverter(usdaItem.sugar), attributes: styleOneAttributesDictionary)
-        itemAttributedString.appendAttributedString(sugarTitleString)
-        itemAttributedString.appendAttributedString(sugarBodyString)
-        
-        //vitman c
-        let vitaminCTitleString = NSAttributedString(string: "Vitamin C ", attributes: styleFirstWordAttributesDictionary)
-        let vitaminCBodyString = NSAttributedString(string: stringConverter(usdaItem.vitaminC), attributes: styleTwoAttributesDictionary)
-        itemAttributedString.appendAttributedString(vitaminCTitleString)
-        itemAttributedString.appendAttributedString(vitaminCBodyString)
+//        // calcium
+//        let calciumTitleString = NSAttributedString(string: "Calcium ", attributes: styleFirstWordAttributesDictionary)
+//        let calciumBodyString = NSAttributedString(string: stringConverter(usdaItem.calcium), attributes: styleOneAttributesDictionary)
+//        itemAttributedString.appendAttributedString(calciumTitleString)
+//        itemAttributedString.appendAttributedString(calciumBodyString)
+//        
+//        //carbohydrate
+//        let carbohydrateTitleString = NSAttributedString(string: "Carbohydrate ", attributes: styleFirstWordAttributesDictionary)
+//        let carbohydrateBodyString = NSAttributedString(string: stringConverter(usdaItem.carbohydrate), attributes: styleTwoAttributesDictionary)
+//        itemAttributedString.appendAttributedString(carbohydrateTitleString)
+//        itemAttributedString.appendAttributedString(carbohydrateBodyString)
+//        
+//        //cholesterol
+//        let cholesterolTitleString = NSAttributedString(string: "Cholesterol ", attributes: styleFirstWordAttributesDictionary)
+//        let cholesterolBodyString = NSAttributedString(string: stringConverter(usdaItem.cholesterol), attributes: styleOneAttributesDictionary)
+//        itemAttributedString.appendAttributedString(cholesterolTitleString)
+//        itemAttributedString.appendAttributedString(cholesterolBodyString)
+//        
+//        //energy
+//        let energyTitleString = NSAttributedString(string: "Energy ", attributes: styleFirstWordAttributesDictionary)
+//        let energyBodyString = NSAttributedString(string: stringConverter(usdaItem.energy), attributes: styleTwoAttributesDictionary)
+//        itemAttributedString.appendAttributedString(energyTitleString)
+//        itemAttributedString.appendAttributedString(energyBodyString)
+//        
+//        //fat
+//        let fatTitleString = NSAttributedString(string: "Fat ", attributes: styleFirstWordAttributesDictionary)
+//        let fatBodyString = NSAttributedString(string: stringConverter(usdaItem.fatTotal), attributes: styleOneAttributesDictionary)
+//        itemAttributedString.appendAttributedString(fatTitleString)
+//        itemAttributedString.appendAttributedString(fatBodyString)
+//        
+//        //protein
+//        let proteinTitleString = NSAttributedString(string: "Protein ", attributes: styleFirstWordAttributesDictionary)
+//        let proteinBodyString = NSAttributedString(string: stringConverter(usdaItem.protein), attributes: styleTwoAttributesDictionary)
+//        itemAttributedString.appendAttributedString(proteinTitleString)
+//        itemAttributedString.appendAttributedString(proteinBodyString)
+//        
+//        //sugar
+//        let sugarTitleString = NSAttributedString(string: "Sugar ", attributes: styleFirstWordAttributesDictionary)
+//        let sugarBodyString = NSAttributedString(string: stringConverter(usdaItem.sugar), attributes: styleOneAttributesDictionary)
+//        itemAttributedString.appendAttributedString(sugarTitleString)
+//        itemAttributedString.appendAttributedString(sugarBodyString)
+//        
+//        //vitman c
+//        let vitaminCTitleString = NSAttributedString(string: "Vitamin C ", attributes: styleFirstWordAttributesDictionary)
+//        let vitaminCBodyString = NSAttributedString(string: stringConverter(usdaItem.vitaminC), attributes: styleTwoAttributesDictionary)
+//        itemAttributedString.appendAttributedString(vitaminCTitleString)
+//        itemAttributedString.appendAttributedString(vitaminCBodyString)
         
         return itemAttributedString
     }
     
-    func stringConverter(orginalString: NSString) -> String {
-        return String(format: "%.2f%% \n", orginalString.doubleValue)
+    func generateAttributeString(usdaName: String, usdaValue: NSString, styleTitleAttribute: [NSObject: AnyObject], styleBobyAttribute: [NSObject: AnyObject] ) -> NSMutableAttributedString {
+        var attributeString = NSMutableAttributedString()
+        
+        let usdaTitleString = NSAttributedString(string: "\(usdaName.capitalizedString) ", attributes:styleTitleAttribute)
+        let usdaBodyString = NSAttributedString(string: String(format: "%.2f%% \n", usdaValue.doubleValue), attributes: styleBobyAttribute )
+        
+        attributeString.appendAttributedString(usdaTitleString)
+        attributeString.appendAttributedString(usdaBodyString)
+        
+        return attributeString
     }
 }

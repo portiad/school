@@ -34,7 +34,7 @@ class SwipeView: UIView {
     }
     
     private func initialize() {
-        // change to clear color
+        
         self.backgroundColor = UIColor.redColor()
         addSubview(card)
         
@@ -55,7 +55,7 @@ class SwipeView: UIView {
         case UIGestureRecognizerState.Changed:
             let rotationPercentage = min(distance.x/(self.superview!.frame.width/2), 1)
             let rotationAngle = (CGFloat(2*M_PI/16)*rotationPercentage)
-            transform = CGAffineTransformRotate(transform, rotationAngle)
+            transform = CGAffineTransformMakeRotation(rotationAngle)
             
             self.center = CGPointMake(originalPoint!.x + distance.x, originalPoint!.y + distance.y)
         case UIGestureRecognizerState.Ended:

@@ -10,10 +10,15 @@ import Foundation
 import UIKit
 
 class SwipeView: UIView {
+    
+    enum Direction {
+        case None
+        case Left
+        case Right
+    }
+    
     private let card: CardView = CardView()
-    
     private var originalPoint: CGPoint?
-    
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -59,10 +64,30 @@ class SwipeView: UIView {
             
             self.center = CGPointMake(originalPoint!.x + distance.x, originalPoint!.y + distance.y)
         case UIGestureRecognizerState.Ended:
-            resetViewPositionandTransformations()
+            if abs(distance.x) < frame.width/4 {
+                resetViewPositionandTransformations()
+            } else {
+                swipe(distance.x > 0 ? .Right : .Left)
+            }
+            
         default:
             println("default triggered for gesture reconginizer")
             break
+        }
+    }
+    
+    func swipe(s: Direction ) {
+        if s == .None {
+            return
+        } else {
+            var parentWidth = superview!.frame.size.width
+            
+            if s == .Left {
+                parentWidth *= -1
+            }
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                self.center.x = self.frame.origin.x + parentWidth
+            })
         }
     }
     

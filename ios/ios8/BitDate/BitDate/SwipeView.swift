@@ -12,6 +12,9 @@ import UIKit
 class SwipeView: UIView {
     private let card: CardView = CardView()
     
+    private var originalPoint: CGPoint?
+    
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -34,10 +37,20 @@ class SwipeView: UIView {
         self.backgroundColor = UIColor.clearColor()
         addSubview(card)
         
+        // add the ability to drag views
+        self.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "dragged:"))
+        
+        originalPoint = center
+        
         card.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
         setConstraints()
+    }
+    
+    func dragged(gestureRecongnizer: UIPanGestureRecognizer) {
+        let distance = gestureRecongnizer.translationInView(self)
+        println("distance - x:\(distance.x) y:\(distance.y)")
         
+        center = CGPointMake(originalPoint!.x + distance.x, originalPoint!.y + distance.y)
     }
     
     private func setConstraints() {
@@ -45,9 +58,6 @@ class SwipeView: UIView {
         addConstraint(NSLayoutConstraint(item: card, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
         addConstraint(NSLayoutConstraint(item: card, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 0.0))
         addConstraint(NSLayoutConstraint(item: card, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
-        
-        
     }
-    
 }
 

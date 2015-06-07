@@ -34,30 +34,43 @@ class SwipeView: UIView {
     }
     
     private func initialize() {
-        self.backgroundColor = UIColor.clearColor()
+        // change to clear color
+        self.backgroundColor = UIColor.redColor()
         addSubview(card)
         
         // add the ability to drag views
         self.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "dragged:"))
         
-        originalPoint = center
-        
-        card.setTranslatesAutoresizingMaskIntoConstraints(false)
-        setConstraints()
+        card.frame = CGRect(x: 0.0, y: 0.00, width: frame.width, height: frame.height)
     }
     
     func dragged(gestureRecongnizer: UIPanGestureRecognizer) {
         let distance = gestureRecongnizer.translationInView(self)
         println("distance - x:\(distance.x) y:\(distance.y)")
         
-        center = CGPointMake(originalPoint!.x + distance.x, originalPoint!.y + distance.y)
+        // determine state of users interaction with the view
+        switch gestureRecongnizer.state {
+        case UIGestureRecognizerState.Began :
+            originalPoint = self.center
+        case UIGestureRecognizerState.Changed:
+            let rotationPercentage = min(distance.x/(self.superview!.frame.width/2), 1)
+            let rotationAngle = (CGFloat(2*M_PI/16)*rotationPercentage)
+            transform = CGAffineTransformRotate(transform, rotationAngle)
+            
+            self.center = CGPointMake(originalPoint!.x + distance.x, originalPoint!.y + distance.y)
+        case UIGestureRecognizerState.Ended:
+            resetViewPositionandTransformations()
+        default:
+            println("default triggered for gesture reconginizer")
+            break
+        }
     }
     
-    private func setConstraints() {
-        addConstraint(NSLayoutConstraint(item: card, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0.0))
-        addConstraint(NSLayoutConstraint(item: card, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
-        addConstraint(NSLayoutConstraint(item: card, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 0.0))
-        addConstraint(NSLayoutConstraint(item: card, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1.0, constant: 0.0))
+    private func resetViewPositionandTransformations() {
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.center = self.originalPoint!
+            self.transform = CGAffineTransformMakeRotation(0.0)
+        })
     }
 }
 

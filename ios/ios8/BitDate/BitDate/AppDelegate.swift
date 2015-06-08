@@ -8,11 +8,7 @@
 
 import UIKit
 import CoreData
-//import Parse
-
-import FBSDKCoreKit
-import FBSDKShareKit
-import FBSDKLoginKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,20 +19,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-//        // [Optional] Power your app with Local Datastore. For more info, go to
-//        // https://parse.com/docs/ios_guide#localdatastore/iOS
-//        Parse.enableLocalDatastore()
-//        
-//        // Initialize Parse.
-//        Parse.setApplicationId("iWuQGCw9RwtKssGXsOtnlLu3PRSHAI6wY8ltGkkG",
-//            clientKey: "s9s6hAnzjzJATw5dUxyNcabCbk38BDiXDzYO2oMM")
-//        
-//        // [Optional] Track statistics around application opens.
-//        PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: nil)
-//            //trackAppOpenedWithLaunchOptions(launchOptions)
+        // Initialize Parse
+        Parse.setApplicationId("iWuQGCw9RwtKssGXsOtnlLu3PRSHAI6wY8ltGkkG",
+            clientKey: "s9s6hAnzjzJATw5dUxyNcabCbk38BDiXDzYO2oMM")
+        
+        // Initalize Facebook connection with Parse
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+        
+        // confirm whether a user is logged in and present the correct UIViewController from the storyboard
+        var storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        var initialViewController: UIViewController
+        
+        if PFUser.currentUser() != nil {
+            initialViewController = storyBoard.instantiateViewControllerWithIdentifier("CardsNavigationController") as! UIViewController
+        } else {
+            initialViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
+        }
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
         
         return true
     }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -54,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+       FBSDKAppEvents.activateApp()
+       
     }
 
     func applicationWillTerminate(application: UIApplication) {

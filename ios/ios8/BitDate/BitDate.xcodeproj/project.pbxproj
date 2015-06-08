@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		83388D6D1B260516000F7434 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D6A1B260516000F7434 /* Parse.framework */; };
-		83388D6E1B260516000F7434 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D6B1B260516000F7434 /* ParseFacebookUtils.framework */; };
 		83388D6F1B260516000F7434 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D6C1B260516000F7434 /* ParseFacebookUtilsV4.framework */; };
 		83388D711B260534000F7434 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D701B260534000F7434 /* AudioToolbox.framework */; };
 		83388D731B26053B000F7434 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D721B26053B000F7434 /* CFNetwork.framework */; };
@@ -33,6 +32,7 @@
 		838148B81B234571009AF1AE /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148B71B234571009AF1AE /* CardView.swift */; };
 		838148BA1B23915B009AF1AE /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148B91B23915B009AF1AE /* SwipeView.swift */; };
 		838148BD1B239861009AF1AE /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148BC1B239861009AF1AE /* CardsViewController.swift */; };
+		83AB13B41B2635C000F02F48 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AB13B31B2635C000F02F48 /* LoginViewController.swift */; };
 		9BF71E8A2F8A5E0E4F214554 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AA272F9D619F17E99CE20AB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -50,7 +50,6 @@
 		2AA272F9D619F17E99CE20AB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7041657BEB03B92892013412 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		83388D6A1B260516000F7434 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		83388D6B1B260516000F7434 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 		83388D6C1B260516000F7434 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		83388D701B260534000F7434 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		83388D721B26053B000F7434 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -80,6 +79,7 @@
 		838148B91B23915B009AF1AE /* SwipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
 		838148BC1B239861009AF1AE /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		83AB13B21B261C7800F02F48 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		83AB13B31B2635C000F02F48 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FFF86C92075423D3250017B7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,7 +101,6 @@
 				83388D751B26054B000F7434 /* CoreGraphics.framework in Frameworks */,
 				83388D731B26053B000F7434 /* CFNetwork.framework in Frameworks */,
 				83388D711B260534000F7434 /* AudioToolbox.framework in Frameworks */,
-				83388D6E1B260516000F7434 /* ParseFacebookUtils.framework in Frameworks */,
 				83388D6D1B260516000F7434 /* Parse.framework in Frameworks */,
 				83388D6F1B260516000F7434 /* ParseFacebookUtilsV4.framework in Frameworks */,
 				9BF71E8A2F8A5E0E4F214554 /* Pods.framework in Frameworks */,
@@ -135,7 +134,6 @@
 				83388D721B26053B000F7434 /* CFNetwork.framework */,
 				83388D701B260534000F7434 /* AudioToolbox.framework */,
 				83388D6A1B260516000F7434 /* Parse.framework */,
-				83388D6B1B260516000F7434 /* ParseFacebookUtils.framework */,
 				83388D6C1B260516000F7434 /* ParseFacebookUtilsV4.framework */,
 				2AA272F9D619F17E99CE20AB /* Pods.framework */,
 			);
@@ -217,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				838148981B23450D009AF1AE /* ViewController.swift */,
+				83AB13B31B2635C000F02F48 /* LoginViewController.swift */,
 				838148BC1B239861009AF1AE /* CardsViewController.swift */,
 			);
 			name = ViewControllers;
@@ -382,6 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83AB13B41B2635C000F02F48 /* LoginViewController.swift in Sources */,
 				838148991B23450D009AF1AE /* ViewController.swift in Sources */,
 				838148941B23450D009AF1AE /* AppDelegate.swift in Sources */,
 				838148BD1B239861009AF1AE /* CardsViewController.swift in Sources */,

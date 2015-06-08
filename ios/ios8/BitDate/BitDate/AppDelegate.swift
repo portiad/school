@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var storyBoard = UIStoryboard(name: "Main", bundle: nil)
         var initialViewController: UIViewController
         
-        if PFUser.currentUser() != nil {
+        if currentUser() != nil {
             initialViewController = storyBoard.instantiateViewControllerWithIdentifier("CardsNavigationController") as! UIViewController
         } else {
             initialViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController

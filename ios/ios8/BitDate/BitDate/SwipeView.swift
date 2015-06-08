@@ -18,8 +18,17 @@ class SwipeView: UIView {
     }
     
     weak var delegate: SwipeViewDelegate?
-    
-    private let card: CardView = CardView()
+
+    // Makes it so CardViewController manages the CardView
+    var innerView: UIView? {
+        didSet {
+            if let v = innerView {
+                addSubview(v)
+                v.frame = CGRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height)
+            }
+            
+        }
+    }
     private var originalPoint: CGPoint?
     
     required init(coder aDecoder: NSCoder) {
@@ -43,12 +52,9 @@ class SwipeView: UIView {
     private func initialize() {
         
         self.backgroundColor = UIColor.redColor()
-        addSubview(card)
         
         // add the ability to drag views
         self.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "dragged:"))
-        
-        card.frame = CGRect(x: 0.0, y: 0.00, width: frame.width, height: frame.height)
     }
     
     func dragged(gestureRecongnizer: UIPanGestureRecognizer) {
@@ -78,13 +84,13 @@ class SwipeView: UIView {
         }
     }
     
-    func swipe(s: Direction ) {
-        if s == .None {
+    func swipe(swipeDirection: Direction ) {
+        if swipeDirection == .None {
             return
         } else {
             var parentWidth = superview!.frame.size.width
             
-            if s == .Left {
+            if swipeDirection == .Left {
                 parentWidth *= -1
             }
             
@@ -92,10 +98,10 @@ class SwipeView: UIView {
                 self.center.x = self.frame.origin.x + parentWidth
             }, completion: {
                 success in
-                if let d = self.delegate {
-                    s == .Right ? d.swipedRight() : d.swipedLeft()
+                if let swipeDelegate = self.delegate {
+                    swipeDirection == .Right ? swipeDelegate.swipedRight() : swipeDelegate.swipedLeft()
                 }
-            })a
+            })
         }
     }
     

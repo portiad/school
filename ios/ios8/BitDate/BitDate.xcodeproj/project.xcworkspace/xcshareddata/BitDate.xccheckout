@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>FC317F4F-4950-45CF-AD8A-88EA17B18AED</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>BitDate</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>
 		<string>https://github.com/portiad/school.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/ios8/BitDate/BitDate.xcodeproj/project.xcworkspace</string>
+	<string>ios/ios8/BitDate/BitDate.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>

@@ -9,7 +9,10 @@
 import UIKit
 
 class ViewController: UIPageViewController, UIPageViewControllerDataSource {
-
+    
+    let cardsVC: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CardsNavigationController") as! UIViewController
+    let profileVC: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -17,6 +20,7 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
         view.backgroundColor = UIColor.whiteColor()
         self.dataSource = self
         
+        self.setViewControllers([cardsVC], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         
         
     }

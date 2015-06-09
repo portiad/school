@@ -31,7 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var initialViewController: UIViewController
         
         if currentUser() != nil {
-            initialViewController = storyBoard.instantiateViewControllerWithIdentifier("CardsNavigationController") as! UIViewController
+            initialViewController =
+                storyBoard.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UIViewController
+            //storyBoard.instantiateViewControllerWithIdentifier("CardsNavigationController") as! UIViewController
         } else {
             initialViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
         }

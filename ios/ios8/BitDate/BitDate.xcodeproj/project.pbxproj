@@ -23,6 +23,7 @@
 		83388D871B2605D1000F7434 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D861B2605D1000F7434 /* Accounts.framework */; };
 		83388D891B2605D7000F7434 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D881B2605D7000F7434 /* Social.framework */; };
 		8338A9381B2656E000860515 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338A9371B2656E000860515 /* User.swift */; };
+		8338DE5F1B276A2E003BB9B0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338DE5E1B276A2E003BB9B0 /* ProfileViewController.swift */; };
 		838148941B23450D009AF1AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148931B23450D009AF1AE /* AppDelegate.swift */; };
 		838148971B23450D009AF1AE /* BitDate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 838148951B23450D009AF1AE /* BitDate.xcdatamodeld */; };
 		838148991B23450D009AF1AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148981B23450D009AF1AE /* ViewController.swift */; };
@@ -66,6 +67,7 @@
 		83388D861B2605D1000F7434 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		83388D881B2605D7000F7434 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		8338A9371B2656E000860515 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8338DE5E1B276A2E003BB9B0 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8381488E1B23450D009AF1AE /* BitDate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BitDate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		838148921B23450D009AF1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		838148931B23450D009AF1AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				838148981B23450D009AF1AE /* ViewController.swift */,
 				83AB13B31B2635C000F02F48 /* LoginViewController.swift */,
 				838148BC1B239861009AF1AE /* CardsViewController.swift */,
+				8338DE5E1B276A2E003BB9B0 /* ProfileViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				838148BD1B239861009AF1AE /* CardsViewController.swift in Sources */,
 				8338A9381B2656E000860515 /* User.swift in Sources */,
 				838148B81B234571009AF1AE /* CardView.swift in Sources */,
+				8338DE5F1B276A2E003BB9B0 /* ProfileViewController.swift in Sources */,
 				838148BA1B23915B009AF1AE /* SwipeView.swift in Sources */,
 				838148971B23450D009AF1AE /* BitDate.xcdatamodeld in Sources */,
 			);

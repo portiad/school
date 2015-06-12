@@ -31,8 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var initialViewController: UIViewController
         
         if currentUser() != nil {
-            initialViewController =
-                storyBoard.instantiateViewControllerWithIdentifier("PageController") as! UIViewController
+            // Sets the transistion style between changing pages
+            initialViewController = ViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
+            
+            
+//            initialViewController =
+//                storyBoard.instantiateViewControllerWithIdentifier("PageController") as! UIViewController
         } else {
             initialViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
         }

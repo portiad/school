@@ -20,6 +20,8 @@ class SwipeView: UIView {
     weak var delegate: SwipeViewDelegate?
     
     let overlay: UIImageView = UIImageView()
+    
+    var direction: Direction?
 
     // Makes it so CardViewController manages the CardView
     var innerView: UIView? {
@@ -28,9 +30,9 @@ class SwipeView: UIView {
                 insertSubview(v, belowSubview: overlay)
                 v.frame = CGRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height)
             }
-            
         }
     }
+    
     private var originalPoint: CGPoint?
 
     required init(coder aDecoder: NSCoder) {
@@ -78,6 +80,9 @@ class SwipeView: UIView {
             transform = CGAffineTransformMakeRotation(rotationAngle)
             
             self.center = CGPointMake(originalPoint!.x + distance.x, originalPoint!.y + distance.y)
+            
+            updateOverlay(distance.x)
+            
         case UIGestureRecognizerState.Ended:
             if abs(distance.x) < frame.width/4 {
                 resetViewPositionandTransformations()
@@ -112,10 +117,26 @@ class SwipeView: UIView {
         }
     }
     
+    // overlay is the yeah or nah that floats above the image when moving to left and right
+    private func updateOverlay(distance: CGFloat) {
+        var newDirection: Direction
+        newDirection = distance < 0 ? .Left : .Right
+        
+        if newDirection != direction {
+            direction = newDirection
+            overlay.image = direction == .Right ? UIImage(named: "yeah-stamp") : UIImage(named: "nah-stamp")
+        }
+        
+        // determines the opacity of the image
+        overlay.alpha = abs(distance)/(superview!.frame.width/2)
+    }
+    
     private func resetViewPositionandTransformations() {
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+        UIView.animateWithDuration(0.2, animations: {
             self.center = self.originalPoint!
             self.transform = CGAffineTransformMakeRotation(0.0)
+            
+            self.overlay.alpha = 0
         })
     }
 }

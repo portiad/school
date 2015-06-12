@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>AFBAE87C-F3BA-4AE2-AC74-CF92F43A3548</string>
 	<key>IDESourceControlProjectName</key>
-	<string>FoodTracker</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>
 		<string>https://github.com/portiad/school.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/ios8/FoodTracker/FoodTracker.xcodeproj</string>
+	<string>ios/ios8/FoodTracker/FoodTracker.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>

@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>B5AD4243-E93E-46E2-AA71-94FD742C5156</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>TaskIt</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>
 		<string>https://github.com/portiad/school.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/ios8/TaskIt/TaskIt.xcodeproj/project.xcworkspace</string>
+	<string>ios/ios8/TaskItMyo/TaskIt.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>

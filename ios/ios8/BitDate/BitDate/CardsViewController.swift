@@ -24,6 +24,15 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
     var backCard: Card?
     var frontCard: Card?
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationItem.titleView = UIImageView(image: UIImage(named: "nav-header"))
+        let leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "nav-back-button"), style: .Plain, target: self, action: "goToProfile:")
+        navigationItem.setLeftBarButtonItem(leftBarButtonItem, animated: true)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -73,5 +82,9 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         if let frontCard = frontCard?.swipeView {
             frontCard.removeFromSuperview()
         }
+    }
+    
+    func goToProfile(button: UIBarButtonItem) {
+        
     }
 }

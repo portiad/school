@@ -8,6 +8,8 @@
 
 import UIKit
 
+let pageController = ViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
+
 class ViewController: UIPageViewController, UIPageViewControllerDataSource {
     
     let cardsVC: UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CardsNavigationController") as! UIViewController
@@ -27,6 +29,19 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Helper UIPageViewControllerDataSource
+    
+    // interact with the UIPageViewControllerDataSource functions to determine which one to present
+    func goToNextVC() {
+        let nextVC = pageViewController(self, viewControllerAfterViewController: viewControllers[0] as! UIViewController)!
+        setViewControllers([nextVC], direction: .Forward, animated: true, completion: nil)
+    }
+    
+    func goToPreviousVC() {
+        let previousVC = pageViewController(self, viewControllerBeforeViewController: viewControllers[0] as! UIViewController)!
+        setViewControllers([previousVC], direction: .Reverse, animated: true, completion: nil)
     }
 
    

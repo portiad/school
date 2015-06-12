@@ -13,6 +13,7 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
     struct Card {
         let cardView: CardView
         let swipeView: SwipeView
+        let user: User
     }
     
     let frontCardTopMargin: CGFloat = 0.0
@@ -23,6 +24,8 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
     
     var backCard: Card?
     var frontCard: Card?
+    
+    var users: [User]?
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -40,11 +43,16 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         
         cardStackView.backgroundColor = UIColor.clearColor()
         
-        backCard = createCard(backCardTopMargin)
-        cardStackView.addSubview(backCard!.swipeView)
+//        backCard = createCard(backCardTopMargin)
+//        cardStackView.addSubview(backCard!.swipeView)
+//        
+//        frontCard = createCard(frontCardTopMargin)
+//        cardStackView.addSubview(frontCard!.swipeView)
         
-        frontCard = createCard(frontCardTopMargin)
-        cardStackView.addSubview(frontCard!.swipeView)
+        fetchUnviewedUsers { (users) -> () in
+            self.users = users
+            println(self.users)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,14 +65,30 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         return CGRect(x: 0.0, y: frontCardTopMargin, width: cardStackView.frame.width, height: cardStackView.frame.height)
     }
     
-    private func createCard(topMargin: CGFloat) -> Card {
+    private func createCard(user: User) -> Card {
         let cardView = CardView()
+        cardView.name = user.name
+        user.getPhoto { (image) in
+            cardView.image = image
+        }
         
-        let swipeView = SwipeView(frame: createCardFrame(topMargin))
+        let swipeView = SwipeView(frame: createCardFrame(0))
         swipeView.delegate = self
         swipeView.innerView = cardView
         
-        return Card(cardView: cardView, swipeView: swipeView)
+        return Card(cardView: cardView, swipeView: swipeView, user: user)
+    }
+    
+    
+    private func popCard() -> Card? {
+        if users != nil && users?.count > 0 {
+            return createCard(users!.removeLast())
+        }
+        return nil
+    }
+    
+    func goToProfile(button: UIBarButtonItem) {
+        pageController.goToPreviousVC()
     }
     
     // MARK: SwipeViewDelegate
@@ -82,9 +106,5 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         if let frontCard = frontCard?.swipeView {
             frontCard.removeFromSuperview()
         }
-    }
-    
-    func goToProfile(button: UIBarButtonItem) {
-        
     }
 }

@@ -43,16 +43,20 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         
         cardStackView.backgroundColor = UIColor.clearColor()
         
-//        backCard = createCard(backCardTopMargin)
-//        cardStackView.addSubview(backCard!.swipeView)
-//        
-//        frontCard = createCard(frontCardTopMargin)
-//        cardStackView.addSubview(frontCard!.swipeView)
-        
-        fetchUnviewedUsers { (users) -> () in
+        fetchUnviewedUsers({(users) in
             self.users = users
-            println(self.users)
-        }
+            
+            if let card = self.popCard() {
+                self.frontCard = card
+                self.cardStackView.addSubview(self.frontCard!.swipeView)
+            }
+            
+            if let card = self.popCard() {
+                self.backCard = card
+                self.backCard!.swipeView.frame = self.createCardFrame(self.backCardTopMargin)
+                self.cardStackView.insertSubview(self.backCard!.swipeView, belowSubview: self.frontCard!.swipeView)
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,12 +83,28 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         return Card(cardView: cardView, swipeView: swipeView, user: user)
     }
     
-    
+    // pop off the current card
     private func popCard() -> Card? {
         if users != nil && users?.count > 0 {
             return createCard(users!.removeLast())
         }
         return nil
+    }
+    
+    // When swiping change the back card to front and pull in next card
+    private func switchCards() {
+        if let card = backCard {
+            frontCard = card
+            UIView.animateWithDuration(0.2, animations: {
+                self.frontCard!.swipeView.frame = self.createCardFrame(self.frontCardTopMargin)
+            })
+        }
+        
+        if let card = self.popCard() {
+            self.backCard = card
+            self.backCard!.swipeView.frame = self.createCardFrame(backCardTopMargin)
+            self.cardStackView.insertSubview(self.backCard!.swipeView, belowSubview: self.frontCard!.swipeView)
+        }
     }
     
     func goToProfile(button: UIBarButtonItem) {
@@ -97,6 +117,7 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         
         if let frontCard = frontCard?.swipeView {
             frontCard.removeFromSuperview()
+            switchCards()
         }
     }
     
@@ -105,6 +126,7 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         
         if let frontCard = frontCard?.swipeView {
             frontCard.removeFromSuperview()
+            switchCards()
         }
     }
 }

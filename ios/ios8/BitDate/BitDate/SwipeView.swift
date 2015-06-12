@@ -18,19 +18,21 @@ class SwipeView: UIView {
     }
     
     weak var delegate: SwipeViewDelegate?
+    
+    let overlay: UIImageView = UIImageView()
 
     // Makes it so CardViewController manages the CardView
     var innerView: UIView? {
         didSet {
             if let v = innerView {
-                addSubview(v)
+                insertSubview(v, belowSubview: overlay)
                 v.frame = CGRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height)
             }
             
         }
     }
     private var originalPoint: CGPoint?
-    
+
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -51,10 +53,15 @@ class SwipeView: UIView {
     
     private func initialize() {
         
-        self.backgroundColor = UIColor.redColor()
+        self.backgroundColor = UIColor.clearColor()
         
         // add the ability to drag views
         self.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "dragged:"))
+        
+        self.overlay.frame = CGRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height)
+        addSubview(self.overlay)
+        
+        
     }
     
     func dragged(gestureRecongnizer: UIPanGestureRecognizer) {

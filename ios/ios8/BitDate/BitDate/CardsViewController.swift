@@ -19,12 +19,9 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
     let frontCardTopMargin: CGFloat = 0.0
     let backCardTopMargin: CGFloat = 10.0
     
-    
     @IBOutlet weak var cardStackView: UIView!
-    
     @IBOutlet weak var nahButton: UIButton!
     @IBOutlet weak var yeahButton: UIButton!
-    
     
     var backCard: Card?
     var frontCard: Card?
@@ -37,7 +34,6 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         navigationItem.titleView = UIImageView(image: UIImage(named: "nav-header"))
         let leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "nav-back-button"), style: .Plain, target: self, action: "goToProfile:")
         navigationItem.setLeftBarButtonItem(leftBarButtonItem, animated: true)
-        
     }
     
     override func viewDidLoad() {
@@ -46,7 +42,6 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         // Do any additional setup after loading the view.
         
         cardStackView.backgroundColor = UIColor.clearColor()
-        
         
         nahButton.setImage(UIImage(named: "nah-button-pressed"), forState: UIControlState.Highlighted)
         yeahButton.setImage(UIImage(named: "yeah-button-pressed"), forState: .Highlighted)
@@ -86,8 +81,8 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
         }
     }
     
-    
     // MARK: Helper functions
+    
     private func createCardFrame(topMargin: CGFloat) -> CGRect {
         return CGRect(x: 0.0, y: frontCardTopMargin, width: cardStackView.frame.width, height: cardStackView.frame.height)
     }

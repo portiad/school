@@ -63,9 +63,23 @@ func saveSkip(user: User) {
 }
 
 func saveLike(user: User) {
-    let like = PFObject(className: "Action")
-    like.setObject(PFUser.currentUser()!.objectId!, forKey: "byUser")
-    like.setObject(user.id, forKey: "toUser")
-    like.setObject("liked", forKey: "type")
-    like.saveInBackgroundWithBlock(nil)
+    PFQuery(className: "Action")
+    .whereKey("byUser", equalTo: user.id)
+    .whereKey("toUser", equalTo: PFUser.currentUser()!.objectId!)
+    .whereKey("type", equalTo: "liked")
+    .getFirstObjectInBackgroundWithBlock({(object, error) in
+        var matched = false
+        
+        if object != nil{
+            matched = true
+            object!.setObject("matched", forKey: "type")
+            object!.saveInBackgroundWithBlock(nil)
+        }
+        
+        let like = PFObject(className: "Action")
+        like.setObject(PFUser.currentUser()!.objectId!, forKey: "byUser")
+        like.setObject(user.id, forKey: "toUser")
+        like.setObject(matched ? "match" : "liked", forKey: "type")
+        like.saveInBackgroundWithBlock(nil)
+    })
 }

@@ -24,6 +24,8 @@
 		83388D891B2605D7000F7434 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D881B2605D7000F7434 /* Social.framework */; };
 		8338A9381B2656E000860515 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338A9371B2656E000860515 /* User.swift */; };
 		8338DE5F1B276A2E003BB9B0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338DE5E1B276A2E003BB9B0 /* ProfileViewController.swift */; };
+		833C31211B2E1C2E00E33453 /* MatchesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833C31201B2E1C2E00E33453 /* MatchesTableViewController.swift */; };
+		833C31231B2E1C8500E33453 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833C31221B2E1C8500E33453 /* UserCell.swift */; };
 		838148941B23450D009AF1AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148931B23450D009AF1AE /* AppDelegate.swift */; };
 		838148971B23450D009AF1AE /* BitDate.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 838148951B23450D009AF1AE /* BitDate.xcdatamodeld */; };
 		838148991B23450D009AF1AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148981B23450D009AF1AE /* ViewController.swift */; };
@@ -68,6 +70,8 @@
 		83388D881B2605D7000F7434 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		8338A9371B2656E000860515 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8338DE5E1B276A2E003BB9B0 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		833C31201B2E1C2E00E33453 /* MatchesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesTableViewController.swift; sourceTree = "<group>"; };
+		833C31221B2E1C8500E33453 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		8381488E1B23450D009AF1AE /* BitDate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BitDate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		838148921B23450D009AF1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		838148931B23450D009AF1AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 		8338A9361B2656D100860515 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				838148951B23450D009AF1AE /* BitDate.xcdatamodeld */,
 				8338A9371B2656E000860515 /* User.swift */,
 			);
 			name = Model;
@@ -177,13 +182,12 @@
 			isa = PBXGroup;
 			children = (
 				838148931B23450D009AF1AE /* AppDelegate.swift */,
-				8338A9361B2656D100860515 /* Model */,
 				8381489A1B23450D009AF1AE /* Main.storyboard */,
+				8338A9361B2656D100860515 /* Model */,
 				838148B61B23454E009AF1AE /* Views */,
 				838148BB1B239832009AF1AE /* ViewControllers */,
 				8381489F1B23450D009AF1AE /* LaunchScreen.xib */,
 				8381489D1B23450D009AF1AE /* Images.xcassets */,
-				838148951B23450D009AF1AE /* BitDate.xcdatamodeld */,
 				838148911B23450D009AF1AE /* Supporting Files */,
 			);
 			path = BitDate;
@@ -220,6 +224,7 @@
 			children = (
 				838148B71B234571009AF1AE /* CardView.swift */,
 				838148B91B23915B009AF1AE /* SwipeView.swift */,
+				833C31221B2E1C8500E33453 /* UserCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 				838148981B23450D009AF1AE /* ViewController.swift */,
 				83AB13B31B2635C000F02F48 /* LoginViewController.swift */,
 				838148BC1B239861009AF1AE /* CardsViewController.swift */,
+				833C31201B2E1C2E00E33453 /* MatchesTableViewController.swift */,
 				8338DE5E1B276A2E003BB9B0 /* ProfileViewController.swift */,
 			);
 			name = ViewControllers;
@@ -399,10 +405,12 @@
 				838148991B23450D009AF1AE /* ViewController.swift in Sources */,
 				838148941B23450D009AF1AE /* AppDelegate.swift in Sources */,
 				838148BD1B239861009AF1AE /* CardsViewController.swift in Sources */,
+				833C31211B2E1C2E00E33453 /* MatchesTableViewController.swift in Sources */,
 				8338A9381B2656E000860515 /* User.swift in Sources */,
 				838148B81B234571009AF1AE /* CardView.swift in Sources */,
 				8338DE5F1B276A2E003BB9B0 /* ProfileViewController.swift in Sources */,
 				838148BA1B23915B009AF1AE /* SwipeView.swift in Sources */,
+				833C31231B2E1C8500E33453 /* UserCell.swift in Sources */,
 				838148971B23450D009AF1AE /* BitDate.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

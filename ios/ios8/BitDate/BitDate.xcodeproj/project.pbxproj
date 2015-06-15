@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		71A85BB1F7B15335293A6148 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8665A7CED1415A45D920FDBC /* libPods.a */; };
 		83388D6D1B260516000F7434 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D6A1B260516000F7434 /* Parse.framework */; };
 		83388D6F1B260516000F7434 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D6C1B260516000F7434 /* ParseFacebookUtilsV4.framework */; };
 		83388D711B260534000F7434 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D701B260534000F7434 /* AudioToolbox.framework */; };
@@ -38,7 +39,6 @@
 		838148BA1B23915B009AF1AE /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148B91B23915B009AF1AE /* SwipeView.swift */; };
 		838148BD1B239861009AF1AE /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148BC1B239861009AF1AE /* CardsViewController.swift */; };
 		83AB13B41B2635C000F02F48 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AB13B31B2635C000F02F48 /* LoginViewController.swift */; };
-		9BF71E8A2F8A5E0E4F214554 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AA272F9D619F17E99CE20AB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2AA272F9D619F17E99CE20AB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7041657BEB03B92892013412 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		83388D6A1B260516000F7434 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		83388D6C1B260516000F7434 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -90,6 +89,7 @@
 		838148BC1B239861009AF1AE /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		83AB13B21B261C7800F02F48 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		83AB13B31B2635C000F02F48 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8665A7CED1415A45D920FDBC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFF86C92075423D3250017B7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +113,7 @@
 				83388D711B260534000F7434 /* AudioToolbox.framework in Frameworks */,
 				83388D6D1B260516000F7434 /* Parse.framework in Frameworks */,
 				83388D6F1B260516000F7434 /* ParseFacebookUtilsV4.framework in Frameworks */,
-				9BF71E8A2F8A5E0E4F214554 /* Pods.framework in Frameworks */,
+				71A85BB1F7B15335293A6148 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +145,7 @@
 				83388D701B260534000F7434 /* AudioToolbox.framework */,
 				83388D6A1B260516000F7434 /* Parse.framework */,
 				83388D6C1B260516000F7434 /* ParseFacebookUtilsV4.framework */,
-				2AA272F9D619F17E99CE20AB /* Pods.framework */,
+				8665A7CED1415A45D920FDBC /* libPods.a */,
 			);
 			name = Frameworks;
 			path = BitDate;
@@ -265,7 +265,6 @@
 				8381488B1B23450D009AF1AE /* Frameworks */,
 				8381488C1B23450D009AF1AE /* Resources */,
 				E29A103E1EDCD09BFE7363EB /* Copy Pods Resources */,
-				4A260A8560D52D685FA82725 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -352,21 +351,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4A260A8560D52D685FA82725 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		DC1031EE1386B423FA93BF26 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -552,7 +536,7 @@
 				);
 				INFOPLIST_FILE = BitDate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/portia/Dropbox/Dev/school/ios/ios8/BitDate/BitDate/Bridging-Header.h";
 			};
@@ -570,7 +554,7 @@
 				);
 				INFOPLIST_FILE = BitDate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/portia/Dropbox/Dev/school/ios/ios8/BitDate/BitDate/Bridging-Header.h";
 			};

@@ -14,7 +14,7 @@ struct Match {
     let user: User
 }
 
-func fetchMatches (callback: ([Match]) -> ()) {
+func fetchMatches (callBack: ([Match]) -> ()) {
     PFQuery(className: "Action")
         .whereKey("byUser", equalTo: PFUser.currentUser()!.objectId!)
         .whereKey("type", equalTo: "matched")
@@ -28,18 +28,18 @@ func fetchMatches (callback: ([Match]) -> ()) {
                 let userIDs = matchedUsers.map({$0.userID})
                 
                 PFUser.query()!
-                .whereKey("objectID", containedIn: userIDs)
-                .findObjectsInBackgroundWithBlock({ (objects, error) in
-                    if let users = objects as? [PFUser] {
-                        var users = reverse(users)
-                        var m = Array<Match>()
-                        
-                        for (index, user) in enumerate(users) {
-                            m.append(Match(id: matchedUsers[index].matchID, user: pfUserToUser(user)))
+                    .whereKey("objectId", containedIn: userIDs)
+                    .findObjectsInBackgroundWithBlock({
+                        objects, error in
+                        if let users = objects as? [PFUser] {
+                            var users = reverse(users)
+                            var m = Array<Match>()
+                            for (index, user) in enumerate(users) {
+                                m.append(Match(id: matchedUsers[index].matchID, user: pfUserToUser(user)))
+                            }
+                            callBack(m)
                         }
-                        callback(m)
-                    }
-                })
+                    })
             }
         })
 }

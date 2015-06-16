@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		71A85BB1F7B15335293A6148 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8665A7CED1415A45D920FDBC /* libPods.a */; };
+		833555671B30A578004F4019 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 833555661B30A578004F4019 /* libicucore.dylib */; };
+		833555691B30A584004F4019 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 833555681B30A584004F4019 /* libc++.dylib */; };
+		8335556B1B30A5B7004F4019 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335556A1B30A5B7004F4019 /* Message.swift */; };
 		83388D6D1B260516000F7434 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D6A1B260516000F7434 /* Parse.framework */; };
 		83388D6F1B260516000F7434 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D6C1B260516000F7434 /* ParseFacebookUtilsV4.framework */; };
 		83388D711B260534000F7434 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83388D701B260534000F7434 /* AudioToolbox.framework */; };
@@ -39,6 +42,7 @@
 		838148BA1B23915B009AF1AE /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148B91B23915B009AF1AE /* SwipeView.swift */; };
 		838148BD1B239861009AF1AE /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838148BC1B239861009AF1AE /* CardsViewController.swift */; };
 		83AB13B41B2635C000F02F48 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AB13B31B2635C000F02F48 /* LoginViewController.swift */; };
+		83F2BAA61B2F4C4C0000A350 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F2BAA51B2F4C4C0000A350 /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,9 @@
 
 /* Begin PBXFileReference section */
 		7041657BEB03B92892013412 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		833555661B30A578004F4019 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		833555681B30A584004F4019 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		8335556A1B30A5B7004F4019 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		83388D6A1B260516000F7434 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		83388D6C1B260516000F7434 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		83388D701B260534000F7434 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -89,6 +96,7 @@
 		838148BC1B239861009AF1AE /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		83AB13B21B261C7800F02F48 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		83AB13B31B2635C000F02F48 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		83F2BAA51B2F4C4C0000A350 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8665A7CED1415A45D920FDBC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFF86C92075423D3250017B7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +106,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				833555691B30A584004F4019 /* libc++.dylib in Frameworks */,
+				833555671B30A578004F4019 /* libicucore.dylib in Frameworks */,
 				83388D891B2605D7000F7434 /* Social.framework in Frameworks */,
 				83388D871B2605D1000F7434 /* Accounts.framework in Frameworks */,
 				83388D851B26059D000F7434 /* libsqlite3.dylib in Frameworks */,
@@ -130,6 +140,8 @@
 		83388D691B26041B000F7434 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				833555681B30A584004F4019 /* libc++.dylib */,
+				833555661B30A578004F4019 /* libicucore.dylib */,
 				83388D881B2605D7000F7434 /* Social.framework */,
 				83388D861B2605D1000F7434 /* Accounts.framework */,
 				83388D841B26059D000F7434 /* libsqlite3.dylib */,
@@ -156,6 +168,7 @@
 			children = (
 				838148951B23450D009AF1AE /* BitDate.xcdatamodeld */,
 				8338A9371B2656E000860515 /* User.swift */,
+				8335556A1B30A5B7004F4019 /* Message.swift */,
 				833C31241B2E2F2F00E33453 /* Match.swift */,
 			);
 			name = Model;
@@ -239,6 +252,7 @@
 				83AB13B31B2635C000F02F48 /* LoginViewController.swift */,
 				838148BC1B239861009AF1AE /* CardsViewController.swift */,
 				833C31201B2E1C2E00E33453 /* MatchesTableViewController.swift */,
+				83F2BAA51B2F4C4C0000A350 /* ChatViewController.swift */,
 				8338DE5E1B276A2E003BB9B0 /* ProfileViewController.swift */,
 			);
 			name = ViewControllers;
@@ -397,9 +411,11 @@
 				838148B81B234571009AF1AE /* CardView.swift in Sources */,
 				8338DE5F1B276A2E003BB9B0 /* ProfileViewController.swift in Sources */,
 				838148BA1B23915B009AF1AE /* SwipeView.swift in Sources */,
+				83F2BAA61B2F4C4C0000A350 /* ChatViewController.swift in Sources */,
 				833C31231B2E1C8500E33453 /* UserCell.swift in Sources */,
 				838148971B23450D009AF1AE /* BitDate.xcdatamodeld in Sources */,
 				833C31251B2E2F2F00E33453 /* Match.swift in Sources */,
+				8335556B1B30A5B7004F4019 /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

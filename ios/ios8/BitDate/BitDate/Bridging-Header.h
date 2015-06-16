@@ -14,3 +14,9 @@
 //Parse SDK
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import <Parse/Parse.h>
+
+// JSQMessages
+#import <JSQMessagesViewController/JSQMessages.h>
+
+// Firebase
+#import <Firebase/Firebase.h>

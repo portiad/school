@@ -50,7 +50,6 @@ class MatchesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        println(matches.count)
         return matches.count
     }
 
@@ -68,6 +67,13 @@ class MatchesTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-       tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let vc = ChatViewViewController()
+        let match = matches[indexPath.row]
+        vc.matchID = match.id
+        vc.title = match.user.name
+        
+        navigationController?.pushViewController(vc, animated: true)
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }

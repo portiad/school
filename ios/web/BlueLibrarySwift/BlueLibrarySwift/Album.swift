@@ -32,6 +32,8 @@ class Album: NSObject, NSCoding {
         self.year = decoder.decodeObjectForKey("year") as! String
     }
     
+    
+    //Part of the NSCoding protocol, encodeWithCoder will be called when you ask for an Album instance to be archived. Conversely, the init(coder:) initializer will be used to reconstruct or unarchive from a saved instance. It’s simple, yet powerful.
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(title, forKey: "title")
         aCoder.encodeObject(artist, forKey: "artist")

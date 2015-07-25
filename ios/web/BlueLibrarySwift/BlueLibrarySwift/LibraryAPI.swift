@@ -65,6 +65,10 @@ class LibraryAPI: NSObject {
         }
     }
     
+    func saveAlbums() {
+        persistencyManager.saveAlbums()
+    }
+    
     func downloadImage(notification: NSNotification) {
         // downloadImage is executed via notifications and so the method receives the notification object as a parameter. The UIImageView and image URL are retrieved from the notification.
         let userInfo = notification.userInfo as! [String: AnyObject]

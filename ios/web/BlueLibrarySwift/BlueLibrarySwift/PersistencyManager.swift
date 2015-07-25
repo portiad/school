@@ -76,6 +76,7 @@ class PersistencyManager: NSObject {
     }
     
     func saveAlbums() {
+        //NSKeyedArchiver archives the album array into a file called albums.bin.
         var filename = NSHomeDirectory().stringByAppendingString("/Documents/albums.bin")
         let data = NSKeyedArchiver.archivedDataWithRootObject(albums)
         data.writeToFile(filename, atomically: true)

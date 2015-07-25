@@ -62,8 +62,6 @@ class LoginViewController: UIViewController {
             
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CardsNavigationController") as! UIViewController
             self.presentViewController(vc, animated: true, completion: nil)
-            
-            
         })
     }
 }

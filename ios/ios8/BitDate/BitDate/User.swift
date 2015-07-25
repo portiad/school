@@ -37,21 +37,21 @@ func currentUser() -> User? {
 }
 
 func fetchUnviewedUsers(callback: ([User]) -> ()) {
-    PFQuery(className: "Action")
-        .whereKey("byUser", equalTo: PFUser.currentUser()!.objectId!).findObjectsInBackgroundWithBlock({
-            objects, error in
-            let seenIDS = map(objects!, {$0.objectForKey("toUser")!})
-            PFUser.query()!
-                .whereKey("objectId", notEqualTo: PFUser.currentUser()!.objectId!)
-                .whereKey("objectId", notContainedIn: seenIDS)
-                .findObjectsInBackgroundWithBlock({
-                    objects, error in
-                    if let pfUsers = objects as? [PFUser] {
-                        let users = map(pfUsers, {pfUserToUser($0)})
-                        callback(users)
-                    }
-                })
-        })
+//    PFQuery(className: "Action")
+//        .whereKey("byUser", equalTo: PFUser.currentUser()!.objectId!).findObjectsInBackgroundWithBlock({
+//            objects, error in
+//            let seenIDS = map(objects!, {$0.objectForKey("toUser")!})
+//            PFUser.query()!
+//                .whereKey("objectId", notEqualTo: PFUser.currentUser()!.objectId!)
+//                .whereKey("objectId", notContainedIn: seenIDS)
+//                .findObjectsInBackgroundWithBlock({
+//                    objects, error in
+//                    if let pfUsers = objects as? [PFUser] {
+//                        let users = map(pfUsers, {pfUserToUser($0)})
+//                        callback(users)
+//                    }
+//                })
+//        })
 }
 
 func saveSkip(user: User) {

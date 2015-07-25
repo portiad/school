@@ -28,6 +28,8 @@ class MapViewController: UIViewController {
         let itemArray = context.executeFetchRequest(request, error: &error)
         println(error)
         
+        println(mapView.frame)
+        
         if itemArray!.count > 0 {
             for item in itemArray! {
                 let location = CLLocationCoordinate2D(latitude: Double(item.latitude), longitude: Double(item.longitude))

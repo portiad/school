@@ -60,6 +60,7 @@ class CardsViewController: UIViewController, SwipeViewDelegate {
                 self.cardStackView.insertSubview(self.backCard!.swipeView, belowSubview: self.frontCard!.swipeView)
             }
         })
+        println(cardStackView.frame)
     }
 
     override func didReceiveMemoryWarning() {

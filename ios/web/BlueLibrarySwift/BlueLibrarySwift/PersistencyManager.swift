@@ -13,6 +13,18 @@ class PersistencyManager: NSObject {
     private var albums = [Album]()
     
     override init() {
+        super.init()
+        if let data = NSData(contentsOfFile: NSHomeDirectory().stringByAppendingString("/Documents/albums.bin")) {
+            let unarchiveAlbums = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! [Album]?
+            if let unwrappedAlbum = unarchiveAlbums {
+                albums = unwrappedAlbum
+            }
+        } else {
+            createPlaceholderAlbum()
+        }
+    }
+    
+    func createPlaceholderAlbum() {
         //Dummy list of albums
         let album1 = Album(title: "Best of Bowie",
             artist: "David Bowie",
@@ -27,7 +39,7 @@ class PersistencyManager: NSObject {
             year: "2003")
         
         let album3 = Album(title: "Nothing Like The Sun",
-            artist: "Sting",
+	           artist: "Sting",
             genre: "Pop",
             coverUrl: "http://www.coversproject.com/static/thumbs/album/album_sting_nothing%20like%20the%20sun.png",
             year: "1999")
@@ -43,8 +55,8 @@ class PersistencyManager: NSObject {
             genre: "Pop",
             coverUrl: "http://www.coversproject.com/static/thumbs/album/album_madonna_american%20pie.png",
             year: "2000")
-        
         albums = [album1, album2, album3, album4, album5]
+        saveAlbums()
     }
     
     func getAlbums() -> [Album] {
@@ -61,6 +73,29 @@ class PersistencyManager: NSObject {
     
     func deleteAlbumAtIndex(index: Int) {
         albums.removeAtIndex(index)
+    }
+    
+    func saveAlbums() {
+        var filename = NSHomeDirectory().stringByAppendingString("/Documents/albums.bin")
+        let data = NSKeyedArchiver.archivedDataWithRootObject(albums)
+        data.writeToFile(filename, atomically: true)
+    }
+    
+    func saveImage(image: UIImage, filename: String) {
+        let path = NSHomeDirectory().stringByAppendingString("/Documents/\(filename)")
+        let data = UIImagePNGRepresentation(image)
+        data.writeToFile(path, atomically: true)
+    }
+    
+    func getImage(filename: String) -> UIImage? {
+        var error: NSError?
+        let path = NSHomeDirectory().stringByAppendingString("/Documents/\(filename)")
+        let data = NSData(contentsOfFile: path, options: .UncachedRead, error: &error)
+        if let unwrappedError = error {
+            return nil
+        } else {
+            return UIImage(data: data!)
+        }
     }
    
 }

@@ -45,6 +45,4 @@ class Album: NSObject, NSCoding {
     override var description: String {
         return "title: \(title)" + "artist: \(artist)" + "genre: \(genre)" + "coverURL: \(coverUrl)" + "year: \(year)"
     }
-    
-    
 }

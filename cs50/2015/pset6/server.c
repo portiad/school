@@ -146,6 +146,52 @@ int main(int argc, char* argv[])
             // log request-line
             printf("%s", line);
 
+            char* request[3];
+
+            request[0] = strtok(line, " \n");
+            for (int i=1; i < 3; i++) {
+                request[i] = strtok(NULL, " \n");
+            }
+            
+            printf("%s\n", request[0]);
+            printf("%s\n", request[1]);
+            printf("%s\n", request[2]);
+
+            // test for only 3 variables
+            char* checkToken = strtok(NULL, " \n");
+            if  (checkToken != NULL || request[0] == NULL || request[1] == NULL || request[2] == NULL) {
+                error(400);
+                continue;
+            }
+
+            // Check if first item is get
+            if (strcmp(request[0], "GET") != 0) {
+                error(405);
+                continue;
+            }
+
+            // Check that request includes /
+            if (request[1][0] != '/') {
+                error(501);
+                continue;
+            }
+
+            // Check if reqest does not include "
+            if (strchr(request[1], '"') != NULL) {
+                error(400);
+                continue;
+            }
+
+            if (strchr(request[1], '.') == NULL) {
+                error(400);
+                continue;
+            }
+
+            if (strcmp(request[2], "HTTP/1.1") != 0) {
+                error(505);
+                continue;
+            }
+
             // TODO: validate request-line
 
             // TODO: extract query from request-target

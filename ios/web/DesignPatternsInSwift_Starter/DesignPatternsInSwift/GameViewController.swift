@@ -30,21 +30,19 @@ class GameViewController: UIViewController {
     
     // Use your new shape factory to create a tuple of shapes.
     let shapes = shapeFactory.createShapes()
-    // Extract the shapes from the tuple…
-    let square1 = shapes.0 as! SquareShape, square2 = shapes.1 as! SquareShape
     
     // Use this new factory to create your shape views.
-    let shapeViews = shapeViewFactory.makeShapesViewsForShape((shapes.0, shapes.1))
+    let shapeViews = shapeViewFactory.makeShapesViewsForShape(shapes)
     
     // Set the tap handler on each shape view to adjust the score based on whether the player tapped the larger view or not.
     shapeViews.0.tapHandler = {
       tappedView in
-      self.gameView.score += square1.sideLength >= square2.sideLength ? 1 : -1
+      self.gameView.score += shapes.0.area >= shapes.1.area ? 1 : -1
       self.beginNextTurn()
     }
     shapeViews.1.tapHandler = {
       tappedView in
-      self.gameView.score += square2.sideLength >= square1.sideLength ? 1 : -1
+      self.gameView.score += shapes.1.area >= shapes.0.area ? 1 : -1
       self.beginNextTurn()
     }
     

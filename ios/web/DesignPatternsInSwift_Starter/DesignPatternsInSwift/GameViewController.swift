@@ -13,9 +13,11 @@ class GameViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    
+    
     // Initialize and store a SquareShapeViewFactory.
-    shapeViewFactory = SquareShapeViewFactory(size: gameView.sizeAvailableForShapes())
-    shapeFactory = SquareShapeFactory(minProportion: 0.3, maxProportion: 0.8)
+    shapeViewFactory = CircleShapeViewFactory(size: gameView.sizeAvailableForShapes())
+    shapeFactory = CircleShapeFactory(minProportion: 0.3, maxProportion: 0.8)
     
     // Begin a turn as soon as the GameView loads.
     beginNextTurn()
@@ -55,5 +57,5 @@ class GameViewController: UIViewController {
   // Store your new shape view factory as an instance property
   private var shapeViewFactory: ShapeViewFactory!
   
-  private var shapeFactory: SquareShapeFactory!
+  private var shapeFactory: CircleShapeFactory!
 }

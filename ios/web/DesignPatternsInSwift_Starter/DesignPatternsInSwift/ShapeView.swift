@@ -79,3 +79,40 @@ class SquareShapeView: ShapeView {
     }
   }
 }
+
+class CircleShapeView: ShapeView {
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    
+    // Since a circle cannot fill the rectangular bounds of its view, you need to tell UIKit that the view is not opaque, meaning content behind it may poke through. If you miss this, then the circles will have an ugly black background.
+    self.opaque = false
+    
+    // Because the view is not opaque, you should redraw the view when its bounds change
+    self.contentMode = UIViewContentMode.Redraw
+  }
+  
+  required init(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func drawRect(rect: CGRect) {
+    super.drawRect(rect)
+    
+    if showFill {
+      fillColor.setFill()
+      
+      // Draw a circle filled with the fillColor. In a moment, you’ll create CircleShapeViewFactory, which will ensurethat CircleView has equal width and height so the shape will be a circle and not an ellipse.
+      let fillPath = UIBezierPath(ovalInRect: self.bounds)
+      fillPath.fill()
+    }
+    
+    if showOutline {
+      outlineColor.setStroke()
+      
+      // Stroke the outline border of the circle and inset to account for line width.
+      let outlinePath = UIBezierPath(ovalInRect: CGRect(x: halfLineWidth, y: halfLineWidth, width: self.bounds.size.width - 2 * halfLineWidth, height: self.bounds.size.height - 2 * halfLineWidth))
+      outlinePath.lineWidth = 2.0 * halfLineWidth
+      outlinePath.stroke()
+    }
+  }
+}

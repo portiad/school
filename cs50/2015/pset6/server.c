@@ -146,16 +146,16 @@ int main(int argc, char* argv[])
             // log request-line
             printf("%s", line);
 
+            // parse out request line
             char* request[3];
+            char temp = &line;
 
-            request[0] = strtok(line, " \n");
+            request[0] = strtok(temp, " \n");
             for (int i=1; i < 3; i++) {
-                request[i] = strtok(NULL, " \n");
+                request[i] = strtok(NULL, " \n \r\n");
             }
-            
-            printf("%s\n", request[0]);
-            printf("%s\n", request[1]);
-            printf("%s\n", request[2]);
+
+            // validation of request line
 
             // test for only 3 variables
             char* checkToken = strtok(NULL, " \n");
@@ -164,38 +164,40 @@ int main(int argc, char* argv[])
                 continue;
             }
 
-            // Check if first item is get
+            // verify http request type is get
             if (strcmp(request[0], "GET") != 0) {
                 error(405);
                 continue;
             }
 
-            // Check that request includes /
+            // check for / in path
             if (request[1][0] != '/') {
                 error(501);
                 continue;
             }
 
-            // Check if reqest does not include "
+            // very no " in path
             if (strchr(request[1], '"') != NULL) {
                 error(400);
                 continue;
             }
-
+            
+            // verify . in path
             if (strchr(request[1], '.') == NULL) {
                 error(400);
                 continue;
             }
 
+            // verify http protocol is 1.1
             if (strcmp(request[2], "HTTP/1.1") != 0) {
                 error(505);
                 continue;
             }
 
-            // TODO: validate request-line
+            printf("%s\n", line);
 
             // TODO: extract query from request-target
-            char query[] = "TODO";
+            char query[] = "TODO"; //strtok(request[1], "?");
 
             // TODO: concatenate root and absolute-path
             char path[] = "TODO";

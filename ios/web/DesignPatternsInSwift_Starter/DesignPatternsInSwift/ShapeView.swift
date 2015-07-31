@@ -60,15 +60,19 @@ class ShapeView: UIView {
 class SquareShapeView: ShapeView {
   override func drawRect(rect: CGRect) {
     super.drawRect(rect)
-
+    
+    // If configured to show fill, then fill in the view with the fill color.
     if showFill {
       fillColor.setFill()
       let fillPath = UIBezierPath(rect: bounds)
       fillPath.fill()
     }
-
+    
+    // If configured to show an outline, then outline the view with the outline color.
     if showOutline {
       outlineColor.setStroke()
+      
+      // Since iOS draws lines that are centered over their position, you need to inset the view bounds by halfLineWidth when stroking the path.
       let outlinePath = UIBezierPath(rect: CGRect(x: halfLineWidth, y: halfLineWidth, width: bounds.size.width - 2 * halfLineWidth, height: bounds.size.height - 2 * halfLineWidth))
       outlinePath.lineWidth = 2.0 * halfLineWidth
       outlinePath.stroke()

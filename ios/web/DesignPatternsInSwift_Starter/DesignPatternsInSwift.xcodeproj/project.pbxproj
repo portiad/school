@@ -18,6 +18,7 @@
 		5D23FD2619D23F9B003F5F4E /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D23FD2519D23F9B003F5F4E /* Shape.swift */; };
 		6A6728FA19EE21B60026F8C9 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6728F919EE21B60026F8C9 /* Utils.swift */; };
 		83D11C4D1B6C092200723103 /* ShapeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D11C4C1B6C092200723103 /* ShapeViewFactory.swift */; };
+		83D11C4F1B6C0E1E00723103 /* ShapeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D11C4E1B6C0E1E00723103 /* ShapeFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		5D23FD2519D23F9B003F5F4E /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
 		6A6728F919EE21B60026F8C9 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		83D11C4C1B6C092200723103 /* ShapeViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeViewFactory.swift; sourceTree = "<group>"; };
+		83D11C4E1B6C0E1E00723103 /* ShapeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			children = (
 				5D23FD2519D23F9B003F5F4E /* Shape.swift */,
 				83D11C4C1B6C092200723103 /* ShapeViewFactory.swift */,
+				83D11C4E1B6C0E1E00723103 /* ShapeFactory.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				6A6728FA19EE21B60026F8C9 /* Utils.swift in Sources */,
 				83D11C4D1B6C092200723103 /* ShapeViewFactory.swift in Sources */,
 				5D23FD2419D223C0003F5F4E /* ShapeView.swift in Sources */,
+				83D11C4F1B6C0E1E00723103 /* ShapeFactory.swift in Sources */,
 				5D23FD0019D21A02003F5F4E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,6 +15,7 @@ class GameViewController: UIViewController {
     
     // Initialize and store a SquareShapeViewFactory.
     shapeViewFactory = SquareShapeViewFactory(size: gameView.sizeAvailableForShapes())
+    shapeFactory = SquareShapeFactory(minProportion: 0.3, maxProportion: 0.8)
     
     // Begin a turn as soon as the GameView loads.
     beginNextTurn()
@@ -26,23 +27,24 @@ class GameViewController: UIViewController {
   
   // Create a pair of square shapes with random side lengths drawn as proportions in the range [0.3, 0.8]. The shapes will also scale to any screen size.
   private func beginNextTurn() {
-    let shape1 = SquareShape()
-    shape1.sideLength = Utils.randomBetweenLower(0.3, andUpper: 0.8)
-    let shape2 = SquareShape()
-    shape2.sideLength = Utils.randomBetweenLower(0.3, andUpper: 0.8)
+    
+    // Use your new shape factory to create a tuple of shapes.
+    let shapes = shapeFactory.createShapes()
+    // Extract the shapes from the tuple…
+    let square1 = shapes.0 as! SquareShape, square2 = shapes.1 as! SquareShape
     
     // Use this new factory to create your shape views.
-    let shapeViews = shapeViewFactory.makeShapesViewsForShape((shape1, shape2))
+    let shapeViews = shapeViewFactory.makeShapesViewsForShape((shapes.0, shapes.1))
     
     // Set the tap handler on each shape view to adjust the score based on whether the player tapped the larger view or not.
     shapeViews.0.tapHandler = {
       tappedView in
-      self.gameView.score += shape1.sideLength >= shape2.sideLength ? 1 : -1
+      self.gameView.score += square1.sideLength >= square2.sideLength ? 1 : -1
       self.beginNextTurn()
     }
     shapeViews.1.tapHandler = {
       tappedView in
-      self.gameView.score += shape2.sideLength >= shape1.sideLength ? 1 : -1
+      self.gameView.score += square2.sideLength >= square1.sideLength ? 1 : -1
       self.beginNextTurn()
     }
     
@@ -54,4 +56,6 @@ class GameViewController: UIViewController {
   
   // Store your new shape view factory as an instance property
   private var shapeViewFactory: ShapeViewFactory!
+  
+  private var shapeFactory: SquareShapeFactory!
 }

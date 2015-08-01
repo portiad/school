@@ -15,7 +15,7 @@ protocol ShapeViewFactory {
   var size: CGSize {get set}
   
   // Define the method that produces shape views. This is the “meat” of the factory. It takes a tuple of two Shape objects and returns a tuple of two ShapeView objects. This essentially manufactures views from its raw materials — the models.
-  func makeShapesViewsForShape(shapes: (Shape, Shape)) -> (ShapeView, ShapeView)
+  func makeShapeViewsForShapes(shapes: (Shape, Shape)) -> (ShapeView, ShapeView)
 }
 
 class SquareShapeViewFactory: ShapeViewFactory {
@@ -26,7 +26,7 @@ class SquareShapeViewFactory: ShapeViewFactory {
     self.size = size
   }
   
-  func makeShapesViewsForShape(shapes: (Shape, Shape)) -> (ShapeView, ShapeView) {
+  func makeShapeViewsForShapes(shapes: (Shape, Shape)) -> (ShapeView, ShapeView) {
     // Construct the first shape view from the first passed shape
     let squareShape1 = shapes.0 as! SquareShape
     let shapeView1 = SquareShapeView(frame: CGRect(x: 0, y: 0, width: squareShape1.sideLength * size.width, height: squareShape1.sideLength * size.height))
@@ -49,7 +49,7 @@ class CircleShapeViewFactory: ShapeViewFactory {
     self.size = size
   }
   
-  func makeShapesViewsForShape(shapes: (Shape, Shape)) -> (ShapeView, ShapeView) {
+  func makeShapeViewsForShapes(shapes: (Shape, Shape)) -> (ShapeView, ShapeView) {
     let circleShape1 = shapes.0 as! CircleShape
     let shapeView1 = CircleShapeView(frame: CGRect(x: 0, y: 0, width: circleShape1.diameter * size.width, height: circleShape1.diameter * size.height))
     shapeView1.shape = circleShape1

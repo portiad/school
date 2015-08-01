@@ -21,6 +21,8 @@ class GameViewController: UIViewController {
     shapeViewBuilder.fillColor = UIColor.brownColor()
     shapeViewBuilder.outlineColor = UIColor.orangeColor()
     
+    turnController = TurnController(shapeFactory: shapeFactory, shapeViewBuilder: shapeViewBuilder)
+    
     // Begin a turn as soon as the GameView loads.
     beginNextTurn()
   }
@@ -31,32 +33,26 @@ class GameViewController: UIViewController {
   
   // Create a pair of square shapes with random side lengths drawn as proportions in the range [0.3, 0.8]. The shapes will also scale to any screen size.
   private func beginNextTurn() {
+    // Asks the TurnController to begin a new turn and return a tuple of ShapeView to use for the turn.
+    let shapeViews = turnController.beginNewTurn()
     
-    // Use your new shape factory to create a tuple of shapes.
-    let shapes = shapeFactory.createShapes()
-    
-    // Use this new factory to create your shape views.
-    let shapeViews = shapeViewBuilder.buildShapeViewsForShapes(shapes)
-    
-    // Set the tap handler on each shape view to adjust the score based on whether the player tapped the larger view or not.
+    // Informs the turn controller that the turn is over when the player taps a ShapeView, and then it increments the score. Notice how TurnController abstracts score calculation away, further simplifying GameViewController.
     shapeViews.0.tapHandler = {
       tappedView in
-      self.gameView.score += shapes.0.area >= shapes.1.area ? 1 : -1
+      self.gameView.score += self.turnController.endTurnWithTappedShape(tappedView.shape)
       self.beginNextTurn()
     }
-    shapeViews.1.tapHandler = {
-      tappedView in
-      self.gameView.score += shapes.1.area >= shapes.0.area ? 1 : -1
-      self.beginNextTurn()
-    }
+    
+    // Since you removed explicit references to specific shapes, the second shape view can share the same tapHandler closure as the first shape view.
+    shapeViews.1.tapHandler = shapeViews.0.tapHandler
     
     // Add the shapes to the GameView so it can lay out the shapes and display them.
     gameView.addShapeViews(shapeViews)
   }
 
   private var gameView: GameView { return view as! GameView }
-  // Store your new shape view factory as an instance property
   private var shapeViewFactory: ShapeViewFactory!
   private var shapeFactory: SquareShapeFactory!
   private var shapeViewBuilder: ShapeViewBuilder!
+  private var turnController: TurnController!
 }

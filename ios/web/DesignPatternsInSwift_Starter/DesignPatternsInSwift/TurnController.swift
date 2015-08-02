@@ -16,6 +16,8 @@ class TurnController {
   // Accepts a passed strategy and stores it on the TurnController instance
   init(turnStrategy: TurnStrategy) {
     self.turnStrategy = turnStrategy
+    self.scorer = MatchScorer()
+    self.scorer.nextScorer = StreakScorer()
   }
   
   func beginNewTurn() -> (ShapeView, ShapeView) {
@@ -30,9 +32,10 @@ class TurnController {
     currentTurn!.turnCompletedWithTappedShape(tappedShape)
     pastTurns.append(currentTurn!)
     
-    var scoreIncrement = currentTurn!.matched! ? 1 : -1
+    var scoreIncrement = scorer.computeScoreIncrement(pastTurns.reverse())
     
     return scoreIncrement
   }
   private let turnStrategy: TurnStrategy
+  private let scorer: Scorer
 }

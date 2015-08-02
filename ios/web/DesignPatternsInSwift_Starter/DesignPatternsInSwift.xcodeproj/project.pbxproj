@@ -23,6 +23,7 @@
 		83D11C531B6C4B2D00723103 /* Turn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D11C521B6C4B2D00723103 /* Turn.swift */; };
 		83D11C551B6C4C6800723103 /* TurnController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D11C541B6C4C6800723103 /* TurnController.swift */; };
 		83D11C571B6ED29B00723103 /* TurnStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D11C561B6ED29B00723103 /* TurnStrategy.swift */; };
+		83D11C591B6EDD5D00723103 /* Scorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D11C581B6EDD5D00723103 /* Scorer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		83D11C521B6C4B2D00723103 /* Turn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Turn.swift; sourceTree = "<group>"; };
 		83D11C541B6C4C6800723103 /* TurnController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnController.swift; sourceTree = "<group>"; };
 		83D11C561B6ED29B00723103 /* TurnStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnStrategy.swift; sourceTree = "<group>"; };
+		83D11C581B6EDD5D00723103 /* Scorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scorer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 			children = (
 				83D11C541B6C4C6800723103 /* TurnController.swift */,
 				83D11C561B6ED29B00723103 /* TurnStrategy.swift */,
+				83D11C581B6EDD5D00723103 /* Scorer.swift */,
 				5D23FD0119D21A02003F5F4E /* GameViewController.swift */,
 			);
 			name = Controller;
@@ -280,6 +283,7 @@
 				5D23FD2419D223C0003F5F4E /* ShapeView.swift in Sources */,
 				83D11C4F1B6C0E1E00723103 /* ShapeFactory.swift in Sources */,
 				5D23FD0019D21A02003F5F4E /* AppDelegate.swift in Sources */,
+				83D11C591B6EDD5D00723103 /* Scorer.swift in Sources */,
 				83D11C551B6C4C6800723103 /* TurnController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

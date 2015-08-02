@@ -13,16 +13,14 @@ class TurnController {
   var currentTurn: Turn?
   var pastTurns: [Turn] = [Turn]()
   
-  // Accepts a ShapeFactory and ShapeViewBuilder.
-  init(shapeFactory: ShapeFactory, shapeViewBuilder: ShapeViewBuilder) {
-    self.shapeFactory = shapeFactory
-    self.shapeViewBuilder = shapeViewBuilder
+  // Accepts a passed strategy and stores it on the TurnController instance
+  init(turnStrategy: TurnStrategy) {
+    self.turnStrategy = turnStrategy
   }
   
-  // Uses this factory and builder to create shapes and views for each new turn and records the current turn.
   func beginNewTurn() -> (ShapeView, ShapeView) {
-    let shapes = shapeFactory.createShapes()
-    let shapeViews = shapeViewBuilder.buildShapeViewsForShapes(shapes)
+    // Uses the strategy to generate the ShapeView objects so the player can begin a new turn.
+    let shapeViews = turnStrategy.makeShapeViewsForNextTurnGivenPastTurns(pastTurns)
     currentTurn = Turn(shapes: [shapeViews.0.shape, shapeViews.1.shape])
     return shapeViews
   }
@@ -36,7 +34,5 @@ class TurnController {
     
     return scoreIncrement
   }
-  
-  private let shapeFactory: ShapeFactory
-  private var shapeViewBuilder: ShapeViewBuilder
+  private let turnStrategy: TurnStrategy
 }

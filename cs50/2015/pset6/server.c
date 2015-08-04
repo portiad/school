@@ -148,9 +148,8 @@ int main(int argc, char* argv[])
 
             // parse out request line
             char* request[3];
-            char temp = &line;
 
-            request[0] = strtok(temp, " \n");
+            request[0] = strtok(line, " \n");
             for (int i=1; i < 3; i++) {
                 request[i] = strtok(NULL, " \n \r\n");
             }
@@ -197,7 +196,7 @@ int main(int argc, char* argv[])
             printf("%s\n", line);
 
             // TODO: extract query from request-target
-            char query[] = "TODO"; //strtok(request[1], "?");
+            char query[] = strtok(request[1], "?");
 
             // TODO: concatenate root and absolute-path
             char path[] = "TODO";

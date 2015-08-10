@@ -48,7 +48,7 @@ class RWTItem: NSObject {
         let beaconMajor = beacon.major == self.majorValue
         let beaconMinor = beacon.minor == self.minorValue
         
-        if matchUUID && () && () {
+        if matchUUID && beaconMajor && beaconMinor {
             return true
         } else {
             return false

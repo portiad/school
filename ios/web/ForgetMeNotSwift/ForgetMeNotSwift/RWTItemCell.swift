@@ -13,7 +13,7 @@ class RWTItemCell: UITableViewCell {
     var item: RWTItem? {
         didSet {
             if let item = item {
-                self.textLabel!.text! = item.name
+                self.textLabel!.text = self.item!.name as String
             }
         }
     }

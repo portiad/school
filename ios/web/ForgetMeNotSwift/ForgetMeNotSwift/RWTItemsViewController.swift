@@ -120,7 +120,7 @@ class RWTItemsViewController: UIViewController, UITableViewDataSource, UITableVi
     //MARK - CLLocationDelegate
     
     func beaconRegionWithItem(item: RWTItem) -> CLBeaconRegion {
-        let beaconRegion = CLBeaconRegion(proximityUUID: item.uuid, major: item.majorValue, minor: item.minorValue, identifier: item.name as String)
+        let beaconRegion = CLBeaconRegion(proximityUUID: item.uuid, major: CLBeaconMajorValue(Int(item.majorValue)), minor: CLBeaconMajorValue(Int(item.minorValue)), identifier: item.name as String)
         
         return beaconRegion
     }

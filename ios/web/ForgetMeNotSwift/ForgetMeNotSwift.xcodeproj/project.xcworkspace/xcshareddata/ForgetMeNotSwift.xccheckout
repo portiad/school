@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>2C36301E-2653-44E4-A8BB-DCF0FBFBA636</string>
+	<string>FD66D3A5-A662-4281-8E4A-E4C6AE62559B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>ForgetMeNot</string>
+	<string>ForgetMeNotSwift</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>
 		<string>https://github.com/portiad/school.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/web/ForgetMeNot-starter-project/ForgetMeNot.xcodeproj</string>
+	<string>ios/web/ForgetMeNotSwift/ForgetMeNotSwift.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>

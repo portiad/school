@@ -20,6 +20,7 @@ class RWTItem: NSObject {
     var uuid: NSUUID
     var majorValue: NSNumber
     var minorValue: NSNumber
+    var lastSeenBeacon: CLBeacon?
     
     init(name: String, uuid: NSUUID, major: NSNumber?, minor: NSNumber?) {
         self.name = name

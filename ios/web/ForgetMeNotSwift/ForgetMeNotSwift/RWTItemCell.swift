@@ -12,8 +12,12 @@ class RWTItemCell: UITableViewCell {
     
     var item: RWTItem? {
         didSet {
+            if (item != nil) {
+                item?.removeObserver(self, forKeyPath: "lastSeenBeacon")
+            }
             if let item = item {
                 self.textLabel!.text = self.item!.name as String
+                item.addObserver(self, forKeyPath: "lastSeenBeacon", options: NSKeyValueObservingOptions.New, context: nil)
             }
         }
     }

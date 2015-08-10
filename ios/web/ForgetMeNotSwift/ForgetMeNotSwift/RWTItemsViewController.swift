@@ -148,11 +148,10 @@ class RWTItemsViewController: UIViewController, UITableViewDataSource, UITableVi
     func locationManager(manager: CLLocationManager!, didRangeBeacons beacons: [AnyObject]!, inRegion region: CLBeaconRegion!) {
         for beacon in beacons {
             for item in self.items {
-                if beacon == item {
-                    
+                if (item as! RWTItem).isEqualToCLBeacon(beacon as! CLBeacon) {
+                    (item as! RWTItem).lastSeenBeacon = beacon as? CLBeacon
                 }
             }
         }
     }
-    
 }

@@ -28,6 +28,7 @@ class RWTAddItemViewController: UITableViewController {
         self.saveBarButtonItem.enabled = false
         self.nameTextField.addTarget(self, action: "nameTextFieldChanged:", forControlEvents: UIControlEvents.EditingChanged)
         self.uuidTextField.addTarget(self, action: "uuidTextFieldChanged:", forControlEvents: UIControlEvents.EditingChanged)
+        // Checks the UUID pattern for a valid entry
         var uuidPatternString: String = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
         self.uuidRegex = NSRegularExpression(pattern: uuidPatternString, options:NSRegularExpressionOptions.CaseInsensitive, error: nil)
     }

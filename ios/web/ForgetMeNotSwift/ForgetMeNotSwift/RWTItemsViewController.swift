@@ -26,6 +26,7 @@ class RWTItemsViewController: UIViewController, UITableViewDataSource, UITableVi
         self.itemsTableView.delegate = self
         self.itemsTableView.dataSource = self
         
+        locationManager = CLLocationManager()
         self.locationManager.delegate = self
         
         self.loadItems()

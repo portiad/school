@@ -1,0 +1,9 @@
+from SimpleCV import *
+
+cam = Camera()
+
+while True:
+	prev = cam.getImage()
+	current = cam.getImage()
+	diff = current - prev
+	diff.show()

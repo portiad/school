@@ -1,0 +1,4 @@
+FROM mariadb:10.0
+
+#setup volumes
+VOLUME  ["/etc/mysql", "/var/lib/mysql"]

@@ -14,7 +14,7 @@
 		<string>https://github.com/portiad/school.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/ios8/FoodTracker/FoodTracker.xcodeproj</string>
+	<string>ios/bitfountain/FoodTracker/FoodTracker.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>

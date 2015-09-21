@@ -1,0 +1,27 @@
+web:
+  build: .
+  dockerfile: node.df
+  volumes:
+    - .:/code
+  links:
+    - db
+  ports:
+    - "80:80"
+  environment:
+    MYSQL_USER: 'mysql'
+    MYSQL_PASSWORD: 'mysql'
+    MYSQL_DATABASE: 'fuck'
+    HTTP_PORT: 80
+db:
+  build: .
+  dockerfile: mysql.df
+  environment:
+    MYSQL_DATABASE: fuck
+    MYSQL_USER: mysql
+    MYSQL_PASSWORD: mysql
+    MYSQL_ROOT_PASSWORD: supersecret
+    MYSQL_HOST: localhost
+  volumes:
+    - /data/mysql:/var/lib/mysql
+  ports:
+    - "3306:3306"

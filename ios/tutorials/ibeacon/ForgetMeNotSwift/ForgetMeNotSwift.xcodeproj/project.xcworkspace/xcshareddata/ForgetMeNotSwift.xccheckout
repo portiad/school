@@ -14,11 +14,11 @@
 		<string>https://github.com/portiad/school.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/web/ForgetMeNotSwift/ForgetMeNotSwift.xcodeproj</string>
+	<string>ios/tutorials/ibeacon/ForgetMeNotSwift/ForgetMeNotSwift.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</key>
-		<string>../../../../..</string>
+		<string>../../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/portiad/school.git</string>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>D20CCC4D0F8633CBACC46EC0937C935FD6C45008</string>
 			<key>IDESourceControlWCCName</key>
-			<string>School</string>
+			<string>school</string>
 		</dict>
 	</array>
 </dict>

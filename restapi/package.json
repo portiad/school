@@ -6,8 +6,6 @@
   "dependencies": {
     "express": "4.13.3",
     "mysql":"2.9.0",
-    "body-parser":"1.14.0",
-    "promise":"7.0.4",
-    "boom":"2.8.0 "
+    "body-parser":"1.14.0"
   }
 }

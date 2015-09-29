@@ -14,61 +14,23 @@ var app = express();
 connection.connect();
 app.use(bodyParser.json());
 
+// Select
 app.get('/animal', selectAllEntries);
 app.get('/owner', selectAllEntries);
-
-//Select
 app.get('/animal/:name', selectName);
-app.get('/owner:name', selectName);
+app.get('/owner/:name', selectName);
 
+// Insert
+app.post('/animal', createNewEntry);
+app.post('/owner', createNewEntry);
 
-app.get('/pets', function (req, res) {
-  var query = 'SELECT * FROM pets join owner on pets.owner_id = owner.id join animal on pets.animal_id = animal.id'
-  var options = {sql: query, nestTables: true};
-  connection.query(options, function(err, rows) {
-    if (err) {
-      throw err;
-    }
-    console.log(rows);
-    var list = [];
-    for (var i in rows) {
-      var entry = {};
-      entry.ownerName = rows[i]['owner']['name'];
-      entry.ownerAge = rows[i]['owner']['age'];
-      entry.petName = rows[i]['animal']['name'];
-      entry.petSpecies = rows[i]['animal']['species'];
-      entry.petAge = rows[i]['animal']['age'];
-      list.push(entry);
-    }
-    console.log(list);
-    res.json(list);
-  });
-});
+// Update
+app.put('/animal/age', updateAge);
+app.put('/owner/age', updateAge);
 
-//Insert
-app.post('/animal', addNewEntry);
-app.post('/owner', addNewEntry);
-app.post('/pets',   function (req, res) {
-// } else if (req.url == '/pets') {
-  //   var query = 'INSERT INTO ??(??,??) VALUES (?,?)';
-  //   var table = ['owner','name','age',req.body.name,req.body.age];
-  //   query = mysql.format(query,table););
-});
-
-//update
-
-app.put('/animal', function (req, res) {
-  var query = 'UPDATE ?? SET ?? = ? WHERE ?? = ?';
-  var table = ['animal','name',req.body.age,'name',req.body.name];
-  query = mysql.format(query,table);
-  connection.query(query,function(err,rows){
-    if(err) {
-      res.json({'Error':true,'Message':'Error executing MySQL query'});
-    } else {
-      res.json({'Error':false,'Message':'Owner Added!'});
-    }
-  });
-});
+// Delete
+app.delete('/animal', deleteEntry);
+app.delete('/owner', deleteEntry);
 
 function selectAllEntries(req, res, next) {
   var query = 'SELECT * FROM ??';
@@ -78,7 +40,11 @@ function selectAllEntries(req, res, next) {
     if (err) {
       next(err);
       return;
-    } 
+    } else if (rows.length == 0) {
+      var err = new Error('Unable to find entries in this table');
+      next(err);
+      return;
+    }
     var list = []
     for (var i in rows) {
       list.push(rows[i]);
@@ -95,30 +61,31 @@ function selectName(req, res, next) {
   if (err) {
     next(err);
     return;
+  } else if (rows.length == 0) {
+    var err = new Error('Unable to find ' + req.params.name);
+    next(err);
+    return;
   }
   var list = []
   for (var i in rows) {
     list.push(rows[i]);
   }
-  console.log(list);
   res.json(list);
   });
 }
 
-function addNewEntry (req, res, next) {
-  if (Object.keys(req.body).length > 3) {
-      var err = new Error('Incorrect number of arguments');
-      next(err);
-      return;
-  }
-  
-  if (req.url == '/animal') {
+function createNewEntry (req, res, next) {
+  if (req.url == '/animal' && Object.keys(req.body).length == 3) {
     var query = 'INSERT INTO ??(??,??,??) VALUES (?,?,?)';
     var table = ['animal','name','species','age',req.body.name,req.body.species,req.body.age];
-  } else if (req.url == '/owner') {
-    var query = 'INSERT INTO ??(??,??) VALUES (?,?)';
-    var table = ['owner','name','age',req.body.name,req.body.age];
-  } 
+  } else if (req.url == '/owner' && Object.keys(req.body).length == 2) {
+      var query = 'INSERT INTO ??(??,??) VALUES (?,?)';
+      var table = ['owner','name','age',req.body.name,req.body.age];
+  } else {
+    var err = new Error('Incorrect number of arguments');
+    next(err);
+    return;
+  }
   query = mysql.format(query,table);
   connection.query(query,function (err,rows){
     if(err) {
@@ -126,6 +93,34 @@ function addNewEntry (req, res, next) {
       return
     } else {
       res.send({'result': 'success','message':'Added!'});
+    }
+  });
+}
+
+function updateAge (req, res, next) {
+  var query = 'UPDATE ?? SET ?? = ? WHERE ?? = ?';
+  var table = [req.url.split('/')[1],'age',req.body.age,'name',req.body.name];
+  query = mysql.format(query,table);
+  connection.query(query,function(err,rows){
+    if(err) {
+      next(err);
+      return;
+    } else {
+      res.send({'result': 'success','message': 'Rows affected: ' + rows.affectedRows});
+    }
+  });
+}
+
+function deleteEntry (req, res, next) {
+  var query = 'DELETE FROM ?? WHERE ?? = ?';
+  var table = [req.url.slice(1),'name',req.body.name];
+  query = mysql.format(query,table);
+  connection.query(query,function(err,rows){
+    if(err) {
+      next(err);
+      return;
+    } else {
+      res.send({'result': 'success','message': 'Rows affected: ' + rows.affectedRows});
     }
   });
 }

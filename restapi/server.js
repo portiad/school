@@ -62,7 +62,7 @@ function selectName(req, res, next) {
     next(err);
     return;
   } else if (rows.length == 0) {
-    var err = new Error('Unable to find ' + req.params.name);
+    var err = new Error('No entries found for name ' + req.params.name);
     next(err);
     return;
   }
@@ -105,6 +105,10 @@ function updateAge (req, res, next) {
     if(err) {
       next(err);
       return;
+    } else if (rows.affectedRows == 0) {
+      var err = new Error('No entries for name ' + req.body.name)
+      next(err);
+      return;
     } else {
       res.send({'result': 'success','message': 'Rows affected: ' + rows.affectedRows});
     }
@@ -117,6 +121,10 @@ function deleteEntry (req, res, next) {
   query = mysql.format(query,table);
   connection.query(query,function(err,rows){
     if(err) {
+      next(err);
+      return;
+    } else if (rows.affectedRows == 0) {
+      var err = new Error('No entries for name ' + req.body.name)
       next(err);
       return;
     } else {

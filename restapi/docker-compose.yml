@@ -1,6 +1,7 @@
 web:
+  image: FROM node:0.10-onbuild
   build: .
-  dockerfile: node.df
+  expose: "80"
   volumes:
     - .:/code
   links:
@@ -13,8 +14,8 @@ web:
     MYSQL_DATABASE: 'fuck'
     HTTP_PORT: 80
 db:
+  image: mariadb:10.0
   build: .
-  dockerfile: mysql.df
   environment:
     MYSQL_DATABASE: fuck
     MYSQL_USER: mysql

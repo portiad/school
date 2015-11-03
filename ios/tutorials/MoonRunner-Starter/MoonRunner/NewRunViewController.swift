@@ -24,6 +24,7 @@ import UIKit
 import CoreData
 import CoreLocation
 import HealthKit
+import MapKit
 
 let DetailSegueName = "RunDetails"
 
@@ -55,6 +56,7 @@ class NewRunViewController: UIViewController {
   @IBOutlet weak var paceLabel: UILabel!
   @IBOutlet weak var startButton: UIButton!
   @IBOutlet weak var stopButton: UIButton!
+  @IBOutlet weak var mapView: MKMapView!
 
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
@@ -66,6 +68,7 @@ class NewRunViewController: UIViewController {
     distanceLabel.hidden = true
     paceLabel.hidden = true
     stopButton.hidden = true
+    mapView.hidden = true
     
     locationManager.requestAlwaysAuthorization()
   }
@@ -130,6 +133,7 @@ class NewRunViewController: UIViewController {
     distanceLabel.hidden = false
     paceLabel.hidden = false
     stopButton.hidden = false
+    mapView.hidden = false
     
     seconds = 0.0
     distance = 0.0
@@ -169,16 +173,38 @@ extension NewRunViewController: UIActionSheetDelegate {
 extension NewRunViewController: CLLocationManagerDelegate {
   func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     for location in locations {
-      if location.horizontalAccuracy < 20 {
+      let howRecent = location.timestamp.timeIntervalSinceNow
+      
+      if abs(howRecent) < 10 && location.horizontalAccuracy < 20 {
         //update distance
         if self.locations.count > 0 {
           distance += location.distanceFromLocation(self.locations.last!)
+          
+          var coords = [CLLocationCoordinate2D]()
+          coords.append(self.locations.last!.coordinate)
+          coords.append(location.coordinate)
+          
+          let region = MKCoordinateRegionMakeWithDistance(location.coordinate, 500, 500)
+          mapView.setRegion(region, animated: true)
+          
+          mapView.addOverlay(MKPolyline(coordinates: &coords, count: coords.count))
         }
+        
         //save location
         self.locations.append(location)
       }
     }
   }
-  
+}
 
+// MARK: - MKMapViewDelegate
+extension NewRunViewController: MKMapViewDelegate {
+  func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+    
+    let polyline = overlay as! MKPolyline
+    let renderer = MKPolylineRenderer(polyline: polyline)
+    renderer.strokeColor = UIColor.blueColor()
+    renderer.lineWidth = 3
+    return renderer
+  }
 }

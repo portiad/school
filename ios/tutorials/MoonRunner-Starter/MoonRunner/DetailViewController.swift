@@ -72,9 +72,9 @@ class DetailViewController: UIViewController {
   }
   
   func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
-    let polyline = overlay as! MKPolyline
+    let polyline = overlay as! MulticolorPolylineSegment
     let renderer = MKPolylineRenderer(polyline: polyline)
-    renderer.strokeColor = UIColor.blackColor()
+    renderer.strokeColor = polyline.color
     renderer.lineWidth = 3
     return renderer
   }

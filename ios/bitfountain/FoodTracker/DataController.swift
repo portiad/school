@@ -44,7 +44,7 @@ class DataController {
             for result in results! {
                 if result["_id"] as? String == idValue {
                     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-                    var requestForUSDAItem = NSFetchRequest(entityName: "USDAItem")
+                    let requestForUSDAItem = NSFetchRequest(entityName: "USDAItem")
                     
                     let resultId = result["_id"]! as! String
                     
@@ -53,15 +53,21 @@ class DataController {
                     requestForUSDAItem.predicate = predicate
                     
                     var error: NSError?
-                    var items = managedObjectContext?.executeFetchRequest(requestForUSDAItem, error: &error)
+                    var items: [AnyObject]?
+                    do {
+                        items = try managedObjectContext?.executeFetchRequest(requestForUSDAItem)
+                    } catch let error1 as NSError {
+                        error = error1
+                        items = nil
+                    }
                     
                     //var count = managedObjectContext?.countForFetchRequest(requestForUSDAItem, error: &error)
                     
                     if items?.count != 0 {
-                        println("Already saved")
+                        print("Already saved")
                         return
                     } else {
-                        println("Lets save this to core data!")
+                        print("Lets save this to core data!")
                         
                         let entityDescription = NSEntityDescription.entityForName("USDAItem", inManagedObjectContext: managedObjectContext!)
                         let usdaItem = USDAItem(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext!)

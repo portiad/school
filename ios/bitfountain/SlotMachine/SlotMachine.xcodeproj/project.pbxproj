@@ -165,6 +165,7 @@
 		834BF9511AB0EC26008E0D3D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Portia Dean";
 				TargetAttributes = {
@@ -419,6 +420,7 @@
 				834BF97A1AB0EC26008E0D3D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		834BF97B1AB0EC26008E0D3D /* Build configuration list for PBXNativeTarget "SlotMachineTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +429,7 @@
 				834BF97D1AB0EC26008E0D3D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

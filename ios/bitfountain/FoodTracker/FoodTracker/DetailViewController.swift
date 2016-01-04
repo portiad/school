@@ -15,7 +15,7 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "usdaItemDidComplete:", name: kUSDAItemCompleted, object: nil)
@@ -35,7 +35,7 @@ class DetailViewController: UIViewController {
     
     // best pratice to remove observer once you have completed
     deinit {
-        println("usdaItemDidComplete in DetailViewController")
+        print("usdaItemDidComplete in DetailViewController")
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
@@ -57,24 +57,24 @@ class DetailViewController: UIViewController {
     }
     
     func createAttributedString(usdaItem: USDAItem!) -> NSAttributedString {
-        var itemAttributedString = NSMutableAttributedString()
+        let itemAttributedString = NSMutableAttributedString()
         
-        var centeredParagraphStyle = NSMutableParagraphStyle()
+        let centeredParagraphStyle = NSMutableParagraphStyle()
         centeredParagraphStyle.alignment = NSTextAlignment.Center
         centeredParagraphStyle.lineSpacing = 10.0
         
-        var titleAttributesDictionary = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName: UIFont.boldSystemFontOfSize(22.0), NSParagraphStyleAttributeName: centeredParagraphStyle]
+        let titleAttributesDictionary = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName: UIFont.boldSystemFontOfSize(22.0), NSParagraphStyleAttributeName: centeredParagraphStyle]
         let titleString = NSAttributedString(string: "\(usdaItem.name!)\n", attributes: titleAttributesDictionary)
         
         itemAttributedString.appendAttributedString(titleString)
         
-        var leftAlignedParagraphStyle = NSMutableParagraphStyle()
+        let leftAlignedParagraphStyle = NSMutableParagraphStyle()
         leftAlignedParagraphStyle.alignment = NSTextAlignment.Left
         leftAlignedParagraphStyle.lineSpacing = 20.0
         
-        var styleFirstWordAttributesDictionary = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0), NSParagraphStyleAttributeName: leftAlignedParagraphStyle]
-        var styleOneAttributesDictionary = [NSForegroundColorAttributeName: UIColor.darkGrayColor(), NSFontAttributeName: UIFont.systemFontOfSize(18.0), NSParagraphStyleAttributeName: leftAlignedParagraphStyle]
-        var styleTwoAttributesDictionary = [NSForegroundColorAttributeName: UIColor.lightGrayColor(), NSFontAttributeName: UIFont.systemFontOfSize(18.0), NSParagraphStyleAttributeName: leftAlignedParagraphStyle]
+        let styleFirstWordAttributesDictionary = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0), NSParagraphStyleAttributeName: leftAlignedParagraphStyle]
+        let styleOneAttributesDictionary = [NSForegroundColorAttributeName: UIColor.darkGrayColor(), NSFontAttributeName: UIFont.systemFontOfSize(18.0), NSParagraphStyleAttributeName: leftAlignedParagraphStyle]
+        let styleTwoAttributesDictionary = [NSForegroundColorAttributeName: UIColor.lightGrayColor(), NSFontAttributeName: UIFont.systemFontOfSize(18.0), NSParagraphStyleAttributeName: leftAlignedParagraphStyle]
         
         itemAttributedString.appendAttributedString(generateAttributeString("Calcium", usdaValue: usdaItem.calcium, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleOneAttributesDictionary))
         itemAttributedString.appendAttributedString(generateAttributeString("Carbohydrate", usdaValue: usdaItem.carbohydrate, styleTitleAttribute: styleFirstWordAttributesDictionary, styleBobyAttribute: styleTwoAttributesDictionary))
@@ -127,9 +127,9 @@ class DetailViewController: UIViewController {
         
         store.healthStore?.requestAuthorizationToShareTypes(NSSet(array: dataTypesToWrite) as Set, readTypes: NSSet(array: dataTypesToRead) as Set, completion: { (success, error) -> Void in
             if success {
-                println("User authorization success")
+                print("User authorization success")
             } else {
-                println("User canceled request")
+                print("User canceled request")
             }
         })
     }
@@ -138,7 +138,7 @@ class DetailViewController: UIViewController {
         if HKHealthStore.isHealthDataAvailable() {
             let timeFoodWasEntered = NSDate()
             
-            let foodMetaData = NSDictionary(objectsAndKeys: foodItem.name!, HKMetadataKeyFoodType, "USDA Item", "HKBrandName", foodItem.idValue, "HKFoodTypeId") as [NSObject: AnyObject]
+            let foodMetaData = NSDictionary(dictionaryLiteral: foodItem.name!, HKMetadataKeyFoodType, "USDA Item", "HKBrandName", foodItem.idValue, "HKFoodTypeId") as [NSObject: AnyObject]
             
 //            let foodMetaData = [
 //                HKMetadataKeyFoodType : foodItem.name,
@@ -178,10 +178,10 @@ class DetailViewController: UIViewController {
             var store:HealthStoreConstant = HealthStoreConstant()
             store.healthStore?.saveObject(foodCorrelation, withCompletion: { (success, error) -> Void in
                 if success {
-                    println("Saved successfully")
+                    print("Saved successfully")
                 }
                 else {
-                    println("Error Occured: \(error)")
+                    print("Error Occured: \(error)")
                 }
             })
             

@@ -53,7 +53,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "usdaItemDidComplete:", name: kUSDAItemCompleted, object: nil)
         
-        println(tableView.frame)
+        print(tableView.frame)
         
     }
     
@@ -73,7 +73,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // Mark - UITableViewDataSource
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
         var foodName:String
         
         let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
@@ -155,7 +155,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let searchString = self.searchController.searchBar.text
         let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
         
-        self.filterContentForSearch(searchString, scope: selectedScopeButtonIndex)
+        self.filterContentForSearch(searchString!, scope: selectedScopeButtonIndex)
         self.tableView.reloadData()
     }
     
@@ -182,7 +182,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // moves the selected option over to index 1 in the scopeButtonArray
         self.searchController.searchBar.selectedScopeButtonIndex = 1
         
-        makeRequest(searchBar.text)
+        makeRequest(searchBar.text!)
     }
     
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
@@ -210,19 +210,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             "filters": ["exists" : ["usda_fields": true]]]
         
         var error: NSError?
-        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &error)
+        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, err) -> Void in
 //            var stringData = NSString(data: data, encoding: NSUTF8StringEncoding)
             var conversionError: NSError?
-            var jsonDictionary = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &conversionError) as? NSDictionary
+            var jsonDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .MutableLeaves) as? NSDictionary
             
             if conversionError != nil {
-                println(conversionError?.localizedDescription)
-                let errorString = NSString(data: data, encoding: NSUTF8StringEncoding)
-                println("Error in Parsing: \(errorString)")
+                print(conversionError?.localizedDescription)
+                let errorString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                print("Error in Parsing: \(errorString)")
             } else {
                 if jsonDictionary != nil {
                     self.jsonResponse = jsonDictionary!
@@ -233,8 +233,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.tableView.reloadData()
                     })
                 } else {
-                    let errorString = NSString(data: data, encoding: NSUTF8StringEncoding)
-                    println("Error could not parse JSON \(errorString)")
+                    let errorString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                    print("Error could not parse JSON \(errorString)")
                 }
             }
         })
@@ -261,13 +261,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let fetchRequest = NSFetchRequest(entityName: "USDAItem")
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         
-        self.favoritedUSDAItems = managedObjectContext?.executeFetchRequest(fetchRequest, error: nil) as! [USDAItem]
+        self.favoritedUSDAItems = managedObjectContext?.executeFetchRequest(fetchRequest) as! [USDAItem]
     }
     
     // Mark - NSNotification Center
     
     func usdaItemDidComplete(notification: NSNotification) {
-        println("usdaItemDidComplete in ViewController")
+        print("usdaItemDidComplete in ViewController")
         requestFavoritedUSDAItems()
         let selectedScopeButtonIndex = self.searchController.searchBar.selectedScopeButtonIndex
         

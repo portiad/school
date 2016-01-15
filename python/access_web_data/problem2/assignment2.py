@@ -17,3 +17,8 @@ Bonus Question?
 import re
 print sum( [ ****** *** * in **********('[0-9]+',**************************.read()) ] )
 """
+
+import re
+text = "X-DSPAM-Confidence:    0.8475";
+text = re.findall('([0-9]*\.[0-9]+)', text)
+print(float(text[0]))

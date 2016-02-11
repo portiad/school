@@ -36,4 +36,5 @@ do
 	let num=$newnum
 	echo ""
 done
+
 func$num

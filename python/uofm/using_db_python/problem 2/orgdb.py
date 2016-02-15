@@ -1,6 +1,7 @@
 #cat mbox.txt | grep From: > newfile.txt
 
 import sqlite3
+#import re
 
 conn = sqlite3.connect('emaildb.sqlite')
 cur = conn.cursor()

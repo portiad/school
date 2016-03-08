@@ -6,22 +6,15 @@ import urllib
 from BeautifulSoup import *
 
 url = raw_input('Enter URL: ')
-count = raw_input('Enter count: ')
-position = raw_input('Enter position: ')
-html = urllib.urlopen(url).read()
-soup = BeautifulSoup(html)
+count = int(raw_input('Enter count: '))
+position = int(raw_input('Enter position: '))
 
-# Retrieve all of the anchor tags
-tags = soup('a')
-print tags
 
-currentCount = 0
-currentPosition = 1
-
-for tag in tags:
-  if currentCount == int(count):
-    break
-  elif currentPosition % int(position) == 0:
-    print tag.get('href', None)
-    currentCount += 1
-  currentPosition += 1
+while count >= 0:
+  print url
+  html = urllib.urlopen(url).read()
+  soup = BeautifulSoup(html)
+  tags = soup('a')
+  tag = tags[position - 1]
+  url = tag.get('href', None)
+  count -= 1

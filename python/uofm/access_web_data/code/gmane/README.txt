@@ -1,30 +1,18 @@
-Analyzing an EMAIL Archive from gmane and vizualizing the data
-using the D3 JavaScript library
+Analyzing an EMAIL Archive vizualizing the data using the 
+D3 JavaScript library
 
-This is a set of tools that allow you to pull down an archive
-of a gmane repository using the instructions at:
+Here is a copy of the Sakai Developer Mailing list from 2006-2014.
 
-http://gmane.org/export.php
-
-In order not to overwhelm the gmane.org server, I have put up 
-my own copy of the messages at: 
-
-http://gmane.dr-chuck.net/
-
-This server will be faster and take a lot of load off the 
-gmane.org server.
+http://mbox.dr-chuck.net/
 
 You should install the SQLite browser to view and modify the databases from:
 
 http://sqlitebrowser.org/
 
-The first step is to spider the gmane repository.  The base URL 
-is hard-coded in the gmane.py and is hard-coded to the Sakai
-developer list.  You can spider another repository by changing that
-base url.   Make sure to delete the content.sqlite file if you 
-switch the base url.  The gmane.py file operates as a spider in 
-that it runs slowly and retrieves one mail message per second so 
-as to avoid getting throttled by gmane.org.   It stores all of
+The base URL is hard-coded in the gmane.py.  Make sure to delete the 
+content.sqlite file if you switch the base url.  The gmane.py file 
+operates as a spider in that it runs slowly and retrieves one mail 
+message per second so as to avoid getting throttled.   It stores all of
 its data in a database and can be interrupted and re-started 
 as often as needed.   It may take many hours to pull all the data
 down.  So you may need to restart several times.
@@ -32,10 +20,10 @@ down.  So you may need to restart several times.
 To give you a head-start, I have put up 600MB of pre-spidered Sakai 
 email here:
 
-https://online.dr-chuck.com/files/sakai/email/content.sqlite
+https://online.dr-chuck.com/files/sakai/email/content.sqlite.zip
 
-If you download this, you can "catch up with the latest" by
-running gmane.py.
+If you download and unzip this, you can "catch up with the 
+latest" by running gmane.py.
 
 Navigate to the folder where you extracted the gmane.zip
 
@@ -46,26 +34,19 @@ Mac: python gmane.py
 Win: gmane.py 
 
 How many messages:10
-http://download.gmane.org/gmane.comp.cms.sakai.devel/51410/51411 9460
-    nealcaidin@sakaifoundation.org 2013-04-05T12:37:27-04:00 re: [building sakai] testing common cartridge
-http://download.gmane.org/gmane.comp.cms.sakai.devel/51411/51412 3379
-    samuelgutierrezjimenez@gmail.com 2013-04-06T03:30:11-07:00 re: [building sakai] melete 2.9 oracle issue (w/ possible fix)
-http://download.gmane.org/gmane.comp.cms.sakai.devel/51412/51413 9903
-    da1@vt.edu 2013-04-05T15:58:51-04:00 [building sakai] melete 2.9 oracle issue (w/ possible fix)
-http://download.gmane.org/gmane.comp.cms.sakai.devel/51413/51414 349265
-    m.shedid@elraed-it.com 2013-04-07T11:19:40+03:00 [building sakai] setup development enviroment
-http://download.gmane.org/gmane.comp.cms.sakai.devel/51414/51415 3481
-    samuelgutierrezjimenez@gmail.com 2013-04-07T02:31:16-07:00 re: [building sakai] setup development enviroment
-http://download.gmane.org/gmane.comp.cms.sakai.devel/51415/51416 0
-
-Does not start with From 
+http://mbox.dr-chuck.net/sakai.devel/5/6 9443
+    john@caret.cam.ac.uk 2005-12-09T13:32:29+00:00 re: lms/vle rants/comments
+http://mbox.dr-chuck.net/sakai.devel/6/7 3586
+    s-githens@northwestern.edu 2005-12-09T13:32:31-06:00 re: sakaiportallogin and presense
+http://mbox.dr-chuck.net/sakai.devel/7/8 10600
+    john@caret.cam.ac.uk 2005-12-09T13:42:24+00:00 re: lms/vle rants/comments
 
 The program scans content.sqlite from 1 up to the first message number not
 already spidered and starts spidering at that message.  It continues spidering
 until it has spidered the desired number of messages or it reaches a page
 that does not appear to be a properly formatted message.
 
-Sometimes gmane.org is missing a message.  Perhaps administrators can delete messages
+Sometimes there is missing a message.  Perhaps administrators can delete messages
 or perhaps they get lost - I don't know.   If your spider stops, and it seems it has hit
 a missing message, go into the SQLite Manager and add a row with the missing id - leave
 all the other fields blank - and then restart gmane.py.   This will unstick the 

@@ -15,8 +15,18 @@ scontext = None
 conn = sqlite3.connect('geodata.sqlite')
 cur = conn.cursor()
 
-cur.execute('''
-CREATE TABLE IF NOT EXISTS Locations (address TEXT, geodata TEXT)''')
+# cur.execute('''
+# CREATE TABLE IF NOT EXISTS Locations (address TEXT, geodata TEXT)''')
+
+cur.executescript('''
+DROP TABLE IF EXISTS Locations;
+
+CREATE TABLE Locations (
+    address TEXT, 
+    geodata TEXT
+)
+
+''')
 
 fh = open("where.data")
 count = 0

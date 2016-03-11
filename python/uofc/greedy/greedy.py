@@ -19,7 +19,6 @@ while x[currentRefill] < n:
   if x[currentRefill] < n:
     numRefills += 1
     stations.append(x[currentRefill])
-  print stations
 
 if success:
   print 'Refills', numRefills

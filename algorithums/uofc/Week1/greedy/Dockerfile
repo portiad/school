@@ -13,4 +13,4 @@ RUN apt-get update && apt-get install -y \
 COPY . /code
 WORKDIR /code
 
-CMD [ "python", "./greedy.py" ]
+CMD [ "python", "./greedyDynamic.py" ]

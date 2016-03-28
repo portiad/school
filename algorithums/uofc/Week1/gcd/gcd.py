@@ -15,7 +15,8 @@ a = raw_input("Enter in your 1st number: ")
 b = raw_input("Enter in your 2nd number: ")
 a, b = int(a), int(b)
 
-value = gcd(a, b)
 
-print value
-print count
+start = time.time()
+print(gcd(a, b))
+end = time.time()
+print(end - start)

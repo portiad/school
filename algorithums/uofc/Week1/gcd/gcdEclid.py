@@ -12,4 +12,7 @@ a = raw_input("Enter in your 1st number: ")
 b = raw_input("Enter in your 2nd number: ")
 a, b = int(a), int(b)
 
+start = time.time()
 print gcdEclid(a, b)
+end = time.time()
+print(end - start)

@@ -1,0 +1,11 @@
+# Filename s3-config.df
+FROM registry:2
+LABEL source=dockerinaction
+LABEL category=infrastructure
+
+# Set the default arguement to specifigy the config file to user
+# Setting it early will enable layer caching if the s3-config.yml changes.
+
+CMD ["/redis-config.yml"]
+COPY ["./redis-config.yml", "/redis-config.yml"]
+

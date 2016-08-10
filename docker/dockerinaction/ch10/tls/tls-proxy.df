@@ -1,0 +1,4 @@
+FROM nginx:latest
+LABEL source=dockerinaction
+LABEL category=infrastructure
+COPY ["./tls-proxy.conf", "./localhost.crt", "./localhost.key", "/etc/nginx/conf.d/"]

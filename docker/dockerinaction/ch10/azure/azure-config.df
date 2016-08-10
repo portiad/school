@@ -1,0 +1,10 @@
+# Filename: azure-config.df
+FROM registry:2
+LABEL source=dockerinaction
+LABEL category=infrastructure
+
+# Set the default arguement to specify the config file to use
+# Setting it early will enable layer caching if the azure-config.yml changes.
+
+CMD ["/azure-config.yml"]
+COPY ["./azure-config.yml", "/azure-config.yml"]

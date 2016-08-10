@@ -1,0 +1,24 @@
+# Filename: azure-config.yml
+version: 0.1
+
+log:
+  level: debug
+  fields:
+    service: registry
+    environment: development
+storage:
+  azure:
+    accountname: boop2
+    accountkey: 
+    container: boop
+    realm: core.windows.net
+  cache:
+    layerinfo: inmemory
+  maintenance:
+    uploadingpurging:
+      enabled: false
+http:
+  addr: :5000
+  secret: asecretforlocaldevelopment
+  debug:
+    addr: localhost:5001

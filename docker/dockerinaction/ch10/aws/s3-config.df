@@ -1,0 +1,11 @@
+# Filename s3-config.df
+FROM registry:2
+LABEL source=dockerinaction
+LABEL category=infrastructure
+
+# Set the default arguement to specifigy the config file to user
+# Setting it early will enable layer caching if the s3-config.yml changes.
+
+CMD ["/s3-config.yml"]
+COPY ["./s3-config.yml", "/s3-config.yml"]
+

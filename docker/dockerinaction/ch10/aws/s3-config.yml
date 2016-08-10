@@ -1,0 +1,31 @@
+# Filename: s3-config.yml
+version: 0.1
+log:
+  level: debug
+  fields:
+    service: registry
+    enviorment: development
+storage:
+  cache:
+    layerinfo: inmemory
+  s3:
+    accesskey: 
+    secretkey: 
+    region: us-west-2
+    bucket: boop2
+    encrypt: true
+    secure: true
+    v4auth: true
+    chunksize: 5242880
+    rootdirectory: /s3/object/name/prefix
+  maintenance:
+    uploadpurging:
+      enabled: false
+      age: false
+      interval: false
+      dryrun: false
+http:
+  addr: :5000
+  secret: asecretforlocaldevelopment
+  debug:
+    addr: localhost:5001

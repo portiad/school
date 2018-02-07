@@ -27,7 +27,7 @@ class Run: NSManagedObject {
 
     @NSManaged var duration: NSNumber
     @NSManaged var distance: NSNumber
-    @NSManaged var timestamp: NSDate
+    @NSManaged var timestamp: Date
     @NSManaged var locations: NSOrderedSet
 
 }

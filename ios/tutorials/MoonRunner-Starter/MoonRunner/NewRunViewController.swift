@@ -36,7 +36,7 @@ class NewRunViewController: UIViewController {
     var _locationManager = CLLocationManager()
     _locationManager.delegate = self
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    _locationManager.activityType = .Fitness
+    _locationManager.activityType = .fitness
     
     //Movement thresholds for new events
     _locationManager.distanceFilter = 10.0
@@ -44,7 +44,7 @@ class NewRunViewController: UIViewController {
   }()
   
   lazy var locations = [CLLocation]()
-  lazy var timer = NSTimer()
+  lazy var timer = Timer()
   
   var managedObjectContext: NSManagedObjectContext?
 
@@ -58,127 +58,127 @@ class NewRunViewController: UIViewController {
   @IBOutlet weak var stopButton: UIButton!
   @IBOutlet weak var mapView: MKMapView!
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    startButton.hidden = false
-    promptLabel.hidden = false
+    startButton.isHidden = false
+    promptLabel.isHidden = false
 
-    timeLabel.hidden = true
-    distanceLabel.hidden = true
-    paceLabel.hidden = true
-    stopButton.hidden = true
-    mapView.hidden = true
+    timeLabel.isHidden = true
+    distanceLabel.isHidden = true
+    paceLabel.isHidden = true
+    stopButton.isHidden = true
+    mapView.isHidden = true
     
     locationManager.requestAlwaysAuthorization()
   }
   
-  override func viewWillDisappear(animated: Bool) {
+  override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     timer.invalidate()
   }
-  
+
   
   //Functions
   
-  func eachSecond(timer: NSTimer) {
-    seconds++
-    let secondsQuantity = HKQuantity(unit: HKUnit.secondUnit(), doubleValue: seconds)
-    timeLabel.text = "Time: " + secondsQuantity.description
-    let distanceQuantity = HKQuantity(unit: HKUnit.meterUnit(), doubleValue: distance)
-    distanceLabel.text = "Distance: " + distanceQuantity.description
-    
-    let paceUnit = HKUnit.secondUnit().unitDividedByUnit(HKUnit.meterUnit())
-    let paceQuanity = HKQuantity(unit: paceUnit, doubleValue: seconds/distance)
-    paceLabel.text = "Pace: " + paceQuanity.description
-  }
+//  func eachSecond(_ timer: Timer) {
+//    seconds += 1
+//    let secondsQuantity = HKQuantity(unit: HKUnit.second(), doubleValue: seconds)
+//    timeLabel.text = "Time: " + secondsQuantity.description
+//    let distanceQuantity = HKQuantity(unit: HKUnit.meter(), doubleValue: distance)
+//    distanceLrabel.text = "Distance: " + distanceQuantity.description
+//    
+//    let paceUnit = HKUnit.second().unitDivided(by: HKUnit.meter())
+//    let paceQuanity = HKQuantity(unit: paceUnit, doubleValue: seconds/distance)
+//    paceLabel.text = "Pace: " + paceQuanity.description
+//  }
   
   func startLocationUpdates() {
     // Here, the location manager will be lazily instantiated
     locationManager.startUpdatingLocation()
   }
   
-  func saveRun() {
-    let savedRun = NSEntityDescription.insertNewObjectForEntityForName("Run", inManagedObjectContext: managedObjectContext!) as! Run
-    savedRun.distance = distance
-    savedRun.duration = seconds
-    savedRun.timestamp = NSDate()
-    
-    var savedLocations = [Location]()
-    for location in locations {
-      let savedLocation = NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: managedObjectContext!) as! Location
-      savedLocation.timestamp = location.timestamp
-      savedLocation.latitude = location.coordinate.latitude
-      savedLocation.longitude = location.coordinate.longitude
-      savedLocations.append(savedLocation)
-    }
-    
-    savedRun.locations = NSOrderedSet(array: savedLocations)
-    run = savedRun
-    
-    do {
-      try managedObjectContext!.save()
-    } catch {
-      print("Unable to save")
-    }
-  }
+//  func saveRun() {
+//    let savedRun = NSEntityDescription.insertNewObject(forEntityName: "Run", into: managedObjectContext!) as! Run
+//    savedRun.distance = NSNumber(value: distance)
+//    savedRun.duration = NSNumber(value: seconds)
+//    savedRun.timestamp = Date()
+//    
+//    var savedLocations = [Location]()
+//    for location in locations {
+//      let savedLocation = NSEntityDescription.insertNewObject(forEntityName: "Location", into: managedObjectContext!) as! Location
+//      savedLocation.timestamp = location.timestamp
+//      savedLocation.latitude = NSNumber(value: location.coordinate.latitude)
+//      savedLocation.longitude = NSNumber(value: location.coordinate.longitude)
+//      savedLocations.append(savedLocation)
+//    }
+//    
+//    savedRun.locations = NSOrderedSet(array: savedLocations)
+//    run = savedRun
+//    
+//    do {
+//      try managedObjectContext!.save()
+//    } catch {
+//      print("Unable to save")
+//    }
+//  }
   
   // IBActions
 
-  @IBAction func startPressed(sender: AnyObject) {
-    startButton.hidden = true
-    promptLabel.hidden = true
+  @IBAction func startPressed(_ sender: AnyObject) {
+    startButton.isHidden = true
+    promptLabel.isHidden = true
 
-    timeLabel.hidden = false
-    distanceLabel.hidden = false
-    paceLabel.hidden = false
-    stopButton.hidden = false
-    mapView.hidden = false
+    timeLabel.isHidden = false
+    distanceLabel.isHidden = false
+    paceLabel.isHidden = false
+    stopButton.isHidden = false
+    mapView.isHidden = false
     
     seconds = 0.0
     distance = 0.0
-    locations.removeAll(keepCapacity: false)
-    timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "eachSecond:", userInfo: nil,repeats: true)
+    locations.removeAll(keepingCapacity: false)
+    //timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(NewRunViewController.eachSecond(_:)), userInfo: nil,repeats: true)
     startLocationUpdates()
   }
 
-  @IBAction func stopPressed(sender: AnyObject) {
-    let actionSheet = UIActionSheet(title: "Run Stopped", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Save", "Discard")
-    actionSheet.actionSheetStyle = .Default
-    actionSheet.showInView(view)
+  @IBAction func stopPressed(_ sender: AnyObject) {
+//    let actionSheet = UIActionSheet(title: "Run Stopped", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Save", "Discard")
+//    actionSheet.actionSheetStyle = .default
+//    actionSheet.show(in: view)
   }
 
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if let detailViewController = segue.destinationViewController as? DetailViewController {
-      detailViewController.run = run
-    }
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//    if let detailViewController = segue.destination as? DetailViewController {
+//      detailViewController.run = run
+//    }
   }
 }
 
 // MARK: UIActionSheetDelegate
 extension NewRunViewController: UIActionSheetDelegate {
-  func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-    //save
-    if buttonIndex == 1 {
-      saveRun()
-      performSegueWithIdentifier(DetailSegueName, sender: nil)
-    }
-    //discard
-    else if buttonIndex == 2 {
-      navigationController?.popToRootViewControllerAnimated(true)
-    }
-  }
+//  func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int) {
+//    //save
+//    if buttonIndex == 1 {
+//      //xxsaveRun()
+//      performSegue(withIdentifier: DetailSegueName, sender: nil)
+//    }
+//    //discard
+//    else if buttonIndex == 2 {
+//      navigationController?.popToRootViewController(animated: true)
+//    }
+//  }
 }
 
 extension NewRunViewController: CLLocationManagerDelegate {
-  func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     for location in locations {
       let howRecent = location.timestamp.timeIntervalSinceNow
       
       if abs(howRecent) < 10 && location.horizontalAccuracy < 20 {
         //update distance
         if self.locations.count > 0 {
-          distance += location.distanceFromLocation(self.locations.last!)
+          distance += location.distance(from: self.locations.last!)
           
           var coords = [CLLocationCoordinate2D]()
           coords.append(self.locations.last!.coordinate)
@@ -187,7 +187,7 @@ extension NewRunViewController: CLLocationManagerDelegate {
           let region = MKCoordinateRegionMakeWithDistance(location.coordinate, 500, 500)
           mapView.setRegion(region, animated: true)
           
-          mapView.addOverlay(MKPolyline(coordinates: &coords, count: coords.count))
+          mapView.add(MKPolyline(coordinates: &coords, count: coords.count))
         }
         
         //save location
@@ -199,11 +199,11 @@ extension NewRunViewController: CLLocationManagerDelegate {
 
 // MARK: - MKMapViewDelegate
 extension NewRunViewController: MKMapViewDelegate {
-  func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+  func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
     
     let polyline = overlay as! MKPolyline
     let renderer = MKPolylineRenderer(polyline: polyline)
-    renderer.strokeColor = UIColor.blueColor()
+    renderer.strokeColor = UIColor.blue
     renderer.lineWidth = 3
     return renderer
   }

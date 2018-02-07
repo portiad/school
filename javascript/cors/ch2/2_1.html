@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<body onload="loadPhotos();">
+<div id = "photos">Loading photos....</div>
+<script>
+function loadPhotos() {
+  var api_key = '36b0770ae54b7865ff60d797b5680645';
+  var method = 'GET'
+  var url = {
+    xml:  'https://api.flickr.com/services/rest?' +
+          'method=flickr.people.getPublicPhotos&' +
+          'user_id=32951986%40N05&' +
+          'extras=url_q&format=json&nojsoncallback=1&' +
+          'api_key=' + api_key, 
+    json: 'https://s3.amazonaws.com/corsinaction/flickr.json'
+  };
+  var xhr;
+
+  if (!(xhr = createCORSRequest(method, url))) {
+    alert('Browser does not support CORS.');
+    return;
+  }
+
+  xhr.onerror = function() {
+    alert('There was an error.')
+  };
+
+  xhr.onload = function() {
+    var data = JSON.parse(xhr.responseText);
+    if (data.stat == 'ok') {
+      var photosDiv = document.getElementById('photos');
+      photosDiv.innerHTML = '';
+      var photos = data.photos.photo;
+      for (var i = 0; i < photos.length; i++) {
+        var img = document.createElement('img');
+        img.src = photos[i].url_q;
+        photosDiv.appendChild(img);
+      }
+    } else {
+      alert(data.message);
+    }
+  };
+  xhr.send('Can send message body here');
+}
+
+// Suuport cors for ie 8 and 9
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ('withCredentials' in xhr) {
+    xhr.open(method, url.xml, true);
+    //xhr.setRequestHeader('X-Requested-With', 'CORS in Action');
+  } else if (typeof XDomainRequest != "undefined") {
+    xhr = new XDomainRequest();
+    xhr.open(method, url.json);
+  } else {
+    xhr = null;
+  }
+  return xhr;
+}
+</script>
+</body>
+</html>

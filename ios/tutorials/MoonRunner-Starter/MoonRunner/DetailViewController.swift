@@ -39,13 +39,13 @@ class DetailViewController: UIViewController {
   }
 
   func configureView() {
-    let distanceQuantity = HKQuantity(unit: HKUnit.meterUnit(), doubleValue: run.distance.doubleValue)
+    let distanceQuantity = HKQuantity(unit: HKUnit.meter(), doubleValue: run.distance.doubleValue)
     distanceLabel.text = "Distance: " + distanceQuantity.description
     
-    let secondsQuantity = HKQuantity(unit: HKUnit.secondUnit(), doubleValue: run.distance.doubleValue)
+    let secondsQuantity = HKQuantity(unit: HKUnit.second(), doubleValue: run.distance.doubleValue)
     timeLabel.text = "Time: " + secondsQuantity.description
     
-    let paceUnit = HKUnit.secondUnit().unitDividedByUnit(HKUnit.meterUnit())
+    let paceUnit = HKUnit.second().unitDivided(by: HKUnit.meter())
     let paceQuantity = HKQuantity(unit: paceUnit, doubleValue: run.duration.doubleValue / run.distance.doubleValue)
     paceLabel.text = "Pace: " + paceQuantity.description
     
@@ -71,7 +71,7 @@ class DetailViewController: UIViewController {
     return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: (minLat + maxLat) / 2, longitude: (minLng + maxLng) / 2), span: MKCoordinateSpan(latitudeDelta: (maxLat - minLat)*1.1, longitudeDelta: (maxLng - minLng)*1.1))
   }
   
-  func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+  @objc(mapView:rendererForOverlay:) func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
     let polyline = overlay as! MulticolorPolylineSegment
     let renderer = MKPolylineRenderer(polyline: polyline)
     renderer.strokeColor = polyline.color
@@ -91,7 +91,7 @@ class DetailViewController: UIViewController {
   
   func loadMap() {
     if run.locations.count > 0 {
-      mapView.hidden = false
+      mapView.isHidden = false
       
       // Set the map bounds
       mapView.region = mapRegion()
@@ -101,7 +101,7 @@ class DetailViewController: UIViewController {
       mapView.addOverlays(colorSegments)
     } else {
       // No locations were found!
-      mapView.hidden = true
+      mapView.isHidden = true
       UIAlertView(title: "Error", message: "Sorry, this run has no locations saved", delegate: nil, cancelButtonTitle: "Ok").show()
     }
   }

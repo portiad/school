@@ -26,9 +26,9 @@ import CoreData
 class HomeViewController: UIViewController {
   var managedObjectContext: NSManagedObjectContext?
 
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.destinationViewController.isKindOfClass(NewRunViewController) {
-      if let newRunViewController = segue.destinationViewController as? NewRunViewController {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.destination.isKind(of: NewRunViewController.self) {
+      if let newRunViewController = segue.destination as? NewRunViewController {
         newRunViewController.managedObjectContext = managedObjectContext
       }
     }

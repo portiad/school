@@ -1,0 +1,5 @@
+# Filename flock.yml
+bird:
+  image: dockerinaction/ch12_painted
+  command: bird
+  restart: always
